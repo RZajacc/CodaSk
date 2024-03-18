@@ -82,7 +82,7 @@ function CodaskNav() {
               <li>
                 {' '}
                 <Link href={'/search/questions/askQuestion'}>
-                  <BsPatchQuestion style={{fontSize: '2em', color: 'white'}} />
+                  <BsPatchQuestion style={{fontSize: '2rem', color: 'white'}} />
                 </Link>
               </li>
             </>
