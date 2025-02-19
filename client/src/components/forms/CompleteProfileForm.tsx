@@ -1,7 +1,8 @@
+'use client';
 import {User, UserPhoto} from '@/types/custom_types';
 import {useSession} from 'next-auth/react';
 import Image from 'next/image';
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 import React, {ChangeEvent, FormEvent, useEffect, useState} from 'react';
 
 function CompleteProfileForm() {

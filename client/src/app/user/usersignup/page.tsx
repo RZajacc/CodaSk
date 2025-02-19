@@ -1,12 +1,12 @@
 import React, {useEffect} from 'react';
-import SignUpForm from '../../components/forms/SignUpForm';
+import SignUpForm from '../../../components/forms/SignUpForm';
 import Image from 'next/image';
 import Link from 'next/link';
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 
 type Props = {};
 
-function Register({}: Props) {
+export default async function Register({}: Props) {
   // const router = useRouter();
   // useEffect(() => {}, [router.reload()]);
 
@@ -26,5 +26,3 @@ function Register({}: Props) {
     </div>
   );
 }
-
-export default Register;

@@ -1,10 +1,11 @@
 import React from 'react';
-import CompleteProfileForm from '../../components/forms/CompleteProfileForm';
+import CompleteProfileForm from '@/components/forms/CompleteProfileForm';
+
 import Image from 'next/image';
 
 type Props = {};
 
-function MoreInfo({}: Props) {
+export default async function MoreInfo({}: Props) {
   return (
     <>
       <div className="h-full bg-[#6741D9]">
@@ -39,5 +40,3 @@ function MoreInfo({}: Props) {
     </>
   );
 }
-
-export default MoreInfo;
