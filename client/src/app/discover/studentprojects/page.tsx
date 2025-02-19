@@ -2,8 +2,6 @@ import React from 'react';
 
 type Props = {};
 
-function StudentProjects({}: Props) {
+export default async function StudentProjects({}: Props) {
   return <div className="h-screen">StudentProjects</div>;
 }
-
-export default StudentProjects;
