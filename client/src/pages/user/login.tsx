@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import LogInForm from '../../components/LogInForm';
+import LogInForm from '../../components/forms/LogInForm';
 import Image from 'next/image';
 import Link from 'next/link';
 

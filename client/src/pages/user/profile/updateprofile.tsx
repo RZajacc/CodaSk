@@ -1,5 +1,5 @@
 import BackButton from '@/components/BackButton';
-import CompleteProfileForm from '@/components/CompleteProfileForm';
+import CompleteProfileForm from '@/components/forms/CompleteProfileForm';
 import React from 'react';
 
 type Props = {};

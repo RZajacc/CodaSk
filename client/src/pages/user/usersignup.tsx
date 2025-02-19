@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import SignUpForm from '../../components/SignUpForm';
+import SignUpForm from '../../components/forms/SignUpForm';
 import Image from 'next/image';
 import Link from 'next/link';
 import {useRouter} from 'next/router';
@@ -7,8 +7,8 @@ import {useRouter} from 'next/router';
 type Props = {};
 
 function Register({}: Props) {
-  const router = useRouter();
-  useEffect(() => {}, [router.reload()]);
+  // const router = useRouter();
+  // useEffect(() => {}, [router.reload()]);
 
   return (
     <div className="h-full w-full bg-[#6741D9]">
