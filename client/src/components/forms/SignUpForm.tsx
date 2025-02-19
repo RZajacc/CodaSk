@@ -1,8 +1,9 @@
+'use client';
 import {FaGithub, FaGoogle} from 'react-icons/fa';
 import {User, UserPhoto} from '@/types/custom_types';
 import {signIn} from 'next-auth/react';
 import Link from 'next/link';
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 import React, {ChangeEvent, FormEvent, useEffect, useState} from 'react';
 
 function SignUpForm() {
@@ -127,7 +128,7 @@ function SignUpForm() {
               Email
             </label>
             <input
-              className="shadow-custom  rounded-2xl bg-[#EDE9E6] p-2"
+              className="rounded-2xl  bg-[#EDE9E6] p-2 shadow-custom"
               onChange={handleRegisterInput}
               type="text"
               name="email"
@@ -144,7 +145,7 @@ function SignUpForm() {
               Password
             </label>
             <input
-              className="shadow-custom  rounded-2xl bg-[#EDE9E6] p-2"
+              className="rounded-2xl  bg-[#EDE9E6] p-2 shadow-custom"
               onChange={handleRegisterInput}
               type={passwordType}
               name="password"

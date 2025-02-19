@@ -1,5 +1,5 @@
 import {describe, expect, it, test} from 'vitest';
-import Login from '../pages/user/login';
+import Login from '../app/user/login/login';
 import {fireEvent, render, screen} from '@testing-library/react';
 
 describe('General document structure', () => {

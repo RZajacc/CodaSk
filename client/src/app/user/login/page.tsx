@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
-import LogInForm from '../../components/forms/LogInForm';
+import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import LogInForm from '@/components/forms/LogInForm';
 
 type Props = {};
 
-function Login({}: Props) {
+export default async function Login({}: Props) {
   return (
     <>
       <div className="h-full bg-[#6741D9]">
@@ -37,5 +37,3 @@ function Login({}: Props) {
     </>
   );
 }
-
-export default Login;

@@ -1,7 +1,8 @@
+'use client';
 import {User} from '@/types/custom_types';
 import {FaGithub, FaGoogle} from 'react-icons/fa';
 import {signIn} from 'next-auth/react';
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 import React, {ChangeEvent, FormEvent, useState} from 'react';
 // import {providers, signIn, getSession, csrfToken} from 'next-auth';
 // {providers, csrfToken}
@@ -67,7 +68,7 @@ function LogInForm() {
             Email{' '}
           </label>
           <input
-            className="shadow-custom  rounded-2xl bg-[#EDE9E6] p-2"
+            className="rounded-2xl  bg-[#EDE9E6] p-2 shadow-custom"
             onChange={handleLogInInput}
             type="email"
             name="email"
@@ -83,7 +84,7 @@ function LogInForm() {
             Password
           </label>
           <input
-            className="shadow-custom  rounded-2xl bg-[#EDE9E6] p-2"
+            className="rounded-2xl  bg-[#EDE9E6] p-2 shadow-custom"
             onChange={handleLogInInput}
             type={passwordType}
             name="password"
