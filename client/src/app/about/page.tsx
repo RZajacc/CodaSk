@@ -3,7 +3,7 @@ import React from 'react';
 
 type Props = {};
 
-function About({}: Props) {
+export default async function About({}: Props) {
   return (
     <div
       className="h-full bg-[#6741D9] text-white
@@ -102,5 +102,3 @@ function About({}: Props) {
     </div>
   );
 }
-
-export default About;

@@ -3,7 +3,7 @@ import React from 'react';
 
 type Props = {};
 
-function Contact({}: Props) {
+export default async function Contact({}: Props) {
   return (
     <div className="flex h-screen items-start justify-center bg-[#6741D9] p-10">
       <div className=" w-max rounded-xl bg-[#EDE9E6] p-4 text-center  text-black">
@@ -42,5 +42,3 @@ function Contact({}: Props) {
     </div>
   );
 }
-
-export default Contact;

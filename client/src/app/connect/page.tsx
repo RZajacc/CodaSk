@@ -1,5 +1,4 @@
 import {ApolloClient, InMemoryCache, gql} from '@apollo/client';
-import {GetServerSideProps} from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -19,10 +18,6 @@ export type userQuery = {
   ];
 };
 
-type ComponentProps = {
-  data: userQuery;
-};
-
 const GET_USERS = gql`
   query getAllUsers {
     getAllUsers {
@@ -37,39 +32,30 @@ const GET_USERS = gql`
   }
 `;
 
-export const getServerSideProps: GetServerSideProps<
-  ComponentProps
-> = async () => {
-  const client = new ApolloClient({
-    uri: 'http://localhost:5008/graphql',
-    cache: new InMemoryCache(),
-  });
+export default async function Connect() {
+  // const client = new ApolloClient({
+  //   uri: 'http://localhost:5008/graphql',
+  //   cache: new InMemoryCache(),
+  // });
 
-  const {data} = await client.query({
-    query: GET_USERS,
-  });
+  // const {data} = await client.query({
+  //   query: GET_USERS,
+  // });
+
   // console.log('data :>> ', data);
-
-  return {
-    props: {
-      data: data,
-    },
-  };
-};
-
-function Connect({data}: ComponentProps) {
-  console.log('data :>> ', data);
 
   return (
     <div className="flex h-full min-h-screen items-start justify-center bg-[#6741D9] p-4">
       <div className="flex flex-col">
         <h1 className="mx-4 mt-4 text-center font-medium text-white md:text-3xl">
-          Get in touch with {data.getAllUsers.length} Codac <br />
+          Get in touch with
+          {/* {data.getAllUsers.length}  */}
+          Codac <br />
           students, graduates, and mentors!
         </h1>
 
         <div className="my-4 flex flex-wrap justify-center">
-          {data &&
+          {/* {data &&
             data.getAllUsers?.map((user, userIndex) => {
               return (
                 <div
@@ -103,11 +89,9 @@ function Connect({data}: ComponentProps) {
                   </div>
                 </div>
               );
-            })}
+            })} */}
         </div>
       </div>
     </div>
   );
 }
-
-export default Connect;
