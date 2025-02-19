@@ -5,8 +5,7 @@ import '@/styles/navbar.css';
 import type {AppProps} from 'next/app';
 import Layout from './Layout';
 import {SessionProvider} from 'next-auth/react';
-import {useEffect} from 'react';
-import {ApolloClient, InMemoryCache, ApolloProvider, gql} from '@apollo/client';
+import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
 
 export default function App({Component, pageProps}: AppProps) {
   const {session} = pageProps;
