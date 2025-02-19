@@ -1,12 +1,11 @@
 import {QuestionType} from '@/types/questionDetailsTypes';
-import {useRouter} from 'next/router';
-import React, {ChangeEvent, MouseEvent, useEffect, useState} from 'react';
+import {useRouter} from 'next/navigation';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import {FaSearch} from 'react-icons/fa';
-import QuestionCard from '../components/QuestionCard';
+// import QuestionCard from '../components/QuestionCard';
 
 type OKResponse = {
   number: number;
-
   data: QuestionType[];
 };
 
@@ -105,7 +104,7 @@ function SearchBox() {
                 <div
                   className="bg-white"
                   key={question.id}
-                  onClick={() => handleQuestionClick('' || question.id)}
+                  // onClick={() => handleQuestionClick('' || question.id)}
                 >
                   {question.author.first_name}
                 </div>

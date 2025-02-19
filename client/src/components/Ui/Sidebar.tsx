@@ -1,9 +1,6 @@
 import Link from 'next/link';
-import React from 'react';
 
-type Props = {};
-
-function CodaskSidebar({}: Props) {
+function Sidebar() {
   return (
     <div className=" h-full bg-white">
       <section className="fixed top-20 mt-10  w-48">
@@ -88,4 +85,4 @@ function CodaskSidebar({}: Props) {
   );
 }
 
-export default CodaskSidebar;
+export default Sidebar;

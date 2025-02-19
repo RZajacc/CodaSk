@@ -5,9 +5,9 @@ import '@/styles/loader.css';
 import '@/styles/navbar.css';
 import {SessionProvider} from 'next-auth/react';
 import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
-import CodaskNav from '@/components/CodaskNav';
-import CodaskSidebar from '@/components/CodaskSidebar';
-import Footer from '@/components/Footer';
+import MainNav from '@/components/Ui/MainNav';
+import Sidebar from '@/components/Ui/Sidebar';
+import Footer from '@/components/Ui/Footer';
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
   const client = new ApolloClient({
@@ -20,8 +20,8 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       <body>
         <SessionProvider>
           <ApolloProvider client={client}>
-            {/* <CodaskNav /> */}
-            <CodaskSidebar />
+            <MainNav />
+            <Sidebar />
             <main className="relative ml-48 border-l-2 border-r-gray-200">
               {children}
             </main>

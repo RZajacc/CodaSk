@@ -1,10 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
 
-type Props = {};
-
-export default async function page({}: Props) {
+export default async function page() {
   return (
     <main className="h-full ">
       <div>

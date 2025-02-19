@@ -1,7 +1,7 @@
 import React, {ReactElement, ReactNode} from 'react';
-import CodaskNav from '../components/CodaskNav';
-import CodaskSidebar from '../components/CodaskSidebar';
-import Footer from '../components/Footer';
+import CodaskNav from '@/components/Ui/MainNav';
+import CodaskSidebar from '../components/Ui/Sidebar';
+import Footer from '../components/Ui/Footer';
 import {SessionProvider} from 'next-auth/react';
 
 type Props = {

@@ -7,7 +7,7 @@ import Link from 'next/link';
 import {useEffect, useState} from 'react';
 import SearchBox from './SearchBox';
 
-function CodaskNav() {
+function MainNav() {
   const {data: session, status, update} = useSession();
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -93,4 +93,4 @@ function CodaskNav() {
   );
 }
 
-export default CodaskNav;
+export default MainNav;

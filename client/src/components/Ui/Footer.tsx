@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
 import {FaGithub} from 'react-icons/fa';
 
 function Footer() {
