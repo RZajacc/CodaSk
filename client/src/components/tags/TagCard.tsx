@@ -1,11 +1,11 @@
 import {useSession} from 'next-auth/react';
 import {BsFillPinFill} from 'react-icons/bs';
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 import React, {useEffect, useState} from 'react';
 import Link from 'next/link';
-import {userQuery} from '@/pages/search/tags';
-import Loader from './Loader';
-import Modal from './Modal';
+import {userQuery} from '@/app/search/tags/page';
+import Loader from '../Loader';
+import Modal from '../Modal';
 
 type tagProps = {
   getAllTags: [

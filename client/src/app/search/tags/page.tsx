@@ -1,5 +1,6 @@
+'use client';
 import QuestionButtons from '@/components/QuestionButtons';
-import TagsGrid from '@/components/TagsGrid';
+import TagsGrid from '@/components/tags/TagsGrid';
 import {gql, useMutation, useQuery} from '@apollo/client';
 import {useSession} from 'next-auth/react';
 import React, {ChangeEvent, useState} from 'react';
@@ -68,7 +69,7 @@ export const UNBOOKMARK_TAG = gql`
   }
 `;
 
-function Tags() {
+export default function Tags() {
   const session = useSession();
   const sessionUserID = session?.data?.user?.name as string;
 
@@ -182,5 +183,3 @@ function Tags() {
     </div>
   );
 }
-
-export default Tags;

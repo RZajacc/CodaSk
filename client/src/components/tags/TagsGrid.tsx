@@ -1,8 +1,8 @@
 import {ApolloClient, InMemoryCache, gql} from '@apollo/client';
 import React, {useEffect} from 'react';
 import {GetServerSideProps} from 'next';
-import QuestionCard from './QuestionCard';
-import {tagQuery, userQuery} from '@/pages/search/tags';
+import QuestionCard from '../QuestionCard';
+import {tagQuery, userQuery} from '@/app/search/tags/page';
 import TagCard from './TagCard';
 
 type Props = {

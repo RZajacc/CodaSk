@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Modules() {
+export default async function Modules() {
   //Do gql query
   //Pass data to module grid ++ module card
   //Pass loading state as well and add to moduleCard component
@@ -13,5 +13,3 @@ function Modules() {
     </div>
   );
 }
-
-export default Modules;
