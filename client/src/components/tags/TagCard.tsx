@@ -4,7 +4,7 @@ import {useRouter} from 'next/navigation';
 import React, {useEffect, useState} from 'react';
 import Link from 'next/link';
 import {userQuery} from '@/app/search/tags/page';
-import Loader from '../Loader';
+import Loader from '@/components/questions/Loader';
 import Modal from '../Modal';
 
 type tagProps = {

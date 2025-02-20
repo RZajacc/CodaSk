@@ -1,3 +1,4 @@
+'use client';
 import {useSession} from 'next-auth/react';
 import React, {useState} from 'react';
 import {
@@ -9,7 +10,7 @@ import {
 } from '@apollo/client';
 import Link from 'next/link';
 import Image from 'next/image';
-import QuestionsGrid from '@/components/QuestionsGrid';
+import QuestionsGrid from '@/components/questions/QuestionsGrid';
 import {GetServerSideProps} from 'next';
 import QuestionButtons from '@/components/QuestionButtons';
 

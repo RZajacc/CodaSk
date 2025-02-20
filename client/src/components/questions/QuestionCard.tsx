@@ -1,15 +1,16 @@
 import React, {useState} from 'react';
 import {FaTrashAlt, FaPen, FaCheckCircle} from 'react-icons/fa';
 import parse from 'html-react-parser';
-import {formatDate} from './Functions';
+import {formatDate} from '@/components/questions/Functions';
 import Image from 'next/image';
 import 'react-quill/dist/quill.snow.css';
 import {useSession} from 'next-auth/react';
 import Link from 'next/link';
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 import {getPostedOnInDays} from '@/utils/GetPostedOnInDays';
-import Loader from './Loader';
+
 import {Questions} from '@/types/custom_types';
+import Loader from './Loader';
 
 type questionCardProp = {
   getAllQuestions: [

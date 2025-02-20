@@ -1,5 +1,5 @@
 'use client';
-import {formatDate} from '@/components/Functions';
+import {formatDate} from '@/components/questions/Functions';
 import parse from 'html-react-parser';
 import {FaGithub} from 'react-icons/fa';
 import {MdLocationOn} from 'react-icons/md';

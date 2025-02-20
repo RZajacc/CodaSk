@@ -3,7 +3,7 @@ import React, {useEffect} from 'react';
 import {GetServerSideProps} from 'next';
 import QuestionCard from './QuestionCard';
 import {questionByTagQuery} from '@/pages/search/questions/tagged/[tag]';
-import {GET_QUESTIONS} from '@/pages/search/questions';
+import {GET_QUESTIONS} from '@/app/search/questions/page';
 
 type questionQuery = {
   getAllQuestions: [

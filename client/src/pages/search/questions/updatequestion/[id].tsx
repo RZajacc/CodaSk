@@ -1,7 +1,7 @@
 import BackButton from '@/components/buttons/BackButton';
 import {gql, useMutation} from '@apollo/client';
 import React from 'react';
-import NewQuestionForm from '../NewQuestionForm';
+import NewQuestionForm from '../../../../components/forms/NewQuestionForm';
 
 type Props = {};
 

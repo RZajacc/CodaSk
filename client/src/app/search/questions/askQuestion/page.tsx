@@ -1,7 +1,8 @@
+'use client';
 import {gql, useMutation, useQuery} from '@apollo/client';
 import {useState} from 'react';
-import NewQuestionForm from './NewQuestionForm';
-import AssignTags from './AssignTags';
+import NewQuestionForm from '@/components/forms/NewQuestionForm';
+import AssignTags from '@/components/questions/AssignTags';
 import {
   AllTagsQuery,
   Tag,
@@ -49,7 +50,7 @@ const UPDATE_QUESTION = gql`
 
 function AskQuestion() {
   const session = useSession();
-  const userID = session.data?.user?.name;
+  const userID = session.data?.user?._id;
   // Initialize user question object
   const [questionInput, setQuestionInput] = useState<questionInput>({
     title: '',

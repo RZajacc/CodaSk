@@ -6,10 +6,10 @@ import {
   InMemoryCache,
   useMutation,
 } from '@apollo/client';
-import {DELETE_QUESTION} from '..';
+import {DELETE_QUESTION} from '../../../../app/search/questions/page';
 import Link from 'next/link';
 import Image from 'next/image';
-import QuestionsGrid from '@/components/QuestionsGrid';
+import QuestionsGrid from '@/components/questions/QuestionsGrid';
 import {GetServerSideProps} from 'next';
 import {useRouter} from 'next/router';
 import QuestionButtons from '@/components/QuestionButtons';
