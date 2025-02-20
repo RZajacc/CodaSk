@@ -6,13 +6,16 @@ import Image from 'next/image';
 import Link from 'next/link';
 import {useEffect, useState} from 'react';
 import SearchBox from './SearchBox';
+import {C} from 'vitest/dist/chunks/reporters.DTtkbAtP.js';
 
 function MainNav() {
   const {data: session, status, update} = useSession();
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const id = session?.user?.name;
+  const id = session?.user;
+
+  console.log('USER IN MAIN NAV', session?.user);
 
   useEffect(() => {
     // console.log('%c status', 'color:purple', status);
@@ -70,7 +73,8 @@ function MainNav() {
             <>
               <li>
                 <Link
-                  href={`/user/profile/${id}`}
+                  href={`/user/profile/${session?.user?._id}`}
+                  // href={`/user/profile/`}
                   className="mx-1 text-2xl text-white	 no-underline hover:font-semibold focus:font-semibold"
                 >
                   👀 |{' '}

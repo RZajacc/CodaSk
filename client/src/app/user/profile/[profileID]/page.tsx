@@ -1,3 +1,4 @@
+'use client';
 import {formatDate} from '@/components/Functions';
 import parse from 'html-react-parser';
 import {FaGithub} from 'react-icons/fa';
@@ -8,7 +9,7 @@ import {Answers, Questions, Tags, User} from '@/types/custom_types';
 import {signOut, useSession} from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 import React, {useEffect, useState} from 'react';
 import Modal from '@/components/Modal';
 
@@ -23,7 +24,7 @@ function Profile() {
   const session = useSession();
 
   const router = useRouter();
-  const id = session?.data?.user?.name as string;
+  const id = session?.data?.user?._id as string;
 
   // Modals
 

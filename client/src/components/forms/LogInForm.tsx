@@ -9,11 +9,11 @@ import React, {ChangeEvent, FormEvent, useState} from 'react';
 function LogInForm() {
   const [passwordType, setPasswordType] = useState('password');
   const [showOrHide, setShowOrHide] = useState('show');
-  const [user, setUser] = useState<User>({
-    email: '',
-    password: '',
-    last_seen: new Date(),
-  });
+  // const [user, setUser] = useState<User>({
+  //   email: '',
+  //   password: '',
+  //   last_seen: new Date(),
+  // });
 
   const id = '656b4777d89e223b1e928c33';
 
@@ -31,18 +31,24 @@ function LogInForm() {
     console.log('show console log :>> ');
   };
 
-  const handleLogInInput = (e: ChangeEvent<HTMLInputElement>) => {
-    setUser({...user, [e.target.name]: e.target.value});
-  };
+  // const handleLogInInput = (e: ChangeEvent<HTMLInputElement>) => {
+  //   setUser({...user, [e.target.name]: e.target.value});
+  // };
 
-  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get('email');
+    const password = formData.get('password');
+
     try {
       const result = await signIn('credentials', {
-        ...user,
+        email: email,
+        password: password,
         redirect: false,
       });
 
+      console.log('LOGIN RESULT', result);
       if (result?.error) {
         console.error('Login failed:', result.error);
       } else {
@@ -69,7 +75,7 @@ function LogInForm() {
           </label>
           <input
             className="rounded-2xl  bg-[#EDE9E6] p-2 shadow-custom"
-            onChange={handleLogInInput}
+            // onChange={handleLogInInput}
             type="email"
             name="email"
             placeholder="email"
@@ -85,7 +91,7 @@ function LogInForm() {
           </label>
           <input
             className="rounded-2xl  bg-[#EDE9E6] p-2 shadow-custom"
-            onChange={handleLogInInput}
+            // onChange={handleLogInInput}
             type={passwordType}
             name="password"
             placeholder="password"
