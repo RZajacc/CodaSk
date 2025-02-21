@@ -3,7 +3,7 @@ import React, {useEffect} from 'react';
 import {GetServerSideProps} from 'next';
 import QuestionCard from './QuestionCard';
 import {questionByTagQuery} from '@/app/search/questions/tagged/[id]/page';
-import {GET_QUESTIONS} from '@/app/search/questions/page';
+// import {GET_QUESTIONS} from '@/app/search/questions/page';
 
 type questionQuery = {
   getAllQuestions: [
@@ -42,8 +42,8 @@ type questionQuery = {
 
 type Props = {
   // data: questionQuery;
-  filteredData: questionQuery;
-  filteredTagData: questionByTagQuery;
+  filteredData?: questionQuery;
+  filteredTagData?: questionByTagQuery;
   // tagdata: questionByTagQuery;
   deleteQuestion: ({
     variables: {deleteQuestionId},

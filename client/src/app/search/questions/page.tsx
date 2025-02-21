@@ -11,8 +11,8 @@ import {
 import Link from 'next/link';
 import Image from 'next/image';
 import QuestionsGrid from '@/components/questions/QuestionsGrid';
-import {GetServerSideProps} from 'next';
 import QuestionButtons from '@/components/QuestionButtons';
+import {GET_QUESTIONS} from '@/app/graphQL/GET_QUESTIONS';
 
 /// QUERIES ///
 export type questionQuery = {
@@ -50,39 +50,34 @@ export type questionQuery = {
   ];
 };
 
-type ComponentProps = {
-  // data: questionQuery;
-  filteredData: questionQuery;
-};
-
-export const GET_QUESTIONS = gql`
-  query getAllQuestions($sortBy: String) {
-    getAllQuestions(sortBy: $sortBy) {
-      id
-      author {
-        id
-        first_name
-        user_photo
-      }
-      posted_on
-      title
-      problem_description
-      solution_tried
-      module
-      tags {
-        id
-        name
-      }
-      answers {
-        id
-      }
-      saved_by {
-        first_name
-      }
-      status
-    }
-  }
-`;
+// export const GET_QUESTIONS = gql`
+//   query getAllQuestions($sortBy: String) {
+//     getAllQuestions(sortBy: $sortBy) {
+//       id
+//       author {
+//         id
+//         first_name
+//         user_photo
+//       }
+//       posted_on
+//       title
+//       problem_description
+//       solution_tried
+//       module
+//       tags {
+//         id
+//         name
+//       }
+//       answers {
+//         id
+//       }
+//       saved_by {
+//         first_name
+//       }
+//       status
+//     }
+//   }
+// `;
 
 /// MUTATIONS ///
 export const DELETE_QUESTION = gql`

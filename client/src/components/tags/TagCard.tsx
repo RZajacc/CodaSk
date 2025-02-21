@@ -151,10 +151,9 @@ function TagCard({
     const filteredTags = allTags?.filter((tag) => {
       return tag.name.toLowerCase().includes(searchInput?.toLowerCase());
     });
-    setDisplayedTags(filteredTags);
-  }, [allTags, searchInput]);
 
-  //
+    setDisplayedTags(filteredTags && [filteredTags[0]]);
+  }, [allTags, searchInput]);
 
   return (
     <div className="flex flex-wrap justify-center">

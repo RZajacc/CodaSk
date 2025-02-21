@@ -3,7 +3,7 @@ import React, {ReactElement, useState} from 'react';
 
 type ModalProps = {
   title: string;
-  message: ReactElement | ReactElement[] | string;
+  message: React.JSX.Element[] | React.JSX.Element | string | undefined;
   onClose: () => void;
   image?: JSX.Element;
 };

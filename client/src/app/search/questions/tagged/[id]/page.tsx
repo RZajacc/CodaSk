@@ -8,10 +8,7 @@ import {
   useMutation,
 } from '@apollo/client';
 import {DELETE_QUESTION} from '@/app/search/questions/page';
-import Link from 'next/link';
-import Image from 'next/image';
 import QuestionsGrid from '@/components/questions/QuestionsGrid';
-import {GetServerSideProps} from 'next';
 import {useRouter} from 'next/navigation';
 import QuestionButtons from '@/components/QuestionButtons';
 
@@ -47,11 +44,6 @@ export type questionByTagQuery = {
       status: string;
     },
   ];
-};
-
-type ComponentProps = {
-  tagdata: questionByTagQuery;
-  tag: string;
 };
 
 const GET_QUESTIONS_BY_TAG = gql`
@@ -108,7 +100,9 @@ const GET_QUESTIONS_BY_TAG = gql`
 
 export default function Question({params}: {params: {id: string}}) {
   const [deleteQuestion] = useMutation(DELETE_QUESTION);
-  const [tagData, setTagData] = useState();
+  const [tagData, setTagData] = useState<{
+    getQuestionsByTagName: [questionByTagQuery];
+  } | null>(null);
 
   const router = useRouter();
   const tag = params.id;

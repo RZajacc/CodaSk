@@ -1,16 +1,17 @@
-import React, {useState} from 'react';
-import {FaTrashAlt, FaPen, FaCheckCircle} from 'react-icons/fa';
-import parse from 'html-react-parser';
-import {formatDate} from '@/components/questions/Functions';
+import React from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
+
+import {FaTrashAlt, FaPen, FaCheckCircle, FaChessKing} from 'react-icons/fa';
+import parse from 'html-react-parser';
 import 'react-quill/dist/quill.snow.css';
 import {useSession} from 'next-auth/react';
-import Link from 'next/link';
 import {useRouter} from 'next/navigation';
 import {getPostedOnInDays} from '@/utils/GetPostedOnInDays';
+import Loader from './Loader';
 
 import {Questions} from '@/types/custom_types';
-import Loader from './Loader';
+// import {formatDate} from '@/components/questions/Functions';
 
 type questionCardProp = {
   getAllQuestions: [
@@ -81,8 +82,8 @@ type questionbyTagCardProp = {
 };
 
 type Props = {
-  filteredData: questionCardProp;
-  filteredTagData: questionbyTagCardProp;
+  filteredData?: questionCardProp;
+  filteredTagData?: questionbyTagCardProp;
   deleteQuestion: ({
     variables: {deleteQuestionId},
   }: {
@@ -100,8 +101,7 @@ function QuestionCard({
   questions,
 }: Props) {
   const session = useSession();
-  const userID = session?.data?.user?.name as string;
-
+  const userID = session?.data?.user?._id;
   const router = useRouter();
 
   const handleQuestionRedirect = (questionID: string) => {
@@ -123,10 +123,8 @@ function QuestionCard({
   };
 
   const noQuestionsMessage =
-    (!filteredTagData?.getQuestionsByTagName ||
-      filteredTagData?.getQuestionsByTagName?.length === 0) &&
-    (!filteredData?.getAllQuestions ||
-      filteredData?.getAllQuestions?.length === 0) ? (
+    (filteredTagData?.getQuestionsByTagName ?? []).length === 0 &&
+    (filteredData?.getAllQuestions ?? []).length === 0 ? (
       <div className="text-center">
         <p className=" my-14  font-medium text-[#6741D9] md:text-3xl">
           No questions match that search.
