@@ -89,7 +89,7 @@ type Props = {
     variables: {deleteQuestionId: string};
   }) => void;
   loading: boolean;
-  questions: Questions[];
+  questions?: Questions[];
 };
 
 function QuestionCard({

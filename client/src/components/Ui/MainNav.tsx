@@ -13,10 +13,6 @@ function MainNav() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const id = session?.user;
-
-  console.log('USER IN MAIN NAV', session?.user);
-
   useEffect(() => {
     // console.log('%c status', 'color:purple', status);
     if (session) {
