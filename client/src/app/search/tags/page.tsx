@@ -1,4 +1,6 @@
 'use client';
+import {BOOKMARK_TAG, GET_TAGS, UNBOOKMARK_TAG} from '@/graphQL/tagsQueries';
+import {GET_USER_BY_ID} from '@/graphQL/userQueries';
 import QuestionButtons from '@/components/QuestionButtons';
 import TagsGrid from '@/components/tags/TagsGrid';
 import {gql, useMutation, useQuery} from '@apollo/client';
@@ -28,46 +30,6 @@ export type userQuery = {
     saved_tags: string[];
   };
 };
-
-const GET_TAGS = gql`
-  query getAllTags($sortBy: String) {
-    getAllTags(sortBy: $sortBy) {
-      course_type
-      description
-      id
-      name
-      related_questions {
-        id
-      }
-    }
-  }
-`;
-
-export const GET_USER_BY_ID = gql`
-  query getUserById($getUserByIdId: ID!) {
-    getUserById(id: $getUserByIdId) {
-      id
-      saved_tags
-    }
-  }
-`;
-
-/// MUTATIONS ///
-export const BOOKMARK_TAG = gql`
-  mutation BookmarkTag($userId: ID, $tagId: ID) {
-    bookmarkTag(userId: $userId, tagId: $tagId) {
-      id
-    }
-  }
-`;
-
-export const UNBOOKMARK_TAG = gql`
-  mutation UnbookmarkTag($userId: ID, $tagId: ID) {
-    unbookmarkTag(userId: $userId, tagId: $tagId) {
-      id
-    }
-  }
-`;
 
 export default function Tags() {
   const session = useSession();

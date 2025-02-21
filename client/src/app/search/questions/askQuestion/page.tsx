@@ -1,5 +1,5 @@
 'use client';
-import {gql, useMutation, useQuery} from '@apollo/client';
+import {useMutation, useQuery} from '@apollo/client';
 import {useState} from 'react';
 import NewQuestionForm from '@/components/forms/NewQuestionForm';
 import AssignTags from '@/components/questions/AssignTags';
@@ -11,42 +11,10 @@ import {
 } from '@/types/askQuestionTypes';
 import {validateInputs} from '@/utils/QuestionValidator';
 import {useSession} from 'next-auth/react';
+import {POST_NEWQUESTION, UPDATE_QUESTION_T} from '@/graphQL/questionQueries';
+import {GET_ALLTAGS_MIN, UPDATE_TAGS} from '@/graphQL/tagsQueries';
 
-// --------QUERIES--------------
-const GET_ALLTAGS = gql`
-  query GetAllTags {
-    getAllTags {
-      id
-      name
-      course_type
-    }
-  }
-`;
-
-// --------MUTATIONS-------------
-const POST_NEWQUESTION = gql`
-  mutation AddQuestion($newQuestion: newQuestionInput) {
-    addQuestion(newQuestion: $newQuestion) {
-      id
-    }
-  }
-`;
-
-const UPDATE_TAGS = gql`
-  mutation UpdateTags($updateTagsId: [ID], $editInput: editTagInput) {
-    updateTags(id: $updateTagsId, editInput: $editInput) {
-      name
-    }
-  }
-`;
-
-const UPDATE_QUESTION = gql`
-  mutation Mutation($updateQuestionId: ID, $editInput: editQuestionInput) {
-    updateQuestion(id: $updateQuestionId, editInput: $editInput) {
-      title
-    }
-  }
-`;
+// Temp
 
 function AskQuestion() {
   const session = useSession();
@@ -76,7 +44,7 @@ function AskQuestion() {
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
 
   // --------Queries-------------
-  const {data: tagData} = useQuery<AllTagsQuery>(GET_ALLTAGS);
+  const {data: tagData} = useQuery<AllTagsQuery>(GET_ALLTAGS_MIN);
 
   // --------Mutations-----------
   const [
@@ -90,7 +58,7 @@ function AskQuestion() {
   const [
     updateQuestion,
     {called: updateQuestionCalled, error: UpdateQuestionErr},
-  ] = useMutation(UPDATE_QUESTION);
+  ] = useMutation(UPDATE_QUESTION_T);
 
   // // ! TEMPORARY ID
   // const userID = '656b4777d89e223b1e928c33';

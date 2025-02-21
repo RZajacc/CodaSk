@@ -2,15 +2,15 @@
 import React, {useState} from 'react';
 import {
   useQuery,
-  gql,
   ApolloClient,
   InMemoryCache,
   useMutation,
 } from '@apollo/client';
-import {DELETE_QUESTION} from '@/app/search/questions/page';
+
 import QuestionsGrid from '@/components/questions/QuestionsGrid';
 import {useRouter} from 'next/navigation';
 import QuestionButtons from '@/components/QuestionButtons';
+import {DELETE_QUESTION, GET_QUESTIONS_BY_TAG} from '@/graphQL/questionQueries';
 
 export type questionByTagQuery = {
   getQuestionsByTagName: [
@@ -45,58 +45,6 @@ export type questionByTagQuery = {
     },
   ];
 };
-
-const GET_QUESTIONS_BY_TAG = gql`
-  query getQuestionsByTagName($tag: ID!, $sortBy: String) {
-    getQuestionsByTagName(tag: $tag, sortBy: $sortBy) {
-      id
-      author {
-        id
-        first_name
-        user_photo
-      }
-      posted_on
-      title
-      problem_description
-      solution_tried
-      module
-      tags {
-        id
-        name
-      }
-      answers {
-        id
-      }
-      saved_by {
-        first_name
-      }
-      status
-    }
-  }
-`;
-
-// export const getServerSideProps: GetServerSideProps<ComponentProps> = async (
-//   context
-// ) => {
-//   const {tag} = context.query;
-
-//   const client = new ApolloClient({
-//     uri: 'http://localhost:5008/graphql',
-//     cache: new InMemoryCache(),
-//   });
-
-//   const {data} = await client.query({
-//     query: GET_QUESTIONS_BY_TAG,
-//     variables: {tag: tag, sortBy: 'All'},
-//   });
-
-//   return {
-//     props: {
-//       tagdata: data,
-//       tag: tag,
-//     },
-//   };
-// };
 
 export default function Question({params}: {params: {id: string}}) {
   const [deleteQuestion] = useMutation(DELETE_QUESTION);

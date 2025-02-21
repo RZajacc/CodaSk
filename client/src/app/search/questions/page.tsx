@@ -12,7 +12,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import QuestionsGrid from '@/components/questions/QuestionsGrid';
 import QuestionButtons from '@/components/QuestionButtons';
-import {GET_QUESTIONS} from '@/app/graphQL/GET_QUESTIONS';
+import {DELETE_QUESTION, GET_QUESTIONS} from '@/graphQL/questionQueries';
 
 /// QUERIES ///
 export type questionQuery = {
@@ -49,44 +49,6 @@ export type questionQuery = {
     },
   ];
 };
-
-// export const GET_QUESTIONS = gql`
-//   query getAllQuestions($sortBy: String) {
-//     getAllQuestions(sortBy: $sortBy) {
-//       id
-//       author {
-//         id
-//         first_name
-//         user_photo
-//       }
-//       posted_on
-//       title
-//       problem_description
-//       solution_tried
-//       module
-//       tags {
-//         id
-//         name
-//       }
-//       answers {
-//         id
-//       }
-//       saved_by {
-//         first_name
-//       }
-//       status
-//     }
-//   }
-// `;
-
-/// MUTATIONS ///
-export const DELETE_QUESTION = gql`
-  mutation DeleteQuestion($deleteQuestionId: ID) {
-    deleteQuestion(id: $deleteQuestionId) {
-      id
-    }
-  }
-`;
 
 function Question() {
   const [deleteQuestion] = useMutation(DELETE_QUESTION, {

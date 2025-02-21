@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import {FaGithub} from 'react-icons/fa';
+import {GET_USERS} from '@/graphQL/userQueries';
 
 export type userQuery = {
   getAllUsers: [
@@ -17,20 +18,6 @@ export type userQuery = {
     },
   ];
 };
-
-const GET_USERS = gql`
-  query getAllUsers {
-    getAllUsers {
-      course_type
-      first_name
-      github
-      last_name
-      user_photo
-      user_permission
-      id
-    }
-  }
-`;
 
 export default async function Connect() {
   // const client = new ApolloClient({

@@ -17,104 +17,17 @@ import AnswerCard from '@/components/AnswerCard';
 import BackButton from '@/components/buttons/BackButton';
 import DeleteModal from '@/components/DeleteModal';
 import {useSession} from 'next-auth/react';
+import {
+  DELETE_QUESTION,
+  GET_QUESTION_BY_ID,
+  UPDATE_QUESTION,
+} from '@/graphQL/questionQueries';
+import {
+  DELETE_ANSWER,
+  POST_NEW_ANSWER,
+  UPDATE_ANSWER,
+} from '@/graphQL/answersQueries';
 const QuillEditor = dynamic(() => import('react-quill'), {ssr: false});
-
-// ------------QUERIES--------------------
-const GET_QUESTION_BY_ID = gql`
-  query GetQuestionById($getQuestionByIdId: ID!) {
-    getQuestionById(id: $getQuestionByIdId) {
-      id
-      title
-      posted_on
-      module
-      problem_description
-      solution_tried
-      github_repo
-      status
-      tags {
-        id
-        name
-      }
-      author {
-        id
-        first_name
-        user_photo
-      }
-      answers {
-        id
-        posted_on
-        message
-        votes {
-          id
-        }
-        author {
-          id
-          first_name
-          user_photo
-        }
-      }
-    }
-  }
-`;
-
-// const GET_ALL_ANSWERS = gql`
-//   query GetAllAnswers {
-//     getAllAnswers {
-//       author {
-//         id
-//         first_name
-//         user_photo
-//       }
-//       id
-//       posted_on
-//       message
-//       votes {
-//         id
-//       }
-//     }
-//   }
-// `;
-
-// -----------MUTATIONS------------------------
-const POST_NEW_ANSWER = gql`
-  mutation Mutation($newAnswer: newAnswerInput) {
-    addAnswer(newAnswer: $newAnswer) {
-      id
-    }
-  }
-`;
-
-const DELETE_QUESTION = gql`
-  mutation Mutation($deleteQuestionId: ID) {
-    deleteQuestion(id: $deleteQuestionId) {
-      id
-    }
-  }
-`;
-
-const UPDATE_QUESTION = gql`
-  mutation Mutation($updateQuestionId: ID, $editInput: editQuestionInput) {
-    updateQuestion(id: $updateQuestionId, editInput: $editInput) {
-      status
-    }
-  }
-`;
-
-const DELETE_ANSWER = gql`
-  mutation Mutation($deleteAnswerId: ID) {
-    deleteAnswer(id: $deleteAnswerId) {
-      message
-    }
-  }
-`;
-
-const UPDATE_ANSWER = gql`
-  mutation UpdateAnswer($updateAnswerId: ID, $userId: ID!) {
-    updateAnswer(id: $updateAnswerId, userID: $userId) {
-      message
-    }
-  }
-`;
 
 function QuestionDetails({params}: {params: {id: string}}) {
   const router = useRouter();
