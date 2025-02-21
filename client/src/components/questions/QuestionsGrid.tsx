@@ -2,7 +2,7 @@ import {ApolloClient, InMemoryCache, gql} from '@apollo/client';
 import React, {useEffect} from 'react';
 import {GetServerSideProps} from 'next';
 import QuestionCard from './QuestionCard';
-import {questionByTagQuery} from '@/pages/search/questions/tagged/[tag]';
+import {questionByTagQuery} from '@/app/search/questions/tagged/[id]/page';
 import {GET_QUESTIONS} from '@/app/search/questions/page';
 
 type questionQuery = {

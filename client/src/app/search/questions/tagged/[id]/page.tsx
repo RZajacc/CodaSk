@@ -6,7 +6,7 @@ import {
   InMemoryCache,
   useMutation,
 } from '@apollo/client';
-import {DELETE_QUESTION} from '../../../../app/search/questions/page';
+import {DELETE_QUESTION} from '@/app/search/questions/page';
 import Link from 'next/link';
 import Image from 'next/image';
 import QuestionsGrid from '@/components/questions/QuestionsGrid';
@@ -82,33 +82,43 @@ const GET_QUESTIONS_BY_TAG = gql`
   }
 `;
 
-export const getServerSideProps: GetServerSideProps<ComponentProps> = async (
-  context
-) => {
-  const {tag} = context.query;
+// export const getServerSideProps: GetServerSideProps<ComponentProps> = async (
+//   context
+// ) => {
+//   const {tag} = context.query;
 
+//   const client = new ApolloClient({
+//     uri: 'http://localhost:5008/graphql',
+//     cache: new InMemoryCache(),
+//   });
+
+//   const {data} = await client.query({
+//     query: GET_QUESTIONS_BY_TAG,
+//     variables: {tag: tag, sortBy: 'All'},
+//   });
+
+//   return {
+//     props: {
+//       tagdata: data,
+//       tag: tag,
+//     },
+//   };
+// };
+
+export default async function Question({params}: {params: {id: string}}) {
+  const [deleteQuestion] = useMutation(DELETE_QUESTION);
+
+  const router = useRouter();
+  const tag = params.id;
   const client = new ApolloClient({
     uri: 'http://localhost:5008/graphql',
     cache: new InMemoryCache(),
   });
 
-  const {data} = await client.query({
+  const {data: tagdata} = await client.query({
     query: GET_QUESTIONS_BY_TAG,
     variables: {tag: tag, sortBy: 'All'},
   });
-
-  return {
-    props: {
-      tagdata: data,
-      tag: tag,
-    },
-  };
-};
-
-function Question({tagdata, tag}: ComponentProps) {
-  const [deleteQuestion] = useMutation(DELETE_QUESTION);
-
-  const router = useRouter();
 
   const [sortBy, setSortBy] = useState('All');
 
@@ -191,5 +201,3 @@ function Question({tagdata, tag}: ComponentProps) {
     </div>
   );
 }
-
-export default Question;

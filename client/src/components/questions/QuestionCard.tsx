@@ -105,7 +105,7 @@ function QuestionCard({
   const router = useRouter();
 
   const handleQuestionRedirect = (questionID: string) => {
-    router.push(`http://localhost:3000/search/questions/id/${questionID}`);
+    router.push(`http://localhost:3000/search/questions/${questionID}`);
   };
 
   const handeleDeleteQuestion = async (questionID: string) => {

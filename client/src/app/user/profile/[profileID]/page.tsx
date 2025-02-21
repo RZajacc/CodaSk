@@ -106,7 +106,7 @@ function Profile() {
   };
 
   const handleQuestionRedirect = (questionID: string) => {
-    router.push(`http://localhost:3000/search/questions/id/${questionID}`);
+    router.push(`http://localhost:3000/search/questions/${questionID}`);
   };
 
   const tagsInModal = user?.saved_tags.map((tag: Tags, tagIndex: number) => (

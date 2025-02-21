@@ -1,5 +1,6 @@
+'use client';
 import {gql, useMutation, useQuery} from '@apollo/client';
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 import React, {useState} from 'react';
 import parse from 'html-react-parser';
 import {divideString} from '@/utils/QuillTextProcessor';
@@ -115,9 +116,9 @@ const UPDATE_ANSWER = gql`
   }
 `;
 
-function QuestionDetails() {
+function QuestionDetails({params}: {params: {id: string}}) {
   const router = useRouter();
-  const postID = router.query.id;
+  const postID = params.id;
   const session = useSession();
   const userID = session.data?.user?.name;
 
