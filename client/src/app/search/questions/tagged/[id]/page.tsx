@@ -1,3 +1,4 @@
+'use client';
 import React, {useState} from 'react';
 import {
   useQuery,
@@ -11,7 +12,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import QuestionsGrid from '@/components/questions/QuestionsGrid';
 import {GetServerSideProps} from 'next';
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 import QuestionButtons from '@/components/QuestionButtons';
 
 export type questionByTagQuery = {
@@ -105,8 +106,9 @@ const GET_QUESTIONS_BY_TAG = gql`
 //   };
 // };
 
-export default async function Question({params}: {params: {id: string}}) {
+export default function Question({params}: {params: {id: string}}) {
   const [deleteQuestion] = useMutation(DELETE_QUESTION);
+  const [tagData, setTagData] = useState();
 
   const router = useRouter();
   const tag = params.id;
@@ -115,10 +117,14 @@ export default async function Question({params}: {params: {id: string}}) {
     cache: new InMemoryCache(),
   });
 
-  const {data: tagdata} = await client.query({
-    query: GET_QUESTIONS_BY_TAG,
-    variables: {tag: tag, sortBy: 'All'},
-  });
+  const fetchData = async () => {
+    const {data} = await client.query({
+      query: GET_QUESTIONS_BY_TAG,
+      variables: {tag: tag, sortBy: 'All'},
+    });
+    setTagData(data);
+  };
+  fetchData();
 
   const [sortBy, setSortBy] = useState('All');
 
@@ -139,8 +145,8 @@ export default async function Question({params}: {params: {id: string}}) {
       {/* TOP SECTION */}
       <div className="flex flex-row items-start justify-between px-6 py-6">
         <h1 className=" mx-8 mt-4 text-left font-medium text-[#6741D9] md:text-3xl">
-          Search among {tagdata?.getQuestionsByTagName.length} questions{' '}
-          {router.query.name ? <>tagged {router.query.name}</> : ''}
+          Search among {tagData?.getQuestionsByTagName.length} questions{' '}
+          {tag ? <>tagged {tag}</> : ''}
         </h1>
         <div className="flex flex-col">
           <QuestionButtons />
