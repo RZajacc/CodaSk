@@ -3,9 +3,9 @@ import mongoose from "mongoose";
 import colors from "colors";
 import cors from "cors";
 import * as dotenv from "dotenv";
-import userRoutes from "../server/routes/userRoutes.js";
-import questionRoutes from "../server/routes/questionRoutes.js";
-import answerRoutes from "../server/routes/answerRoute.js";
+import userRoutes from "./routes/userRoutes.js"
+import questionRoutes from "./routes/questionRoutes.js";
+import answerRoutes from "./routes/answerRoute.js";
 import cloudinaryConfig from "./config/cloudinaryConfig.js";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
