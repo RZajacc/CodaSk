@@ -22,7 +22,7 @@ const handler = NextAuth({
         };
 
         const res = await fetch(
-          'http://localhost:5008/api/users/login',
+          'http://backend:5008/api/users/login',
           requestOptions
         );
 
