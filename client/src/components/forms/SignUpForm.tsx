@@ -5,8 +5,12 @@ import {signIn} from 'next-auth/react';
 import Link from 'next/link';
 import {useRouter} from 'next/navigation';
 import React, {ChangeEvent, FormEvent, useEffect, useState} from 'react';
+import {BuildFetchUrl} from '@/utils/BuildFetchUrl';
 
 function SignUpForm() {
+  // Build Fetch url
+  const FETCH_URL = BuildFetchUrl();
+
   const [newUser, setNewUser] = useState<User>({
     first_name: '',
     last_name: '',
@@ -88,7 +92,7 @@ function SignUpForm() {
 
       try {
         const response = await fetch(
-          'http://localhost:5008/api/users/signup',
+          `${FETCH_URL}/api/users/signup`,
           requestOptions
         );
         if (response.ok) {

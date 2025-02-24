@@ -12,6 +12,7 @@ import Link from 'next/link';
 import {useRouter} from 'next/navigation';
 import React, {useEffect, useState} from 'react';
 import Modal from '@/components/Modal';
+import {BuildFetchUrl} from '@/utils/BuildFetchUrl';
 
 type Props = {};
 
@@ -22,10 +23,11 @@ function Profile() {
   const [showQuestionsModal, setShowQuestionsModal] = useState(false);
 
   const session = useSession();
-
   const router = useRouter();
   const id = session?.data?.user?._id as string;
 
+  // Build Fetch url
+  const FETCH_URL = BuildFetchUrl();
   // Modals
 
   const handleShowTagModal = () => {
@@ -59,7 +61,7 @@ function Profile() {
     };
     try {
       const response = await fetch(
-        `http://localhost:5008/api/users/id/${id}`,
+        `${FETCH_URL}/api/users/id/${id}`,
         requestOptions
       );
       if (response.ok) {
@@ -85,7 +87,7 @@ function Profile() {
       };
       try {
         const response = await fetch(
-          `http://localhost:5008/api/users/deleteuser/${userId}`,
+          `${FETCH_URL}/api/users/deleteuser/${userId}`,
           requestOptions
         );
         await signOut({redirect: false});

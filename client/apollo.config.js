@@ -1,8 +1,13 @@
-module.exports = {
+const {BuildFetchUrl} = require("./src/utils/BuildFetchUrl")
+
+  // Build Fetch url
+  const FETCH_URL = BuildFetchUrl();
+
+  module.exports = {
   client: {
     service: {
       name: 'my-graphql-app',
-      url: 'http://localhost:5008/graphql',
+      url: `${FETCH_URL}/graphql`,
     },
   },
 };

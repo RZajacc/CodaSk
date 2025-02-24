@@ -1,5 +1,6 @@
 'use client';
 import {User, UserPhoto} from '@/types/custom_types';
+import {BuildFetchUrl} from '@/utils/BuildFetchUrl';
 import {useSession} from 'next-auth/react';
 import Image from 'next/image';
 import {useRouter} from 'next/navigation';
@@ -8,6 +9,8 @@ import React, {ChangeEvent, FormEvent, useEffect, useState} from 'react';
 function CompleteProfileForm() {
   const session = useSession();
 
+  // Build Fetch url
+  const FETCH_URL = BuildFetchUrl();
   const id = session!.data?.user?.name as string;
   console.log('id :>> ', id);
 
@@ -76,7 +79,7 @@ function CompleteProfileForm() {
     };
     try {
       const response = await fetch(
-        `http://localhost:5008/api/users/id/${id}`,
+        `${FETCH_URL}/api/users/id/${id}`,
         requestOptions
       );
       if (response.ok) {
@@ -143,7 +146,7 @@ function CompleteProfileForm() {
 
     try {
       const response = await fetch(
-        'http://localhost:5008/api/users/imageupload',
+        `${FETCH_URL}/api/users/imageupload`,
         requestOptions
       );
       const result = (await response.json()) as UserPhoto;
@@ -187,7 +190,7 @@ function CompleteProfileForm() {
 
       try {
         const response = await fetch(
-          'http://localhost:5008/api/users/completeProfile',
+          `${FETCH_URL}/api/users/completeProfile`,
           requestOptions
         );
         console.log('response :>> ', response);

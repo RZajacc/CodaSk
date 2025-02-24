@@ -1,4 +1,5 @@
 import {QuestionType} from '@/types/questionDetailsTypes';
+import {BuildFetchUrl} from '@/utils/BuildFetchUrl';
 import {useRouter} from 'next/navigation';
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import {FaSearch} from 'react-icons/fa';
@@ -16,6 +17,9 @@ function SearchBox() {
 
   const router = useRouter();
 
+  // Build Fetch url
+  const FETCH_URL = BuildFetchUrl();
+
   const handleQuestionClick = async (questionID: string) => {
     await router.push(
       `http://localhost:3000/search/questions/id/${questionID}`
@@ -24,7 +28,7 @@ function SearchBox() {
 
   const getQuestionsByTitle = async (title: string) => {
     const response = await fetch(
-      `http://localhost:5008/api/questions/questionbytitle/${title}`
+      `${FETCH_URL}/api/questions/questionbytitle/${title}`
     );
     // console.log('response :>> ', response);
 
