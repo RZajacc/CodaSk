@@ -122,7 +122,7 @@ export default function Tags() {
             className="mx-2 rounded-full bg-black p-2 font-medium text-white"
             onChange={(e) => handleSortChange(e.target.value)}
             name="course_type"
-            placeholder="course type"
+            // placeholder="course type"
           >
             <option value={'All'}>course type</option>
             <option value={'Web Development'}>web development</option>

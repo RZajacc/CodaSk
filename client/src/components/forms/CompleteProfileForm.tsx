@@ -396,7 +396,7 @@ function CompleteProfileForm() {
               onChange={handleDropdownInput}
               name="user_permission"
               id="user_permission"
-              placeholder="student type"
+              // placeholder="student type"
               value={userInfo?.user_permission || 'user_permission'}
             >
               <option value={'user_permission'}>student type</option>
@@ -455,7 +455,7 @@ function CompleteProfileForm() {
               onChange={handleDropdownInput}
               name="cohort_name"
               id="cohort_name"
-              placeholder="cohort name"
+              // placeholder="cohort name"
               value={userInfo?.cohort_name || 'cohort_name'}
             >
               <option value={'cohort_name'}>cohort name</option>
