@@ -5,25 +5,25 @@ import NewQuestionForm from '../../../../../components/forms/NewQuestionForm';
 
 type Props = {};
 
-export type updatedQuestionQuery = {};
+// export type updatedQuestionQuery = {};
 
-export const UPDATE_QUESTION = gql`
-  mutation Mutation($updateQuestionId: ID, $editInput: editQuestionInput) {
-    updateQuestion(id: $updateQuestionId, editInput: $editInput) {
-      github_repo
-      module
-      problem_description
-      solution_tried
-      title
-      tags {
-        id
-      }
-    }
-  }
-`;
+// export const UPDATE_QUESTION = gql`
+//   mutation Mutation($updateQuestionId: ID, $editInput: editQuestionInput) {
+//     updateQuestion(id: $updateQuestionId, editInput: $editInput) {
+//       github_repo
+//       module
+//       problem_description
+//       solution_tried
+//       title
+//       tags {
+//         id
+//       }
+//     }
+//   }
+// `;
 
 function UpdateQuestion({}: Props) {
-  const [updateQuestion] = useMutation(UPDATE_QUESTION);
+  // const [updateQuestion] = useMutation(UPDATE_QUESTION);
 
   return (
     <div className="h-full">

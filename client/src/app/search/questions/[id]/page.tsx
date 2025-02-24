@@ -29,7 +29,7 @@ import {
 } from '@/graphQL/answersQueries';
 const QuillEditor = dynamic(() => import('react-quill'), {ssr: false});
 
-function QuestionDetails({params}: {params: {id: string}}) {
+export default function QuestionDetails({params}: {params: {id: string}}) {
   const router = useRouter();
   const postID = params.id;
   const session = useSession();
@@ -420,5 +420,3 @@ function QuestionDetails({params}: {params: {id: string}}) {
     </>
   );
 }
-
-export default QuestionDetails;
