@@ -1,3 +1,4 @@
+import {BuildFetchUrl} from '@/utils/BuildFetchUrl';
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
@@ -21,10 +22,10 @@ const handler = NextAuth({
           body: urlencoded,
         };
 
-        const res = await fetch(
-          'http://backend:5008/api/users/login',
-          requestOptions
-        );
+        // Build Fetch url
+        const FETCH_URL = BuildFetchUrl();
+
+        const res = await fetch(`${FETCH_URL}/api/users/login`, requestOptions);
 
         const responseData = await res.json();
 
