@@ -18,6 +18,6 @@ services:
     env_file:
       - ./client/.env.local
     environment:
-      - API_URL_SERVER=http://backend:5000
+      - API_URL_SERVER=http://backend:5008
     depends_on:
       - backend
