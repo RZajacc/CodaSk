@@ -103,8 +103,8 @@ function Profile() {
     window.confirm('Are you sure you want to log out?');
     await signOut({redirect: false});
     setUser(null);
-    await router.push('../login');
-    location.reload();
+    router.push('../login');
+    // location.reload();
   };
 
   const handleQuestionRedirect = (questionID: string) => {

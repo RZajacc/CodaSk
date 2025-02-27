@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import {useEffect, useState} from 'react';
 import SearchBox from './SearchBox';
-import {C} from 'vitest/dist/chunks/reporters.DTtkbAtP.js';
+// import {C} from 'vitest/dist/chunks/reporters.DTtkbAtP.js';
 
 function MainNav() {
   const {data: session, status, update} = useSession();

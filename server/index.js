@@ -20,7 +20,13 @@ const app = express();
 const addMiddlewares = () => {
   app.use(express.json());
 
-  app.use(cors());
+  app.use(cors({
+    origin: [process.env.LOCAL_URL,
+      process.env.SERVICE_NAME,
+      process.env.PUBLIC_URL,
+      process.env.PUBLIC_DNS,],
+  }));
+  
   app.use(
     express.urlencoded({
       extended: true,

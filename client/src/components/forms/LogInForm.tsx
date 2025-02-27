@@ -53,8 +53,8 @@ function LogInForm() {
         console.error('Login failed:', result.error);
       } else {
         // router.push(`../user/moreinfo`);
-        await router.push(`/`);
-        location.reload();
+        router.push(`/`);
+        // location.reload();
 
         console.log('Result of login successfully:', result);
       }

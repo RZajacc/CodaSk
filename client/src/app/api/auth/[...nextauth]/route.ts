@@ -31,8 +31,6 @@ const handler = NextAuth({
 
         const user = responseData.user;
 
-        console.log('MY user object', user);
-
         // If no error and we have user data, return it
         if (res.ok && user) {
           return {
@@ -46,6 +44,7 @@ const handler = NextAuth({
       },
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: '/user/login',
   },
