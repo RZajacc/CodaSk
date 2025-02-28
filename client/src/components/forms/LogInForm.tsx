@@ -23,12 +23,12 @@ function LogInForm() {
     if (passwordType === 'password') {
       setPasswordType('text');
       setShowOrHide('hide');
-      console.log('hide console log :>> ');
+      // console.log('hide console log :>> ');
       return;
     }
     setPasswordType('password');
     setShowOrHide('show');
-    console.log('show console log :>> ');
+    // console.log('show console log :>> ');
   };
 
   // const handleLogInInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -48,15 +48,15 @@ function LogInForm() {
         redirect: false,
       });
 
-      console.log('LOGIN RESULT', result);
+      // console.log('LOGIN RESULT', result);
       if (result?.error) {
-        console.error('Login failed:', result.error);
+        // console.error('Login failed:', result.error);
       } else {
         // router.push(`../user/moreinfo`);
         router.push(`/`);
         // location.reload();
 
-        console.log('Result of login successfully:', result);
+        // console.log('Result of login successfully:', result);
       }
     } catch (error) {
       console.error('Login error:', error);

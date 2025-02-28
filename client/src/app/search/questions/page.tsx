@@ -62,7 +62,7 @@ function Question() {
       sortBy,
     },
   });
-  console.log('filteredData :>> ', filteredData);
+  // console.log('filteredData :>> ', filteredData);
 
   const handleSortChange = (sortOption: string) => {
     setSortBy(sortOption);
