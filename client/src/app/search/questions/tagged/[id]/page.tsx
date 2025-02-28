@@ -48,25 +48,31 @@ export type questionByTagQuery = {
 
 export default function Question({params}: {params: {id: string}}) {
   const [deleteQuestion] = useMutation(DELETE_QUESTION);
-  const [tagData, setTagData] = useState<{
-    getQuestionsByTagName: [questionByTagQuery];
-  } | null>(null);
+  // const [tagData, setTagData] = useState<{
+  //   getQuestionsByTagName: [questionByTagQuery];
+  // } | null>(null);
 
   const router = useRouter();
   const tag = params.id;
-  const client = new ApolloClient({
-    uri: 'http://localhost:5008/graphql',
-    cache: new InMemoryCache(),
-  });
+  // const client = new ApolloClient({
+  //   uri: 'http://localhost:5008/graphql',
+  //   cache: new InMemoryCache(),
+  // });
 
-  const fetchData = async () => {
-    const {data} = await client.query({
-      query: GET_QUESTIONS_BY_TAG,
-      variables: {tag: tag, sortBy: 'All'},
-    });
-    setTagData(data);
-  };
-  fetchData();
+  const {data: tagData} = useQuery(GET_QUESTIONS_BY_TAG, {
+    variables: {
+      tag: tag,
+      sortBy: 'All',
+    },
+  });
+  // const fetchData = async () => {
+  //   const {data} = await client.query({
+  //     query: GET_QUESTIONS_BY_TAG,
+  //     variables: {tag: tag, sortBy: 'All'},
+  //   });
+  //   setTagData(data);
+  // };
+  // fetchData();
 
   const [sortBy, setSortBy] = useState('All');
 

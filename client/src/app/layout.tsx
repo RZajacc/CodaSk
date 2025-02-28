@@ -8,10 +8,13 @@ import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
 import MainNav from '@/components/Ui/MainNav';
 import Sidebar from '@/components/Ui/Sidebar';
 import Footer from '@/components/Ui/Footer';
+import {BuildFetchUrl} from '@/utils/BuildFetchUrl';
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
+  const FETCH_URL = BuildFetchUrl();
+
   const client = new ApolloClient({
-    uri: 'http://localhost:5008/graphql',
+    uri: `${FETCH_URL}/graphql`,
     cache: new InMemoryCache(),
   });
 
