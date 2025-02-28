@@ -106,8 +106,8 @@ function SignUpForm() {
             redirect: false,
           });
         }
-        router.push('../user/moreinfo');
-        location.reload();
+        router.push('/user/moreinfo');
+        // location.reload();
       } catch (error) {
         console.log('error in your /signup fetch:>> ', error);
       }

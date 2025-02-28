@@ -106,8 +106,7 @@ function QuestionCard({
   const router = useRouter();
 
   const handleQuestionRedirect = (questionID: string) => {
-    const FETCH_URL = BuildFetchUrl();
-    router.push(`${FETCH_URL}/search/questions/${questionID}`);
+    router.push(`/search/questions/${questionID}`);
   };
 
   const handeleDeleteQuestion = async (questionID: string) => {
@@ -115,7 +114,7 @@ function QuestionCard({
       'Are you SURE you want to delete your question?'
     );
     if (deleteConfirm) {
-      await deleteQuestion({
+      deleteQuestion({
         variables: {
           deleteQuestionId: questionID,
         },
@@ -133,7 +132,7 @@ function QuestionCard({
         </p>
         <Link
           className="rounded-full font-normal no-underline hover:bg-[#B197FC] hover:p-2 hover:text-white "
-          href={'http://localhost:3000/search/questions/askQuestion'}
+          href={'/search/questions/askQuestion'}
         >
           Be the first to ask one!
         </Link>
@@ -216,7 +215,7 @@ function QuestionCard({
                               <Link
                                 className="no-underline"
                                 href={{
-                                  pathname: `http://localhost:3000/search/questions/tagged/${tag.id}`,
+                                  pathname: `/search/questions/tagged/${tag.id}`,
                                   query: {
                                     name: tag.name,
                                   },
@@ -324,7 +323,7 @@ function QuestionCard({
                               <Link
                                 className="no-underline"
                                 href={{
-                                  pathname: `http://localhost:3000/search/questions/tagged/${tag.id}`,
+                                  pathname: `/search/questions/tagged/${tag.id}`,
                                   query: {
                                     name: tag.name,
                                   },

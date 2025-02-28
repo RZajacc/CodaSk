@@ -130,7 +130,7 @@ function TagCard({
   // Div redirect
   const handleTagRedirect = (tagID: string) => {
     const FETCH_URL = BuildFetchUrl();
-    router.push(`${FETCH_URL}/search/questions/tagged/${tagID}`);
+    router.push(`/search/questions/tagged/${tagID}`);
   };
 
   //
@@ -176,7 +176,7 @@ function TagCard({
                   <Link
                     className="no-underline"
                     href={{
-                      pathname: `http://localhost:3000/search/questions/tagged/${tag.id}`,
+                      pathname: `/search/questions/tagged/${tag.id}`,
                       query: {
                         name: tag.name,
                       },
@@ -243,7 +243,7 @@ function TagCard({
           message={
             <Link
               className=" rounded-full bg-[#B197FC] px-2 py-2 font-light text-white no-underline hover:bg-black hover:font-light"
-              href={`http://localhost:3000/user/profile/${sessionUserID}`}
+              href={`/user/profile/${sessionUserID}`}
             >
               Go to profile
             </Link>
@@ -259,7 +259,7 @@ function TagCard({
           message={
             <Link
               className=" rounded-full bg-[#B197FC] px-2 py-2 font-light text-white no-underline hover:bg-black hover:font-light"
-              href={`http://localhost:3000/user/profile/${sessionUserID}`}
+              href={`/user/profile/${sessionUserID}`}
             >
               Go to profile
             </Link>
