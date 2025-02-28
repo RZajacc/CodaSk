@@ -6,6 +6,7 @@ import Link from 'next/link';
 import {userQuery} from '@/app/search/tags/page';
 import Loader from '@/components/questions/Loader';
 import Modal from '../Modal';
+import {BuildFetchUrl} from '@/utils/BuildFetchUrl';
 
 type tagProps = {
   getAllTags: [
@@ -128,7 +129,8 @@ function TagCard({
 
   // Div redirect
   const handleTagRedirect = (tagID: string) => {
-    router.push(`http://localhost:3000/search/questions/tagged/${tagID}`);
+    const FETCH_URL = BuildFetchUrl();
+    router.push(`${FETCH_URL}/search/questions/tagged/${tagID}`);
   };
 
   //

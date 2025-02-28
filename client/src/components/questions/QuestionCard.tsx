@@ -11,6 +11,7 @@ import {getPostedOnInDays} from '@/utils/GetPostedOnInDays';
 import Loader from './Loader';
 
 import {Questions} from '@/types/custom_types';
+import {BuildFetchUrl} from '@/utils/BuildFetchUrl';
 // import {formatDate} from '@/components/questions/Functions';
 
 type questionCardProp = {
@@ -105,7 +106,8 @@ function QuestionCard({
   const router = useRouter();
 
   const handleQuestionRedirect = (questionID: string) => {
-    router.push(`http://localhost:3000/search/questions/${questionID}`);
+    const FETCH_URL = BuildFetchUrl();
+    router.push(`${FETCH_URL}/search/questions/${questionID}`);
   };
 
   const handeleDeleteQuestion = async (questionID: string) => {
