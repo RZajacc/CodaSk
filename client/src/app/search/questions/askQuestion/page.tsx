@@ -118,7 +118,7 @@ function AskQuestion() {
       },
     });
   };
-  console.log(questionInput);
+  // console.log(questionInput);
   return (
     <div className="h-full min-h-screen">
       {!addQuestionCalled ? (

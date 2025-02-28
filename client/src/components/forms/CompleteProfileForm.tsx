@@ -13,6 +13,7 @@ function CompleteProfileForm() {
   const FETCH_URL = BuildFetchUrl();
   const id = session!.data?.user?.name as string;
   console.log('id :>> ', id);
+  ``;
 
   const cohortNames = [
     'Blue Ants',
@@ -70,7 +71,7 @@ function CompleteProfileForm() {
 
   const getUserInfo = async () => {
     if (!id) {
-      console.log(' whatxws going on?:>>');
+      // console.log(' whatxws going on?:>>');
     }
     // await location.reload();
 
@@ -84,7 +85,7 @@ function CompleteProfileForm() {
       );
       if (response.ok) {
         const results = await response.json();
-        console.log('userInfo Results :>> ', results);
+        // console.log('userInfo Results :>> ', results);
 
         const userData = results!.data[0];
 
@@ -103,7 +104,7 @@ function CompleteProfileForm() {
   };
 
   const handleDropdownInput = (e: ChangeEvent<HTMLSelectElement>) => {
-    console.log('e.target.value :>> ', e.target.value);
+    // console.log('e.target.value :>> ', e.target.value);
     setuserInfo({
       ...userInfo,
       [e.target.name]: e.target.value,
@@ -150,7 +151,7 @@ function CompleteProfileForm() {
         requestOptions
       );
       const result = (await response.json()) as UserPhoto;
-      console.log('result single photo:>> ', result);
+      // console.log('result single photo:>> ', result);
 
       // setuserInfo({...userInfo, user_photo: result.user_photo});
       setuserInfo((prevInfo) => {
@@ -193,12 +194,12 @@ function CompleteProfileForm() {
           `${FETCH_URL}/api/users/completeProfile`,
           requestOptions
         );
-        console.log('response :>> ', response);
+        // console.log('response :>> ', response);
         if (response.ok) {
           const result = await response.json();
-          console.log('result from update :>> ', result);
+          // console.log('result from update :>> ', result);
           setuserInfo(result);
-          router.push(`http://localhost:3000/user/profile/${id}`);
+          router.push(`${FETCH_URL}/user/profile/${id}`);
         }
       } catch (error) {
         console.log('error in your /completeProfile route:>> ', error);

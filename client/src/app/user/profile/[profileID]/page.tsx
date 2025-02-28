@@ -66,7 +66,7 @@ function Profile() {
       );
       if (response.ok) {
         const results = await response.json();
-        console.log('RESULTS :>> ', results);
+        // console.log('RESULTS :>> ', results);
 
         const userData = results!.data[0];
 
@@ -91,7 +91,7 @@ function Profile() {
           requestOptions
         );
         await signOut({redirect: false});
-        await router.push('/');
+        router.push('/');
         location.reload();
       } catch (error) {
         console.log('error when deleting a user:>> ', error);
@@ -108,7 +108,7 @@ function Profile() {
   };
 
   const handleQuestionRedirect = (questionID: string) => {
-    router.push(`http://localhost:3000/search/questions/${questionID}`);
+    router.push(`${FETCH_URL}/search/questions/${questionID}`);
   };
 
   const tagsInModal = user?.saved_tags.map((tag: Tags, tagIndex: number) => (
@@ -118,7 +118,7 @@ function Profile() {
           <Link
             className="no-underline"
             href={{
-              pathname: `http://localhost:3000/search/questions/tagged/${tag?._id}`,
+              pathname: `${FETCH_URL}/search/questions/tagged/${tag?._id}`,
               query: {
                 name: tag?.name,
               },

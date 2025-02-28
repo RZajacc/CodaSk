@@ -45,12 +45,12 @@ function SignUpForm() {
     if (passwordType === 'password') {
       setPasswordType('text');
       setShowOrHide('hide');
-      console.log('hide console log :>> ');
+      // console.log('hide console log :>> ');
       return;
     }
     setPasswordType('password');
     setShowOrHide('show');
-    console.log('show console log :>> ');
+    // console.log('show console log :>> ');
   };
 
   const handleRegisterInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -97,7 +97,7 @@ function SignUpForm() {
         );
         if (response.ok) {
           const result = await response.json();
-          console.log('result in register:>> ', result);
+          // console.log('result in register:>> ', result);
 
           setNewUser(result);
           alert('Thank you for signing up!  🤓');
@@ -106,7 +106,7 @@ function SignUpForm() {
             redirect: false,
           });
         }
-        await router.push('../user/moreinfo');
+        router.push('../user/moreinfo');
         location.reload();
       } catch (error) {
         console.log('error in your /signup fetch:>> ', error);
