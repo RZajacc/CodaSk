@@ -21,9 +21,7 @@ function SearchBox() {
   const FETCH_URL = BuildFetchUrl();
 
   const handleQuestionClick = async (questionID: string) => {
-    await router.push(
-      `http://localhost:3000/search/questions/id/${questionID}`
-    );
+    router.push(`/search/questions/id/${questionID}`);
   };
 
   const getQuestionsByTitle = async (title: string) => {
@@ -57,8 +55,8 @@ function SearchBox() {
   };
 
   useEffect(() => {
-    console.log('questions :>> ', questions);
-    console.log('questionTitle :>> ', questionTitle);
+    // console.log('questions :>> ', questions);
+    // console.log('questionTitle :>> ', questionTitle);
   }, []);
 
   return (
