@@ -8,8 +8,19 @@ services:
       - ./server:/app
     env_file:
       - ./server/.env
-  frontend:
-    build: ./client
+  
+  frontend-test:
+    build: 
+      context: ./client
+      dockerfile: Dockerfile
+      target: test
+    environment:
+      - NODE_ENV=test
+  frontend-dev:
+    build: 
+      context: ./client
+      dockerfile: Dockerfile
+      target: dev
     ports:
       - '3001:3000'
     volumes:
@@ -21,3 +32,4 @@ services:
       - API_URL_SERVER=http://backend:5008
     depends_on:
       - backend
+      - frontend-test
