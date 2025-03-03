@@ -17,8 +17,6 @@ function LogInForm() {
 
   const id = '656b4777d89e223b1e928c33';
 
-  const router = useRouter();
-
   const changePasswordType = () => {
     if (passwordType === 'password') {
       setPasswordType('text');
@@ -37,6 +35,7 @@ function LogInForm() {
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const router = useRouter();
     const formData = new FormData(e.currentTarget);
     const email = formData.get('email');
     const password = formData.get('password');
@@ -65,7 +64,7 @@ function LogInForm() {
 
   return (
     <div className="mt-8 w-96 rounded-2xl bg-[#EDE9E6] p-10">
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleLogin} data-testid="login-form">
         <div className="flex  w-full flex-col">
           <label
             className="mb-1 ml-1 font-medium text-[#6741D9]"
