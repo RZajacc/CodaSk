@@ -17,17 +17,36 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-
-      - name: Build and test
+      
+      # CLIENT APP
+      - name: Build and test client
         uses: docker/build-push-action@v6
         with:
+          context: ./client
           target: test
           load: true
-
-      - name: Build and push
+          
+      - name: Build and push client
         uses: docker/build-push-action@v6
         with:
+          context: ./client
           platforms: linux/amd64,linux/arm64
           push: true
           target: prod
-          tags: ${{ vars.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest
+          build-args: 
+            NODE_VERSION=22-alpine
+            NEXTAUTH_URL=http://codask-frontend:3000
+            NEXT_PUBLIC_API_URL=http://ec2-3-87-231-53.compute-1.amazonaws.com:5008
+          tags: ${{ vars.DOCKER_USERNAME }}/${{ github.event.repository.name }}-client:latest
+      
+      #  SERVER APP
+      - name: Build and push server
+        uses: docker/build-push-action@v6
+        with:
+          context: ./server
+          platforms: linux/amd64,linux/arm64
+          push: true
+          target: prod
+          build-args: 
+            NODE_VERSION=22-alpine
+          tags: ${{ vars.DOCKER_USERNAME }}/${{ github.event.repository.name }}-server:latest
