@@ -1,4 +1,6 @@
-FROM node as base
+ARG NODE_VERSION=22
+
+FROM node:${NODE_VERSION} as base
 
 WORKDIR /app
 
