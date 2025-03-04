@@ -9,6 +9,7 @@ services:
     env_file:
       - ./server/.env
   
+  #? *** CLIENT SIDE SERVICES ***
   frontend-test:
     build: 
       context: ./client
@@ -30,6 +31,24 @@ services:
       - ./client/.env.local
     environment:
       - API_URL_SERVER=http://backend:5008
+    depends_on:
+      - backend
+      - frontend-test
+  frontend-prod:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+      target: prod
+      args:
+        NODE_VERSION: "22-alpine"
+        NEXTAUTH_URL: "http://frontend:3000"
+        NEXT_PUBLIC_API_URL: "http://localhost:5008"
+    ports:
+      - '3001:3000'
+    environment:
+      - API_URL_SERVER=http://backend:5008
+    env_file:
+      - ./client/.env.local
     depends_on:
       - backend
       - frontend-test

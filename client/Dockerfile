@@ -29,3 +29,21 @@ COPY . .
 
 CMD [ "npm", "run", "dev" ]
 
+# Prod stage
+FROM base as prod
+
+ARG NEXTAUTH_URL
+ARG NEXT_PUBLIC_API_URL
+
+COPY package.json .
+
+RUN npm install
+
+COPY . .
+
+ENV NEXTAUTH_URL=${NEXTAUTH_URL}
+ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+
+RUN npm run build
+
+CMD [ "npm", "start" ]
