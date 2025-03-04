@@ -24,7 +24,7 @@ export default async function About({}: Props) {
         <p className="text-xl font-normal text-white underline">Quick Intro:</p>
         <br />
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur,
+          Loremm ipsum dolor sit amet consectetur adipisicing elit. Pariatur,
           porro enim accusamus quo, qui incidunt harum ducimus, esse ratione
           culpa eveniet aperiam? Eos nostrum aliquam veniam harum dolores.
           Numquam, quam laudantium libero dolor eaque pariatur asperiores
