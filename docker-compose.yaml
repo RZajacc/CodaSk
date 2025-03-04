@@ -1,6 +1,9 @@
 services:
-  backend:
-    build: ./server
+  # *** SERVER SIDE SERVICES ***
+  backend-dev:
+    build: 
+      context: ./server
+      target: dev
     ports:
       - '5008:5008'
     volumes:
@@ -8,19 +11,27 @@ services:
       - ./server:/app
     env_file:
       - ./server/.env
+  backend-prod:
+    build: 
+      context: ./server
+      target: prod
+      args:
+        - NODE_VERSION=22-alpine
+    ports:
+      - '5008:5008'
+    env_file:
+      - ./server/.env
   
-  #? *** CLIENT SIDE SERVICES ***
+  # *** CLIENT SIDE SERVICES ***
   frontend-test:
     build: 
       context: ./client
-      dockerfile: Dockerfile
       target: test
     environment:
       - NODE_ENV=test
   frontend-dev:
     build: 
       context: ./client
-      dockerfile: Dockerfile
       target: dev
     ports:
       - '3001:3000'
@@ -30,25 +41,24 @@ services:
     env_file:
       - ./client/.env.local
     environment:
-      - API_URL_SERVER=http://backend:5008
+      - API_URL_SERVER=http://backend-dev:5008
     depends_on:
-      - backend
+      - backend-dev
       - frontend-test
   frontend-prod:
     build:
       context: ./client
-      dockerfile: Dockerfile
       target: prod
       args:
-        NODE_VERSION: "22-alpine"
-        NEXTAUTH_URL: "http://frontend:3000"
-        NEXT_PUBLIC_API_URL: "http://localhost:5008"
+        - NODE_VERSION=22-alpine
+        - NEXTAUTH_URL=http://frontend-prod:3000
+        - NEXT_PUBLIC_API_URL=http://localhost:5008
     ports:
       - '3001:3000'
     environment:
-      - API_URL_SERVER=http://backend:5008
+      - API_URL_SERVER=http://backend-prod:5008
     env_file:
       - ./client/.env.local
     depends_on:
-      - backend
+      - backend-prod
       - frontend-test
