@@ -1,6 +1,5 @@
 node_modules
 Dockerfile
-Dockerfile.prod
 dist
 .git
 .env*
