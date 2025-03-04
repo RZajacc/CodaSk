@@ -2,6 +2,14 @@ import '@testing-library/jest-dom';
 import {render, screen} from '@testing-library/react';
 import Content from './page';
 
+jest.mock('next/navigation', () => ({
+  useRouter() {
+    return {
+      push: jest.fn(),
+    };
+  },
+}));
+
 describe('Login component', () => {
   // Ensure the async component is rendered at each test
   beforeEach(async () => {
