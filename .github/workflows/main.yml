@@ -40,7 +40,7 @@ jobs:
             NODE_VERSION=22-alpine
             NEXTAUTH_URL=http://codask-frontend:3000
             NEXT_PUBLIC_API_URL=http://ec2-3-87-231-53.compute-1.amazonaws.com:5008
-          tags: ${{ vars.DOCKER_USERNAME }}/${{ github.event.repository.name }}-client:latest
+          tags: ${{ vars.DOCKER_USERNAME }}/codask-client
       
       #  SERVER APP
       - name: Build and push server
@@ -52,4 +52,4 @@ jobs:
           target: prod
           build-args: 
             NODE_VERSION=22-alpine
-          tags: ${{ vars.DOCKER_USERNAME }}/${{ github.event.repository.name }}-server:latest
+          tags: ${{ vars.DOCKER_USERNAME }}/codask-server:latest
