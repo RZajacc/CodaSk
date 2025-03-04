@@ -36,10 +36,10 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           target: prod
-          build-args: 
+          build-args: |
             NODE_VERSION=22-alpine
-            NEXTAUTH_URL=http://codask-frontend:3000
-            NEXT_PUBLIC_API_URL=http://ec2-3-87-231-53.compute-1.amazonaws.com:5008
+            NEXTAUTH_URL=${{secrets.NEXTAUTH_URL}}
+            NEXT_PUBLIC_API_URL=${{secrets.NEXT_PUBLIC_API_URL}}
           tags: ${{ vars.DOCKER_USERNAME }}/codask-client
       
       #  SERVER APP
@@ -50,6 +50,5 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           target: prod
-          build-args: 
-            NODE_VERSION=22-alpine
+          build-args: NODE_VERSION=22-alpine
           tags: ${{ vars.DOCKER_USERNAME }}/codask-server:latest
