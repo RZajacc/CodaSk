@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import helloGif from '../../public/ezgif.com-video-to-gif.gif';
 
 export default async function page() {
   return (
@@ -13,9 +14,7 @@ export default async function page() {
             width={900}
             height={900}
             alt="homepage-photo"
-            src={
-              'https://res.cloudinary.com/dfm1r4ikr/image/upload/v1702067424/codask/website_photos/ezgif.com-video-to-gif_efni18.gif'
-            }
+            src={helloGif}
           />
           <h1 className="lg:text-6x m-1 pb-8 pt-6 text-center font-bold text-[#6741D9] md:text-3xl">
             Welcome to Codask,
