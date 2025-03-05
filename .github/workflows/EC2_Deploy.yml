@@ -40,7 +40,7 @@ jobs:
             NODE_VERSION=22-alpine
             NEXTAUTH_URL=${{secrets.NEXTAUTH_URL}}
             NEXT_PUBLIC_API_URL=${{secrets.NEXT_PUBLIC_API_URL}}
-          tags: ${{ secrets.DOCKER_USERNAME }}/codask-client:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/codask-client
       
       #  SERVER APP
       - name: Build and push server
@@ -51,7 +51,7 @@ jobs:
           push: true
           target: prod
           build-args: NODE_VERSION=22-alpine
-          tags: ${{ secrets.DOCKER_USERNAME }}/codask-server:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/codask-server
 
       #  Deploy to EC-2
       - name: Deploy to EC2
@@ -62,10 +62,10 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd codask
-            docker pull ${{ vars.DOCKER_USERNAME }}/codask-client:latest
-            docker pull ${{ secrets.DOCKER_USERNAME }}/codask-server:latest
+            docker pull ${{ vars.DOCKER_USERNAME }}/codask-client
+            docker pull ${{ secrets.DOCKER_USERNAME }}/codask-server
             docker stop codask-frontend || true
             docker stop codask-backend || true
-            docker run --rm -d --name codask-frontend --network codask_net -p 3001:3000 --env-file .env.local ${{ secrets.DOCKER_USERNAME }}/codask-client:latest
-            docker run --rm -d --name codask-backend --network codask_net -p 5008:5008 --env-file .env ${{ secrets.DOCKER_USERNAME }}/codask-server:latest
+            docker run --rm -d --name codask-frontend --network codask_net -p 3001:3000 --env-file .env.local ${{ secrets.DOCKER_USERNAME }}/codask-client
+            docker run --rm -d --name codask-backend --network codask_net -p 5008:5008 --env-file .env ${{ secrets.DOCKER_USERNAME }}/codask-server
       
