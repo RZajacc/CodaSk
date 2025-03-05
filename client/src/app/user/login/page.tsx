@@ -9,7 +9,7 @@ export default async function Login() {
       <div className="h-full bg-[#6741D9]">
         <div className="flex flex-col items-center justify-center">
           <h1 className=" mt-4 text-center font-medium text-white md:text-3xl">
-            please log in!!
+            Please log in:
           </h1>
           <div className=" justify-center">
             <LogInForm />
