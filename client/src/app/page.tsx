@@ -6,9 +6,7 @@ export default async function page() {
   return (
     <main className="h-full ">
       <div>
-        <br />
-        <div className="grid justify-items-center">
-          <i className="fa fa-github"></i>
+        <div className="my-5 grid justify-items-center">
           <Image
             className=" rounded-lg"
             width={900}
@@ -30,62 +28,45 @@ export default async function page() {
               <h2 className="mb-4 text-center text-3xl font-semibold dark:text-white">
                 Stuck on a problem? Let us help...
               </h2>
-              <div className="flex flex-row justify-around">
-                <div
-                  id="greyCTABox"
-                  className="h-40 w-40 rounded-lg bg-[#D9D9D9] p-5 text-[#6741D9] shadow-custom hover:bg-[#6741D9] hover:text-white hover:shadow-custom2"
-                >
-                  <Link
-                    className="text-center text-xl font-bold  no-underline"
-                    href={'/search/questions'}
-                  >
-                    Search by questions
-                  </Link>
-                </div>
-                <div
-                  id="greyCTABox"
-                  className="h-40 w-40 rounded-lg bg-[#D9D9D9] p-5 text-[#6741D9] shadow-custom hover:bg-[#6741D9] hover:text-white hover:shadow-custom2"
-                >
-                  <Link
-                    className="text-center text-xl font-bold no-underline"
-                    href={'/search/tags'}
-                  >
-                    Search by tags
-                  </Link>
-                </div>
 
-                <div
-                  id="greyCTABox"
-                  className="h-40 w-40 rounded-lg bg-[#D9D9D9] p-5 text-[#6741D9] shadow-custom hover:bg-[#6741D9] hover:text-white hover:shadow-custom2"
+              <div className="flex flex-row justify-around">
+                <Link
+                  className="h-40 w-40 rounded-lg  bg-[#D9D9D9] p-5 text-center text-xl font-bold text-[#6741D9] no-underline shadow-custom hover:bg-[#6741D9] hover:text-white hover:shadow-custom2"
+                  href={'/search/questions'}
                 >
-                  <Link
-                    className="text-center text-xl font-bold  no-underline"
-                    href={'/search/modules'}
-                  >
-                    {' '}
-                    Search by modules
-                  </Link>
-                </div>
+                  Search by questions
+                </Link>
+
+                <Link
+                  className="h-40 w-40 rounded-lg  bg-[#D9D9D9] p-5 text-center text-xl font-bold text-[#6741D9] no-underline shadow-custom hover:bg-[#6741D9] hover:text-white hover:shadow-custom2"
+                  href={'/search/tags'}
+                >
+                  Search by tags
+                </Link>
+
+                <Link
+                  className="h-40 w-40 rounded-lg  bg-[#D9D9D9] p-5 text-center text-xl font-bold text-[#6741D9] no-underline shadow-custom hover:bg-[#6741D9] hover:text-white hover:shadow-custom2"
+                  href={'/search/modules'}
+                >
+                  Search by modules
+                </Link>
               </div>
             </div>
           </div>
-          <br />
+
           <Image
-            className="mainLogo items-center"
+            className="mainLogo my-3 items-center"
             src={'/CodaskLogo.png'}
             alt="Logo"
             width={210}
             height={210}
           />
-          <br />
+
           <pre>
-            <code className="text-[#E91E63]">
+            <code className=" text-[#E91E63]">
               Happy learning and happy coding!
             </code>
           </pre>
-          <p></p>
-          <br />
-          <br />
         </div>
       </div>
     </main>
