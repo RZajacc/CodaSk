@@ -74,6 +74,7 @@ jobs:
       # Install playwright and run tests against deployed app
       - name: Install Playwright dependencies and run tests
         run: |
+          cd client
           npm install playwright  
           npx playwright install --with-deps 
           npx playwright test  
