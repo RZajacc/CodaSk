@@ -71,3 +71,11 @@ jobs:
             docker run --rm -d --name codask-frontend --network codask_net -p 3001:3000 --env-file .env.local ${{ secrets.DOCKER_USERNAME }}/codask-client
             docker run --rm -d --name codask-backend --network codask_net -p 5008:5008 --env-file .env ${{ secrets.DOCKER_USERNAME }}/codask-server
       
+      # Install playwright and run tests against deployed app
+      - name: Install Playwright dependencies and run tests
+        run: |
+          npm install playwright  
+          npx playwright install --with-deps 
+          npx playwright test  
+        env:
+          BASE_URL: ${{ secrets.BASE_URL }}
