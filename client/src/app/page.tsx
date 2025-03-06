@@ -11,6 +11,7 @@ export default async function page() {
         className=" w-full rounded-lg md:w-4/5 lg:w-2/3"
         alt="homepage-gif"
         src={helloGif}
+        data-testid="main-gif"
       />
 
       {/* Header text section */}
@@ -39,6 +40,7 @@ export default async function page() {
         className="my-3 w-1/3 md:w-1/6"
         src={CodaskLogo}
         alt="Codask Logo"
+        data-testid="codask-logo"
       />
 
       <pre>
