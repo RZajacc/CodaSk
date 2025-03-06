@@ -14,7 +14,7 @@ import 'react-quill/dist/quill.snow.css'; // Import Quill styles
 import {quillFormats, quillModules} from '@/types/quillTypes';
 import {AllAnswersQuery} from '@/types/AnswersQuery';
 import AnswerCard from '@/components/AnswerCard';
-import BackButton from '@/components/buttons/BackButton';
+import BackButton from '@/components/Ui/buttons/BackButton';
 import DeleteModal from '@/components/DeleteModal';
 import {useSession} from 'next-auth/react';
 import {

@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import helloGif from '../../public/ezgif.com-video-to-gif.gif';
+import BoxLink from '@/components/Ui/links/BoxLink';
 
 export default async function page() {
   return (
@@ -30,26 +31,9 @@ export default async function page() {
               </h2>
 
               <div className="flex flex-row justify-around">
-                <Link
-                  className="h-40 w-40 rounded-lg  bg-[#D9D9D9] p-5 text-center text-xl font-bold text-[#6741D9] no-underline shadow-custom hover:bg-[#6741D9] hover:text-white hover:shadow-custom2"
-                  href={'/search/questions'}
-                >
-                  Search by questions
-                </Link>
-
-                <Link
-                  className="h-40 w-40 rounded-lg  bg-[#D9D9D9] p-5 text-center text-xl font-bold text-[#6741D9] no-underline shadow-custom hover:bg-[#6741D9] hover:text-white hover:shadow-custom2"
-                  href={'/search/tags'}
-                >
-                  Search by tags
-                </Link>
-
-                <Link
-                  className="h-40 w-40 rounded-lg  bg-[#D9D9D9] p-5 text-center text-xl font-bold text-[#6741D9] no-underline shadow-custom hover:bg-[#6741D9] hover:text-white hover:shadow-custom2"
-                  href={'/search/modules'}
-                >
-                  Search by modules
-                </Link>
+                <BoxLink url="/search/questions">Search by questions</BoxLink>
+                <BoxLink url="/search/tags"> Search by tags</BoxLink>
+                <BoxLink url="/search/modules">Search by modules</BoxLink>
               </div>
             </div>
           </div>
