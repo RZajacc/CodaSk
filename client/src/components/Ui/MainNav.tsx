@@ -6,24 +6,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 import {useEffect, useState} from 'react';
 import SearchBox from './SearchBox';
+import Sidebar from './Sidebar';
 // import {C} from 'vitest/dist/chunks/reporters.DTtkbAtP.js';
 
 function MainNav() {
   const {data: session, status, update} = useSession();
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    // console.log('%c status', 'color:purple', status);
-    if (session) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
-  }, [status]);
-
   return (
     <>
+      <Sidebar />
       <nav className=" sticky top-0 z-50 flex max-h-28 items-center justify-between border-b-2 border-b-[#EDE9E6] bg-[#6741D9] p-6">
         {/* LEFT SECTION */}
         <Link
@@ -46,7 +37,7 @@ function MainNav() {
 
         {/* RIGHT SECTION */}
         <ul className="flex list-none ">
-          {!isLoggedIn ? (
+          {status === 'unauthenticated' ? (
             <>
               <li>
                 <Link
@@ -70,7 +61,6 @@ function MainNav() {
               <li>
                 <Link
                   href={`/user/profile/${session?.user?._id}`}
-                  // href={`/user/profile/`}
                   className="mx-1 text-2xl text-white	 no-underline hover:font-semibold focus:font-semibold"
                 >
                   👀 |{' '}
