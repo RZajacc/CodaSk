@@ -15,19 +15,19 @@ export default async function page() {
       />
 
       {/* Header text section */}
-      <h1 className="lg:text-6x m-1 pb-8 pt-6 text-center font-bold text-[#6741D9] md:text-3xl">
+      <h1 className="m-1 pb-8 pt-6 text-center text-xl font-bold text-[#6741D9] md:text-3xl lg:text-4xl">
         Welcome to Codask,
         <br />a learning platform and community <br />
         for Codac students and alumnis!
       </h1>
 
       {/* Navigation box */}
-      <div className="flex min-w-full flex-col justify-center">
+      <div className="w-full justify-center">
         <div className="rounded-lg bg-[#B197FC] p-10 pb-10">
           <h2 className="mb-4 text-center text-3xl font-semibold dark:text-white">
             Stuck on a problem? Let us help...
           </h2>
-          <div className="flex flex-row justify-around">
+          <div className="flex flex-row flex-wrap justify-center gap-4 sm:gap-4 md:gap-6 lg:gap-8">
             <BoxLink url="/search/questions">Search by questions</BoxLink>
             <BoxLink url="/search/tags"> Search by tags</BoxLink>
             <BoxLink url="/search/modules">Search by modules</BoxLink>
