@@ -4,7 +4,7 @@ import {FaGithub} from 'react-icons/fa';
 
 function Footer() {
   return (
-    <div className="flex h-full w-full justify-between bg-black p-8 text-white">
+    <footer className="flex h-full w-full justify-between bg-black p-8 text-white">
       <Image
         className="opacity-0"
         src={'/CodaskLogo.png'}
@@ -66,7 +66,7 @@ function Footer() {
           </Link>
         </p>
       </div>
-    </div>
+    </footer>
   );
 }
 

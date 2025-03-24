@@ -2,6 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  display: grid;
+  grid-template-rows: 112px auto 117px;
+  grid-template-columns: 192px auto;
+  grid-template-areas:
+    'navigation navigation'
+    'sidebar main'
+    'footer footer';
+}
+
+#desktop-sidebar {
+  grid-area: sidebar;
+}
+
+main {
+  grid-area: main;
+}
+
+footer {
+  grid-area: footer;
+}
+
 @layer components {
   .title_base {
     @apply col-span-6 my-6 h-12 rounded-3xl bg-[#EDE9E6] p-2 text-[#6741D9] shadow-custom;

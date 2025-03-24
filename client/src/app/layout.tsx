@@ -19,14 +19,13 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
   });
 
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" className="h-full">
+      <body className="h-full">
         <SessionProvider>
           <ApolloProvider client={client}>
             <MainNav />
-            <main className="relative ml-48 border-l-2 border-r-gray-200">
-              {children}
-            </main>
+            <Sidebar />
+            <main className="h-full p-2">{children}</main>
             <Footer />
           </ApolloProvider>
         </SessionProvider>

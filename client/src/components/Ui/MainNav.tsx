@@ -14,8 +14,7 @@ function MainNav() {
 
   return (
     <>
-      <Sidebar />
-      <nav className=" sticky top-0 z-50 flex max-h-28 items-center justify-between border-b-2 border-b-[#EDE9E6] bg-[#6741D9] p-6">
+      <nav className="fixed left-0 top-0 z-50 flex max-h-28 w-full items-center justify-between border-b-2 border-b-[#EDE9E6] bg-[#6741D9] p-6">
         {/* LEFT SECTION */}
         <Link
           href={'/'}
