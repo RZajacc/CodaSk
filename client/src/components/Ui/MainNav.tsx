@@ -4,9 +4,8 @@ import {FaRegEnvelope} from 'react-icons/fa';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import {useEffect, useState} from 'react';
 import SearchBox from './SearchBox';
-import Sidebar from './Sidebar';
+
 // import {C} from 'vitest/dist/chunks/reporters.DTtkbAtP.js';
 
 function MainNav() {
@@ -14,23 +13,17 @@ function MainNav() {
 
   return (
     <>
-      <nav className="fixed left-0 top-0 z-50 flex max-h-28 w-full items-center justify-between border-b-2 border-b-[#EDE9E6] bg-[#6741D9] p-6">
+      <nav className="fixed left-0 top-0 z-50 flex h-20 w-full items-center justify-between border-b-2 border-b-[#EDE9E6] bg-[#6741D9] px-4 py-1 sm:h-24 md:h-28 md:px-6">
         {/* LEFT SECTION */}
         <Link
           href={'/'}
-          className="mx-1 hover:font-semibold focus:font-semibold"
+          className="relative mx-1 h-14 w-14 hover:font-semibold focus:font-semibold sm:h-16 sm:w-16 md:h-20 md:w-20"
         >
-          <Image
-            className="mainLogo"
-            src={'/CodaskLogo.png'}
-            alt="Logo"
-            width={110}
-            height={110}
-          />
+          <Image className="mainLogo" src={'/CodaskLogo.png'} alt="Logo" fill />
         </Link>
 
         {/* MIDDLE SECTION */}
-        <div className="w-5/12">
+        <div className="hidden w-5/12 md:block">
           <SearchBox />
         </div>
 
@@ -62,9 +55,10 @@ function MainNav() {
                   href={`/user/profile/${session?.user?._id}`}
                   className="mx-1 text-2xl text-white	 no-underline hover:font-semibold focus:font-semibold"
                 >
-                  👀 |{' '}
+                  👀 |
                 </Link>
               </li>
+              {/* Later for notifications */}
               {/* <li className="mx-1 text-2xl text-white ">
                 <FaRegEnvelope /> |{' '}
               </li> */}

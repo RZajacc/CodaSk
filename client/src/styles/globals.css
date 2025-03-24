@@ -4,7 +4,7 @@
 
 body {
   display: grid;
-  grid-template-rows: 112px auto 117px;
+  grid-template-rows: 80px auto 117px;
   grid-template-areas:
     'navigation'
     'main'
@@ -17,6 +17,21 @@ main {
 
 footer {
   grid-area: footer;
+}
+
+@media (min-width: 640px) {
+  body {
+    display: grid;
+    grid-template-rows: 96px auto 117px;
+    grid-template-areas:
+      'navigation'
+      'main'
+      'footer';
+  }
+
+  #desktop-sidebar {
+    grid-area: sidebar;
+  }
 }
 
 @media (min-width: 768px) {
