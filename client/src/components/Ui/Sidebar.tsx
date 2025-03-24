@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 function Sidebar() {
   return (
-    <section id="desktop-sidebar" className="border-r-2">
+    <section id="desktop-sidebar" className=" hidden border-r-2 md:block">
       <div className="mx-4 my-10">
         <h3 className="mb-2 text-lg font-extralight">SEARCH BY: </h3>
         <ul className="list-none ">

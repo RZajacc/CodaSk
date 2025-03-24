@@ -5,15 +5,10 @@
 body {
   display: grid;
   grid-template-rows: 112px auto 117px;
-  grid-template-columns: 192px auto;
   grid-template-areas:
-    'navigation navigation'
-    'sidebar main'
-    'footer footer';
-}
-
-#desktop-sidebar {
-  grid-area: sidebar;
+    'navigation'
+    'main'
+    'footer';
 }
 
 main {
@@ -22,6 +17,22 @@ main {
 
 footer {
   grid-area: footer;
+}
+
+@media (min-width: 768px) {
+  body {
+    display: grid;
+    grid-template-rows: 112px auto 117px;
+    grid-template-columns: 192px auto;
+    grid-template-areas:
+      'navigation navigation'
+      'sidebar main'
+      'footer footer';
+  }
+
+  #desktop-sidebar {
+    grid-area: sidebar;
+  }
 }
 
 @layer components {
