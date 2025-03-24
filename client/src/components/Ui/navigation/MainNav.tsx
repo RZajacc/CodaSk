@@ -8,6 +8,7 @@ import LinksAuthUser from './desktopNav-elements/LinksAuthUser';
 import LinksNoUser from './desktopNav-elements/LinksNoUser';
 import {useState} from 'react';
 import Backdrop from './mobileNav-elements/Backdrop';
+import MobileSidebar from './mobileNav-elements/MobileSidebar';
 
 function MainNav() {
   const {data: session, status} = useSession();
@@ -16,6 +17,10 @@ function MainNav() {
   return (
     <>
       <Backdrop
+        setShowMobileNav={setShowMobileNav}
+        showMobileNav={showMobileNav}
+      />
+      <MobileSidebar
         setShowMobileNav={setShowMobileNav}
         showMobileNav={showMobileNav}
       />

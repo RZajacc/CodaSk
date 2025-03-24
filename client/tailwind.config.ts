@@ -17,6 +17,37 @@ const config: Config = {
         custom: '10px 10px 0 0 #6741D9',
         custom2: '10px 10px 0 0 black',
       },
+      keyframes: {
+        fadein: {
+          '0%': {
+            opacity: '0',
+          },
+          '100%': {
+            opacity: '0.7',
+          },
+        },
+        slidein: {
+          '0%': {
+            transform: 'translateX(0%)',
+          },
+          '100%': {
+            transform: 'translateX(100%)',
+          },
+        },
+        slideout: {
+          '0%': {
+            transform: 'translateX(100%)',
+          },
+          '100%': {
+            transform: 'translateX(0%)',
+          },
+        },
+      },
+      animation: {
+        slidein: 'slidein 500ms ease-in forwards',
+        slideout: 'slideout 500ms ease-in forwards',
+        fadein: 'fadein 500ms ease-in forwards',
+      },
     },
   },
   plugins: [],
