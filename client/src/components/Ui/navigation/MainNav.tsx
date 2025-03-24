@@ -2,19 +2,29 @@ import {useSession} from 'next-auth/react';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import SearchBox from './nav-elements/SearchBox';
+import SearchBox from './desktopNav-elements/SearchBox';
 import HamburgerButton from '../buttons/HamburgerButton';
-import LinksAuthUser from './nav-elements/LinksAuthUser';
-import LinksNoUser from './nav-elements/LinksNoUser';
+import LinksAuthUser from './desktopNav-elements/LinksAuthUser';
+import LinksNoUser from './desktopNav-elements/LinksNoUser';
+import {useState} from 'react';
+import Backdrop from './mobileNav-elements/Backdrop';
 
 function MainNav() {
-  const {data: session, status, update} = useSession();
+  const {data: session, status} = useSession();
+  const [showMobileNav, setShowMobileNav] = useState(false);
 
   return (
     <>
-      <nav className="fixed left-0 top-0 z-50 flex h-20 w-full items-center justify-between border-b-2 border-b-[#EDE9E6] bg-[#6741D9] px-4 py-1 sm:h-24 md:h-28 md:px-6">
+      <Backdrop
+        setShowMobileNav={setShowMobileNav}
+        showMobileNav={showMobileNav}
+      />
+      <nav className="fixed left-0 top-0 flex h-20 w-full items-center justify-between border-b-2 border-b-[#EDE9E6] bg-[#6741D9] px-4 py-1 sm:h-24 md:h-28 md:px-6">
         {/* LEFT SECTION */}
-        <HamburgerButton className="md:hidden" />
+        <HamburgerButton
+          className="md:hidden"
+          setShowMobileNav={setShowMobileNav}
+        />
         <Link
           href={'/'}
           className="relative mx-1 hidden h-14 w-14 hover:font-semibold focus:font-semibold sm:h-16 sm:w-16 md:block md:h-20 md:w-20"
