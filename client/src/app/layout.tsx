@@ -5,7 +5,7 @@ import '@/styles/loader.css';
 import '@/styles/navbar.css';
 import {SessionProvider} from 'next-auth/react';
 import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
-import MainNav from '@/components/Ui/MainNav';
+import MainNav from '@/components/Ui/navigation/MainNav';
 import Sidebar from '@/components/Ui/Sidebar';
 import Footer from '@/components/Ui/Footer';
 import {BuildFetchUrl} from '@/utils/BuildFetchUrl';

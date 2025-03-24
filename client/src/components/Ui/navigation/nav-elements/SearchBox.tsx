@@ -60,7 +60,7 @@ function SearchBox() {
   }, []);
 
   return (
-    <div>
+    <div className="hidden w-5/12 md:block">
       <form onSubmit={handleSubmit}>
         <label
           htmlFor="default-search"

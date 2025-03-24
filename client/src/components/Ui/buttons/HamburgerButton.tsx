@@ -15,6 +15,9 @@ function HamburgerButton({...props}: Props) {
         strokeLinecap="round"
         className="mx-5 cursor-pointer"
         // onClick={handleMobileNavButtonClick}
+        onClick={() => {
+          console.log('I am clicked');
+        }}
       >
         <line x1="2" y1="4.2" x2="24" y2="4.2" />
         <line x1="2" y1="9.4" x2="20" y2="9.4" />
