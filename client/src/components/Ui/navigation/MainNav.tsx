@@ -9,6 +9,7 @@ import LinksNoUser from './desktopNav-elements/LinksNoUser';
 import {useState} from 'react';
 import Backdrop from './mobileNav-elements/Backdrop';
 import MobileSidebar from './mobileNav-elements/MobileSidebar';
+import CodaskLogo from '@/../public/CodaskLogo.png';
 
 function MainNav() {
   const {data: session, status} = useSession();
@@ -42,7 +43,7 @@ function MainNav() {
           href={'/'}
           className="relative mx-1 hidden h-14 w-14 hover:font-semibold focus:font-semibold sm:h-16 sm:w-16 md:block md:h-20 md:w-20"
         >
-          <Image className="mainLogo" src={'/CodaskLogo.png'} alt="Logo" fill />
+          <Image className="mainLogo" src={CodaskLogo} alt="Logo" fill />
         </Link>
 
         {/* MIDDLE SECTION */}

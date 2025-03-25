@@ -50,6 +50,26 @@ footer {
   }
 }
 
+.mainLogo:hover {
+  animation-name: shake;
+  animation-duration: 3s;
+}
+@keyframes shake {
+  25% {
+    transform: rotate(10deg);
+    transform-origin: bottom;
+  }
+
+  50% {
+    transform: rotate(-10deg);
+    transform-origin: bottom;
+  }
+  75% {
+    transform: rotate(10deg);
+    transform-origin: bottom;
+  }
+}
+
 @layer components {
   .title_base {
     @apply col-span-6 my-6 h-12 rounded-3xl bg-[#EDE9E6] p-2 text-[#6741D9] shadow-custom;

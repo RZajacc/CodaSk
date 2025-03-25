@@ -37,7 +37,12 @@ function MobileSidebar({
           onClick={handleSideNavVisibility}
           className="hover:animate-pulse"
         >
-          <Image src={CodaskLogo} alt="logo" width={84} className="mx-auto" />
+          <Image
+            src={CodaskLogo}
+            alt="logo"
+            width={84}
+            className="mainLogo mx-auto"
+          />
         </Link>
       </section>
 
