@@ -17,7 +17,7 @@ function MainNav() {
 
   return (
     <>
-      {/* MOBILE NAVIGATION ELEMENTS */}
+      {/* -----MOBILE NAVIGATION ELEMENTS----- */}
       <Backdrop
         setShowMobileNav={setShowMobileNav}
         setHideMobileNav={setHideMobileNav}
@@ -30,7 +30,7 @@ function MainNav() {
         showMobileNav={showMobileNav}
       />
 
-      {/* DESKTOP NAVIGATION ELEMENTS */}
+      {/* -----DESKTOP NAVIGATION ELEMENTS----- */}
       <nav className="fixed left-0 top-0 flex h-20 w-full items-center justify-between border-b-2 border-b-[#EDE9E6] bg-[#6741D9] px-4 py-1 sm:h-24 md:h-28 md:px-6">
         {/* LEFT SECTION */}
         <HamburgerButton
