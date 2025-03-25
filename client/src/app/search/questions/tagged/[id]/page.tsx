@@ -9,7 +9,7 @@ import {
 
 import QuestionsGrid from '@/components/questions/QuestionsGrid';
 import {useRouter} from 'next/navigation';
-import QuestionButtons from '@/components/QuestionButtons';
+import QuestionButtons from '@/components/questions/QuestionButtons';
 import {DELETE_QUESTION, GET_QUESTIONS_BY_TAG} from '@/graphQL/questionQueries';
 
 export type questionByTagQuery = {

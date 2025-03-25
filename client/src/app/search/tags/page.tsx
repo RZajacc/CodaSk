@@ -1,7 +1,7 @@
 'use client';
 import {BOOKMARK_TAG, GET_TAGS, UNBOOKMARK_TAG} from '@/graphQL/tagsQueries';
 import {GET_USER_BY_ID} from '@/graphQL/userQueries';
-import QuestionButtons from '@/components/QuestionButtons';
+import QuestionButtons from '@/components/questions/QuestionButtons';
 import TagsGrid from '@/components/tags/TagsGrid';
 import {gql, useMutation, useQuery} from '@apollo/client';
 import {useSession} from 'next-auth/react';

@@ -11,7 +11,7 @@ import {
 import Link from 'next/link';
 import Image from 'next/image';
 import QuestionsGrid from '@/components/questions/QuestionsGrid';
-import QuestionButtons from '@/components/QuestionButtons';
+import QuestionButtons from '@/components/questions/QuestionButtons';
 import {DELETE_QUESTION, GET_QUESTIONS} from '@/graphQL/questionQueries';
 
 /// QUERIES ///
@@ -69,17 +69,17 @@ function Question() {
   };
 
   return (
-    <div className="h-full min-h-screen w-full">
+    <div className="w-full">
       {/* TOP SECTION */}
-      <div className="flex flex-row items-start justify-between px-6 py-6">
-        <h1 className=" mx-8 mt-4 text-left font-medium text-[#6741D9] md:text-3xl">
+      <div className="grid justify-center px-6 py-6 md:flex md:justify-between">
+        <h1 className=" mt-4 text-left text-2xl font-medium text-[#6741D9] md:text-3xl">
           Search among {filteredData?.getAllQuestions.length} questions
         </h1>
-        <div>
-          <QuestionButtons />
-        </div>
+        <QuestionButtons />
       </div>
-      <div className="sortByBox flex flex-row border-b-2 border-b-[#D9D9D9] p-2">
+
+      {/* SORTING OPTIONS */}
+      <div className="flex flex-row border-b-2 border-b-[#D9D9D9] p-2">
         <span className="flex flex-row  text-lg font-normal text-[#6741D9]">
           Sort by:
           <ul className="flex cursor-pointer list-none flex-row">
@@ -121,6 +121,7 @@ function Question() {
           </ul>
         </span>
       </div>
+
       {/* GRID SECTION */}
       <div className="mx-8">
         <QuestionsGrid
