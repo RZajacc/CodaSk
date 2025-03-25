@@ -13,6 +13,7 @@ import Image from 'next/image';
 import QuestionsGrid from '@/components/questions/QuestionsGrid';
 import QuestionButtons from '@/components/questions/QuestionButtons';
 import {DELETE_QUESTION, GET_QUESTIONS} from '@/graphQL/questionQueries';
+import SortOptionItem from '@/components/questions/SortOptionItem';
 
 /// QUERIES ///
 export type questionQuery = {
@@ -79,47 +80,21 @@ function Question() {
       </div>
 
       {/* SORTING OPTIONS */}
-      <div className="flex flex-row border-b-2 border-b-[#D9D9D9] p-2">
-        <span className="flex flex-row  text-lg font-normal text-[#6741D9]">
-          Sort by:
-          <ul className="flex cursor-pointer list-none flex-row">
-            <li
-              onClick={() => handleSortChange('All')}
-              className=" px-1"
-              value={'All'}
-            >
-              All<span className="font-semibold text-black"> | </span>
-            </li>
-            <li
-              onClick={() => handleSortChange('Popular')}
-              className=" px-1"
-              value={'Popular'}
-            >
-              Popular<span className="font-semibold text-black"> |</span>
-            </li>
-            <li
-              onClick={() => handleSortChange('Oldest')}
-              className=" px-1"
-              value={'Oldest'}
-            >
-              Oldest<span className="font-semibold text-black"> | </span>
-            </li>
-            <li
-              onClick={() => handleSortChange('Unanswered')}
-              className=" px-1"
-              value={'Unanswered'}
-            >
-              Unanswered<span className="font-semibold text-black"> |</span>
-            </li>
-            <li
-              onClick={() => handleSortChange('Solved')}
-              className=" px-1"
-              value={'Solved'}
-            >
-              Solved
-            </li>
-          </ul>
-        </span>
+      <div className="flex border-b-2 border-b-[#D9D9D9] p-2 text-lg text-[#6741D9]">
+        Sort by:
+        <ul className="flex cursor-pointer list-none flex-row flex-wrap">
+          <SortOptionItem handleSortChange={handleSortChange} option="All" />
+          <SortOptionItem
+            handleSortChange={handleSortChange}
+            option="Popular"
+          />
+          <SortOptionItem handleSortChange={handleSortChange} option="Oldest" />
+          <SortOptionItem
+            handleSortChange={handleSortChange}
+            option="Unanswered"
+          />
+          <SortOptionItem handleSortChange={handleSortChange} option="Solved" />
+        </ul>
       </div>
 
       {/* GRID SECTION */}
