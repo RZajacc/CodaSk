@@ -4,7 +4,7 @@
 
 body {
   display: grid;
-  grid-template-rows: 80px auto 117px;
+  grid-template-rows: 80px auto 80px;
   grid-template-areas:
     'navigation'
     'main'
@@ -22,7 +22,7 @@ footer {
 @media (min-width: 640px) {
   body {
     display: grid;
-    grid-template-rows: 96px auto 117px;
+    grid-template-rows: 96px auto 96px;
     grid-template-areas:
       'navigation'
       'main'

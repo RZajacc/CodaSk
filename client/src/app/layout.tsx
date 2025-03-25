@@ -5,8 +5,8 @@ import '@/styles/loader.css';
 import {SessionProvider} from 'next-auth/react';
 import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
 import MainNav from '@/components/Ui/navigation/MainNav';
-import Sidebar from '@/components/Ui/Sidebar';
-import Footer from '@/components/Ui/Footer';
+import Sidebar from '@/components/Ui/navigation/Sidebar';
+import Footer from '@/components/Ui/navigation/Footer';
 import {BuildFetchUrl} from '@/utils/BuildFetchUrl';
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
