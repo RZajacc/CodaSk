@@ -4,15 +4,21 @@ import React from 'react';
 
 type Props = {
   showMobileNav: boolean;
+  hideMobileNav: boolean;
   setShowMobileNav: React.Dispatch<React.SetStateAction<boolean>>;
+  setHideMobileNav: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-function MobileSidebar({showMobileNav, setShowMobileNav}: Props) {
+function MobileSidebar({
+  showMobileNav,
+  hideMobileNav,
+  setShowMobileNav,
+}: Props) {
   return (
     <div
       id="sidenav"
-      className={`h-lvh ${
-        showMobileNav ? 'animate-slidein' : 'animate-slideout'
+      className={`h-full ${showMobileNav && 'animate-slidein'} ${
+        hideMobileNav && 'animate-slideout'
       }  fixed -left-1/2 top-0 z-20 w-1/2 bg-white`}
     >
       {/* Logo and contact section */}

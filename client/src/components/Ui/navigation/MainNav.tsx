@@ -13,22 +13,30 @@ import MobileSidebar from './mobileNav-elements/MobileSidebar';
 function MainNav() {
   const {data: session, status} = useSession();
   const [showMobileNav, setShowMobileNav] = useState(false);
+  const [hideMobileNav, setHideMobileNav] = useState(false);
 
   return (
     <>
+      {/* MOBILE NAVIGATION ELEMENTS */}
       <Backdrop
         setShowMobileNav={setShowMobileNav}
+        setHideMobileNav={setHideMobileNav}
         showMobileNav={showMobileNav}
       />
       <MobileSidebar
         setShowMobileNav={setShowMobileNav}
+        setHideMobileNav={setHideMobileNav}
+        hideMobileNav={hideMobileNav}
         showMobileNav={showMobileNav}
       />
+
+      {/* DESKTOP NAVIGATION ELEMENTS */}
       <nav className="fixed left-0 top-0 flex h-20 w-full items-center justify-between border-b-2 border-b-[#EDE9E6] bg-[#6741D9] px-4 py-1 sm:h-24 md:h-28 md:px-6">
         {/* LEFT SECTION */}
         <HamburgerButton
           className="md:hidden"
           setShowMobileNav={setShowMobileNav}
+          setHideMobileNav={setHideMobileNav}
         />
         <Link
           href={'/'}

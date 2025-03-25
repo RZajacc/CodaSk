@@ -2,9 +2,19 @@ import React from 'react';
 
 type Props = {
   setShowMobileNav: React.Dispatch<React.SetStateAction<boolean>>;
+  setHideMobileNav: React.Dispatch<React.SetStateAction<boolean>>;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-function HamburgerButton({setShowMobileNav, ...props}: Props) {
+function HamburgerButton({
+  setShowMobileNav,
+  setHideMobileNav,
+  ...props
+}: Props) {
+  const handleMobileNavVisibility = () => {
+    setShowMobileNav((prev) => !prev);
+    setHideMobileNav(false);
+  };
+
   return (
     <button {...props}>
       <svg
@@ -16,9 +26,7 @@ function HamburgerButton({setShowMobileNav, ...props}: Props) {
         strokeLinejoin="round"
         strokeLinecap="round"
         className="mx-5 cursor-pointer"
-        onClick={() => {
-          setShowMobileNav((prev) => !prev);
-        }}
+        onClick={handleMobileNavVisibility}
       >
         <line x1="2" y1="4.2" x2="24" y2="4.2" />
         <line x1="2" y1="9.4" x2="20" y2="9.4" />
