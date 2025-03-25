@@ -6,10 +6,8 @@ export default async function Modules() {
   //Pass loading state as well and add to moduleCard component
 
   return (
-    <div className="h-full min-h-screen">
-      <h1 className=" mx-8 mt-4 text-left font-medium text-[#6741D9] md:text-3xl">
-        Page is still in development...
-      </h1>
-    </div>
+    <h1 className="mt-4 text-center text-xl text-[#6741D9] md:text-3xl">
+      Page is still in development...
+    </h1>
   );
 }
