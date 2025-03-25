@@ -5,14 +5,14 @@ function Footer() {
   return (
     <footer className="flex h-[80px] flex-col justify-center bg-black text-white sm:h-[96px]">
       <p className="my-1 text-center">CODASK Team</p>
-      <div className="flex justify-center gap-2">
+      <div className="flex justify-center gap-3">
         <Link
           className="flex gap-1 font-light no-underline hover:animate-pulse"
           href={'https://github.com/helene-abiassi'}
           target="_blank"
         >
           <FaGithub style={{fontSize: '1.3em'}} />
-          Hélène Abi Assi
+          Hélène
         </Link>{' '}
         |{' '}
         <Link
@@ -21,7 +21,7 @@ function Footer() {
           target="_blank"
         >
           <FaGithub style={{fontSize: '1.3em'}} />
-          Thair Orfali{' '}
+          Thair
         </Link>
         |{' '}
         <Link
@@ -30,7 +30,7 @@ function Footer() {
           target="_blank"
         >
           <FaGithub style={{fontSize: '1.3em'}} />
-          Rafał Zając
+          Rafał
         </Link>
       </div>
     </footer>
