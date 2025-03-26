@@ -48,40 +48,6 @@ type questionCardProp = {
   ];
 };
 
-type questionbyTagCardProp = {
-  getQuestionsByTagName: [
-    {
-      id: string;
-      author: {
-        id: string;
-        first_name: string;
-        user_photo: string;
-      };
-      posted_on: Date | string;
-      title: string;
-      problem_description: string;
-      module: string;
-      tags: [
-        {
-          id: string;
-          name: string;
-        },
-      ];
-      answers: [
-        {
-          id: string;
-        },
-      ];
-      saved_by: [
-        {
-          first_name: string;
-        },
-      ];
-      status: string;
-    },
-  ];
-};
-
 type Props = {
   filteredData?: questionCardProp;
   deleteQuestion: ({
