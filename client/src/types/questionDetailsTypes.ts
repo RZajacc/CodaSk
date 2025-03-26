@@ -38,3 +38,39 @@ export type QuestionType = {
 export type questionDetailsType = {
   getQuestionById: QuestionType;
 };
+
+// QUESTION QUERIES TYPES
+export type questionQuery = {
+  getAllQuestions: [
+    {
+      id: string;
+      author: {
+        id: string;
+        first_name: string;
+        user_photo: string;
+      };
+      posted_on: Date | string;
+      title: string;
+      problem_description: string;
+      solution_tried: string;
+      module: string;
+      tags: [
+        {
+          id: string;
+          name: string;
+        },
+      ];
+      answers: [
+        {
+          id: string;
+        },
+      ];
+      saved_by: [
+        {
+          first_name: string;
+        },
+      ];
+      status: string;
+    },
+  ];
+};

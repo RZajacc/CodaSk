@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
-import {FaTrashAlt, FaPen, FaCheckCircle, FaChessKing} from 'react-icons/fa';
+import {FaTrashAlt, FaPen, FaCheckCircle} from 'react-icons/fa';
 import parse from 'html-react-parser';
 import 'react-quill/dist/quill.snow.css';
 import {useSession} from 'next-auth/react';
@@ -10,46 +10,10 @@ import {useRouter} from 'next/navigation';
 import {getPostedOnInDays} from '@/utils/GetPostedOnInDays';
 import Loader from './Loader';
 
-import {Questions} from '@/types/custom_types';
-import {BuildFetchUrl} from '@/utils/BuildFetchUrl';
-// import {formatDate} from '@/components/questions/Functions';
-
-type questionCardProp = {
-  getAllQuestions: [
-    {
-      id: string;
-      author: {
-        id: string;
-        first_name: string;
-        user_photo: string;
-      };
-      posted_on: Date | string;
-      title: string;
-      problem_description: string;
-      module: string;
-      tags: [
-        {
-          id: string;
-          name: string;
-        },
-      ];
-      answers: [
-        {
-          id: string;
-        },
-      ];
-      saved_by: [
-        {
-          first_name: string;
-        },
-      ];
-      status: string;
-    },
-  ];
-};
+import {questionQuery} from '@/types/questionDetailsTypes';
 
 type Props = {
-  filteredData?: questionCardProp;
+  filteredData?: questionQuery;
   deleteQuestion: ({
     variables: {deleteQuestionId},
   }: {
