@@ -45,6 +45,8 @@ function QuestionCard({filteredData, deleteQuestion, loading}: Props) {
     }
   };
 
+  console.log('QUESTIONS', filteredData?.getAllQuestions);
+
   const noQuestionsMessage =
     (filteredData?.getAllQuestions ?? []).length === 0 ? (
       <div className="text-center">
@@ -61,11 +63,7 @@ function QuestionCard({filteredData, deleteQuestion, loading}: Props) {
     ) : null;
 
   return (
-    <div className="flex flex-col">
-      {loading && <Loader />}
-
-      {!loading && noQuestionsMessage}
-
+    <div>
       {filteredData &&
         filteredData.getAllQuestions.map((q, index) => {
           return (

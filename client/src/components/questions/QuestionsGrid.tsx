@@ -1,6 +1,7 @@
 import React from 'react';
 import QuestionCard from './QuestionCard';
 import {questionQuery} from '@/types/questionDetailsTypes';
+import Loader from './Loader';
 
 type Props = {
   filteredData: questionQuery;
@@ -14,7 +15,8 @@ type Props = {
 
 function QuestionsGrid({filteredData, deleteQuestion, loading}: Props) {
   return (
-    <div className="flex flex-col">
+    <div className="grid">
+      {loading && <Loader />}
       <QuestionCard
         filteredData={filteredData}
         deleteQuestion={deleteQuestion}
