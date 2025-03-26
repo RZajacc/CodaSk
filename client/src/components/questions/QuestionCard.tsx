@@ -84,23 +84,15 @@ type questionbyTagCardProp = {
 
 type Props = {
   filteredData?: questionCardProp;
-  filteredTagData?: questionbyTagCardProp;
   deleteQuestion: ({
     variables: {deleteQuestionId},
   }: {
     variables: {deleteQuestionId: string};
   }) => void;
   loading: boolean;
-  questions?: Questions[];
 };
 
-function QuestionCard({
-  filteredData,
-  filteredTagData,
-  deleteQuestion,
-  loading,
-  questions,
-}: Props) {
+function QuestionCard({filteredData, deleteQuestion, loading}: Props) {
   const session = useSession();
   const userID = session?.data?.user?._id;
   const router = useRouter();
@@ -124,7 +116,6 @@ function QuestionCard({
   };
 
   const noQuestionsMessage =
-    (filteredTagData?.getQuestionsByTagName ?? []).length === 0 &&
     (filteredData?.getAllQuestions ?? []).length === 0 ? (
       <div className="text-center">
         <p className=" my-14  font-medium text-[#6741D9] md:text-3xl">
@@ -144,114 +135,6 @@ function QuestionCard({
       {loading && <Loader />}
 
       {!loading && noQuestionsMessage}
-      {filteredTagData &&
-        filteredTagData.getQuestionsByTagName?.map((q, index) => {
-          return (
-            <div
-              key={index + 1} ///
-              className="my-4 max-w-full rounded-2xl bg-[#EDE9E6] hover:bg-gray-300"
-            >
-              {/* QUESTION BOX HEADER */}
-              <div className="flex flex-row items-center justify-between rounded-xl bg-black p-2 text-base font-light text-white">
-                <div className="leftSideHeader flex items-center">
-                  <Image
-                    alt="user_photo"
-                    src={q.author?.user_photo}
-                    width={40}
-                    height={40}
-                    className="mr-2 rounded-3xl"
-                  />
-                  <p>
-                    {q.author?.first_name} posted{' '}
-                    {getPostedOnInDays(q.posted_on)}
-                  </p>
-                </div>
-
-                <p className="mx-4">{q.module}</p>
-              </div>
-
-              {/* QUESTION BOX BODY */}
-              <div className="flex h-full cursor-pointer flex-row items-center ">
-                <div className="questionBoxBody mx-4 w-full max-w-7xl p-4 ">
-                  <div
-                    onClick={() => {
-                      handleQuestionRedirect(q?.id);
-                    }}
-                  >
-                    <div className="mb-2 flex flex-row justify-between font-semibold text-[#6741D9]">
-                      <p className="">{q.title}</p>
-                      <div className="flex flex-row items-center justify-center">
-                        {q.status === 'Solved' ? (
-                          <div className="mx-2">
-                            <FaCheckCircle color="#088F8F" />
-                          </div>
-                        ) : (
-                          <div></div>
-                        )}
-                        {q.answers && q.answers.length <= 1 ? (
-                          <p>{q.answers.length} answer</p>
-                        ) : (
-                          <p>{q.answers.length} answers</p>
-                        )}
-                      </div>
-                    </div>
-                    <div>
-                      <p className=" max-h-7 overflow-hidden truncate text-ellipsis pr-4">
-                        {/* {q?.problem_description}{' '} */}
-                        {parse(q?.problem_description)}
-                      </p>
-                    </div>
-                  </div>
-                  {/* TAG BODY */}
-                  <div className="m-2 flex flex-row items-center justify-between">
-                    <div className="flex flex-1 flex-wrap">
-                      {q.tags &&
-                        q.tags.map((tag, indexT) => {
-                          return (
-                            <div
-                              key={indexT}
-                              className="mx-2 my-2 w-max rounded-md bg-black p-2 text-white"
-                            >
-                              <Link
-                                className="no-underline"
-                                href={{
-                                  pathname: `/search/questions/tagged/${tag.id}`,
-                                  query: {
-                                    name: tag.name,
-                                  },
-                                }}
-                              >
-                                {tag.name}
-                              </Link>
-                            </div>
-                          );
-                        })}
-                    </div>
-                    {/* EDIT/DELETE BUTTONS */}
-                    <div>
-                      {userID === q?.author.id && (
-                        <>
-                          <button
-                            onClick={() => {
-                              handeleDeleteQuestion(q?.id);
-                            }}
-                            className="mx-2"
-                          >
-                            <FaTrashAlt />
-                          </button>
-                          <button className="mx-2">
-                            <FaPen />
-                          </button>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      {/*   -------------------------------------------------------------------------------------------------------------- */}
 
       {filteredData &&
         filteredData.getAllQuestions.map((q, index) => {

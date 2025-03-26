@@ -1,6 +1,4 @@
-import {ApolloClient, InMemoryCache, gql} from '@apollo/client';
-import React, {useEffect} from 'react';
-import {GetServerSideProps} from 'next';
+import React from 'react';
 import QuestionCard from './QuestionCard';
 import {questionByTagQuery} from '@/app/search/questions/tagged/[id]/page';
 // import {GET_QUESTIONS} from '@/app/search/questions/page';
@@ -41,10 +39,7 @@ type questionQuery = {
 };
 
 type Props = {
-  // data: questionQuery;
-  filteredData?: questionQuery;
-  filteredTagData?: questionByTagQuery;
-  // tagdata: questionByTagQuery;
+  filteredData: questionQuery;
   deleteQuestion: ({
     variables: {deleteQuestionId},
   }: {
@@ -53,16 +48,10 @@ type Props = {
   loading: boolean;
 };
 
-function QuestionsGrid({
-  filteredData,
-  filteredTagData,
-  deleteQuestion,
-  loading,
-}: Props) {
+function QuestionsGrid({filteredData, deleteQuestion, loading}: Props) {
   return (
     <div className="flex flex-col">
       <QuestionCard
-        filteredTagData={filteredTagData}
         filteredData={filteredData}
         deleteQuestion={deleteQuestion}
         loading={loading}

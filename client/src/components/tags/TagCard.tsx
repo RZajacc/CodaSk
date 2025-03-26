@@ -207,15 +207,15 @@ function TagCard({
                 </div>
               </div>
               {/* TAG BOX BODY */}
-              <div className="flex h-full  flex-row items-center">
+              <div className="flex h-full flex-row items-center">
                 <div className="questionBoxBody mx-2 p-2">
                   <div
                     onClick={() => {
                       handleTagRedirect(tag.id);
                     }}
-                    className="flex  flex-col"
+                    className="flex flex-col"
                   >
-                    <p className="line-clamp-4 ">{tag?.description}</p>
+                    <p className="line-clamp-4">{tag?.description}</p>
                     <br />
                   </div>
                   <div className="text-[#6741D9]">
