@@ -47,7 +47,7 @@ function QuestionCard({questionObj, deleteQuestion, loading}: Props) {
   };
 
   return (
-    <div className=" my-4 rounded-2xl bg-[#EDE9E6] hover:bg-gray-300">
+    <div className="questionCard my-4 rounded-2xl bg-[#EDE9E6] hover:bg-gray-300">
       {/* QUESTION BOX HEADER */}
       <QuestionCardHeader
         userImageURL={questionObj.author.user_photo}
@@ -56,85 +56,70 @@ function QuestionCard({questionObj, deleteQuestion, loading}: Props) {
         courseModule={questionObj.module}
       />
 
-      {/* QUESTION BOX BODY */}
-      <div className="flex cursor-pointer flex-row items-center ">
-        {/* BODY WRAPPER */}
-        <div className="mx-4 w-full max-w-7xl p-4">
-          {/* QUESTION ACTUAL BODY */}
-          <div
-            onClick={() => {
-              handleQuestionRedirect(questionObj?.id);
-            }}
-          >
-            {/* Question title */}
-            <div className="mb-2 flex flex-row justify-between font-semibold text-[#6741D9]">
-              <p className="break-words">{questionObj.title}</p>
-              <div className="flex flex-row items-center justify-center">
-                {questionObj.status === 'Solved' ? (
-                  <div className="mx-2">
-                    <FaCheckCircle color="#088F8F" />
-                  </div>
-                ) : (
-                  <div></div>
-                )}
-                {questionObj.answers && questionObj.answers.length <= 1 ? (
-                  <p>{questionObj.answers.length} answer</p>
-                ) : (
-                  <p>{questionObj.answers.length} answers</p>
-                )}
+      {/* Title Section */}
+      <section className="title p-2 font-semibold text-[#6741D9]">
+        {questionObj.title}
+      </section>
+
+      <section className="desc px-2 pb-2">
+        {parse(questionObj.problem_description)}
+      </section>
+
+      {/* Tags */}
+      <section className="flex gap-2 p-2">
+        {questionObj.tags &&
+          questionObj.tags.map((tag, indexT) => {
+            return (
+              <div key={indexT} className="rounded-md bg-black p-2 text-white">
+                <Link
+                  className="no-underline"
+                  href={{
+                    pathname: `/search/questions/tagged/${tag.id}`,
+                    query: {
+                      name: tag.name,
+                    },
+                  }}
+                >
+                  {tag.name}
+                </Link>
               </div>
-            </div>
-            {/* Problem description */}
-            <div className="max-h-6 overflow-hidden truncate text-ellipsis pr-4">
-              <p>{parse(questionObj?.problem_description)}</p>
-            </div>
-          </div>
-          {/* TAG BODY */}
-          <div className="m-2 flex flex-row items-center justify-between">
-            <div className="flex flex-row flex-wrap">
-              {questionObj.tags &&
-                questionObj.tags.map((tag, indexT) => {
-                  return (
-                    <div
-                      key={indexT}
-                      className="mx-2 my-2 w-max rounded-md bg-black p-2 text-white"
-                    >
-                      <Link
-                        className="no-underline"
-                        href={{
-                          pathname: `/search/questions/tagged/${tag.id}`,
-                          query: {
-                            name: tag.name,
-                          },
-                        }}
-                      >
-                        {tag.name}
-                      </Link>
-                    </div>
-                  );
-                })}
-            </div>
-            {/* EDIT/DELETE BUTTONS - NOT WORKING!*/}
-            <div>
-              {userID === questionObj?.author.id && (
-                <>
-                  <button
-                    onClick={() => {
-                      handeleDeleteQuestion(questionObj?.id);
-                    }}
-                    className="mx-2"
-                  >
-                    <FaTrashAlt />
-                  </button>
-                  <button className="mx-2">
-                    <FaPen />
-                  </button>
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
+            );
+          })}
+      </section>
+
+      {/* Answers section */}
+      <section className="answers flex items-center gap-1 py-2 pl-4">
+        {questionObj.status === 'Solved' && <FaCheckCircle color="#088F8F" />}
+        {questionObj.answers.length === 1 ? (
+          <>
+            {questionObj.answers.length} <span>answer</span>
+          </>
+        ) : (
+          <>
+            {questionObj.answers.length}
+            <span>answers</span>
+          </>
+        )}
+      </section>
+
+      {/* Edit */}
+      <section className="opt flex items-center justify-center">
+        {userID === questionObj?.author.id && (
+          <>
+            <button
+              onClick={() => {
+                handeleDeleteQuestion(questionObj?.id);
+              }}
+              className="mx-2"
+            >
+              <FaTrashAlt />
+            </button>
+            <button className="mx-2">
+              <FaPen />
+            </button>
+          </>
+        )}
+      </section>
     </div>
   );
 }

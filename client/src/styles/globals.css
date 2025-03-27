@@ -19,6 +19,39 @@ footer {
   grid-area: footer;
 }
 
+/* QUESTIONS CARD */
+.questionCard {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  align-items: start;
+  grid-template-areas:
+    'header header header header header header header header header header'
+    'title title title title title title title title title title'
+    'desc desc desc desc desc desc desc desc desc desc'
+    'tags tags tags tags tags tags tags tags tags tags'
+    'answers answers blank blank blank blank blank blank blank opt';
+}
+
+.questionHeader {
+  grid-area: header;
+}
+
+.title {
+  grid-area: title;
+}
+
+.answers {
+  grid-area: answers;
+}
+
+.desc {
+  grid-area: desc;
+}
+
+.opt {
+  grid-area: opt;
+}
+
 @media (min-width: 640px) {
   body {
     display: grid;

@@ -16,7 +16,7 @@ function QuestionCardHeader({
   courseModule,
 }: Props) {
   return (
-    <section className="flex items-center justify-between rounded-xl bg-black p-2 text-base font-light text-white">
+    <section className="questionHeader flex items-center justify-between rounded-xl bg-black p-2 text-base font-light text-white">
       <div className="flex items-center">
         <Image
           alt="user_photo"
