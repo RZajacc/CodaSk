@@ -2,11 +2,10 @@ import React from 'react';
 import QuestionCard from './QuestionCard';
 import {questionQuery} from '@/types/questionDetailsTypes';
 import Loader from './Loader';
-import Link from 'next/link';
 import NoQuestionsFound from './NoQuestionsFound';
 
 type Props = {
-  filteredData?: questionQuery;
+  filteredData?: {getAllQuestions: questionQuery[]};
   deleteQuestion: ({
     variables: {deleteQuestionId},
   }: {
@@ -21,14 +20,22 @@ function QuestionsGrid({filteredData, deleteQuestion, loading}: Props) {
 
   return (
     <div className="grid">
+      {/* Loading and empty array states */}
       {loading && <Loader />}
       {isQuestionsArrEmpty && <NoQuestionsFound />}
 
-      <QuestionCard
-        filteredData={filteredData}
-        deleteQuestion={deleteQuestion}
-        loading={loading}
-      />
+      {/* Display all questions */}
+      {filteredData &&
+        filteredData.getAllQuestions.map((questionObj, index) => {
+          return (
+            <QuestionCard
+              key={questionObj.id}
+              questionObj={questionObj}
+              deleteQuestion={deleteQuestion}
+              loading={loading}
+            />
+          );
+        })}
     </div>
   );
 }

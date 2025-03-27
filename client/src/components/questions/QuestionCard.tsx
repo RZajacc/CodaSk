@@ -13,7 +13,7 @@ import Loader from './Loader';
 import {questionQuery} from '@/types/questionDetailsTypes';
 
 type Props = {
-  filteredData?: questionQuery;
+  questionObj: questionQuery;
   deleteQuestion: ({
     variables: {deleteQuestionId},
   }: {
@@ -22,7 +22,7 @@ type Props = {
   loading: boolean;
 };
 
-function QuestionCard({filteredData, deleteQuestion, loading}: Props) {
+function QuestionCard({questionObj, deleteQuestion, loading}: Props) {
   const session = useSession();
   const userID = session?.data?.user?._id;
   const router = useRouter();
@@ -46,113 +46,103 @@ function QuestionCard({filteredData, deleteQuestion, loading}: Props) {
   };
 
   return (
-    <div>
-      {filteredData &&
-        filteredData.getAllQuestions.map((q, index) => {
-          return (
-            <div
-              key={index + 1}
-              className=" my-4 max-w-full  rounded-2xl bg-[#EDE9E6] hover:bg-gray-300"
-            >
-              {/* QUESTION BOX HEADER */}
-              <div className="questionBoxHeader flex flex-row items-center justify-between rounded-xl bg-black p-2 text-base font-light text-white">
-                <div className="leftSideHeader flex items-center">
-                  <Image
-                    alt="user_photo"
-                    src={q.author?.user_photo}
-                    width={40}
-                    height={40}
-                    className="mr-2 rounded-3xl"
-                  />
-                  <p>
-                    {q.author?.first_name} posted{' '}
-                    {getPostedOnInDays(q.posted_on)}
-                  </p>
-                </div>
+    <div className=" my-4 max-w-full  rounded-2xl bg-[#EDE9E6] hover:bg-gray-300">
+      {/* QUESTION BOX HEADER */}
+      <div className="flex flex-row items-center justify-between rounded-xl bg-black p-2 text-base font-light text-white">
+        <div className="leftSideHeader flex items-center">
+          <Image
+            alt="user_photo"
+            src={questionObj.author?.user_photo}
+            width={40}
+            height={40}
+            className="mr-2 rounded-3xl"
+          />
+          <p>
+            {questionObj.author?.first_name} posted{' '}
+            {getPostedOnInDays(questionObj.posted_on)}
+          </p>
+        </div>
 
-                <p className="mx-4">{q.module}</p>
-              </div>
+        <p className="mx-4">{questionObj.module}</p>
+      </div>
 
-              {/* QUESTION BOX BODY */}
+      {/* QUESTION BOX BODY */}
 
-              <div className="flex h-full cursor-pointer flex-row items-center ">
-                <div className="questionBoxBody mx-4 w-full max-w-7xl p-4">
-                  <div
-                    onClick={() => {
-                      handleQuestionRedirect(q?.id);
-                    }}
-                  >
-                    <div className="mb-2 flex flex-row justify-between font-semibold text-[#6741D9]">
-                      <p className="">{q.title}</p>
-                      <div className="flex flex-row items-center justify-center">
-                        {q.status === 'Solved' ? (
-                          <div className="mx-2">
-                            <FaCheckCircle color="#088F8F" />
-                          </div>
-                        ) : (
-                          <div></div>
-                        )}
-                        {q.answers && q.answers.length <= 1 ? (
-                          <p>{q.answers.length} answer</p>
-                        ) : (
-                          <p>{q.answers.length} answers</p>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="... max-h-6 overflow-hidden truncate text-ellipsis pr-4">
-                      <p>{parse(q?.problem_description)}</p>
-                    </div>
+      <div className="flex h-full cursor-pointer flex-row items-center ">
+        <div className="questionBoxBody mx-4 w-full max-w-7xl p-4">
+          <div
+            onClick={() => {
+              handleQuestionRedirect(questionObj?.id);
+            }}
+          >
+            <div className="mb-2 flex flex-row justify-between font-semibold text-[#6741D9]">
+              <p className="">{questionObj.title}</p>
+              <div className="flex flex-row items-center justify-center">
+                {questionObj.status === 'Solved' ? (
+                  <div className="mx-2">
+                    <FaCheckCircle color="#088F8F" />
                   </div>
-                  {/* TAG BODY */}
-                  <div className="m-2 flex flex-row items-center justify-between">
-                    <div className="flex flex-row flex-wrap">
-                      {q.tags &&
-                        q.tags.map((tag, indexT) => {
-                          return (
-                            <div
-                              key={indexT}
-                              className="mx-2 my-2 w-max rounded-md bg-black p-2 text-white"
-                            >
-                              <Link
-                                className="no-underline"
-                                href={{
-                                  pathname: `/search/questions/tagged/${tag.id}`,
-                                  query: {
-                                    name: tag.name,
-                                  },
-                                }}
-                              >
-                                {tag.name}
-                              </Link>
-                            </div>
-                          );
-                        })}
-                    </div>
-                    {/* EDIT/DELETE BUTTONS */}
-                    <div>
-                      {userID === q?.author.id && (
-                        <>
-                          <button
-                            onClick={() => {
-                              handeleDeleteQuestion(q?.id);
-                            }}
-                            className="mx-2"
-                          >
-                            <FaTrashAlt />
-                          </button>
-                          <button className="mx-2">
-                            <FaPen />
-                          </button>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                </div>
+                ) : (
+                  <div></div>
+                )}
+                {questionObj.answers && questionObj.answers.length <= 1 ? (
+                  <p>{questionObj.answers.length} answer</p>
+                ) : (
+                  <p>{questionObj.answers.length} answers</p>
+                )}
               </div>
             </div>
-          );
-        })}
+
+            <div className="... max-h-6 overflow-hidden truncate text-ellipsis pr-4">
+              <p>{parse(questionObj?.problem_description)}</p>
+            </div>
+          </div>
+          {/* TAG BODY */}
+          <div className="m-2 flex flex-row items-center justify-between">
+            <div className="flex flex-row flex-wrap">
+              {questionObj.tags &&
+                questionObj.tags.map((tag, indexT) => {
+                  return (
+                    <div
+                      key={indexT}
+                      className="mx-2 my-2 w-max rounded-md bg-black p-2 text-white"
+                    >
+                      <Link
+                        className="no-underline"
+                        href={{
+                          pathname: `/search/questions/tagged/${tag.id}`,
+                          query: {
+                            name: tag.name,
+                          },
+                        }}
+                      >
+                        {tag.name}
+                      </Link>
+                    </div>
+                  );
+                })}
+            </div>
+            {/* EDIT/DELETE BUTTONS */}
+            <div>
+              {userID === questionObj?.author.id && (
+                <>
+                  <button
+                    onClick={() => {
+                      handeleDeleteQuestion(questionObj?.id);
+                    }}
+                    className="mx-2"
+                  >
+                    <FaTrashAlt />
+                  </button>
+                  <button className="mx-2">
+                    <FaPen />
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
