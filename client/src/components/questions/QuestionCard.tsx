@@ -1,20 +1,18 @@
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 
 import {FaTrashAlt, FaPen, FaCheckCircle} from 'react-icons/fa';
-import parse from 'html-react-parser';
 import 'react-quill/dist/quill.snow.css';
 import {useSession} from 'next-auth/react';
 import {useRouter} from 'next/navigation';
 import {getPostedOnInDays} from '@/utils/GetPostedOnInDays';
-import Loader from './Loader';
 
 import {questionQuery} from '@/types/questionDetailsTypes';
 import QuestionCardHeader from './questionCard/QuestionCardHeader';
 import {divideString} from '@/utils/QuillTextProcessor';
 import {deleteInlineStyles} from '@/utils/CleanInlineStyles';
 import ProblemDescription from './questionCard/ProblemDescription';
+import TagPill from './questionCard/TagPill';
 
 type Props = {
   questionObj: questionQuery;
@@ -53,7 +51,7 @@ function QuestionCard({questionObj, deleteQuestion, loading}: Props) {
   const divideDescString = divideString(questionObj.problem_description);
   const problemDesc = deleteInlineStyles(divideDescString);
 
-  console.log(problemDesc);
+  // console.log(questionObj.tags[0]);
   return (
     <Link
       href={`/search/questions/${questionObj.id}`}
@@ -83,15 +81,8 @@ function QuestionCard({questionObj, deleteQuestion, loading}: Props) {
       {/* Tags */}
       <section className="flex gap-2 px-8">
         {questionObj.tags &&
-          questionObj.tags.map((tag, indexT) => {
-            return (
-              <div
-                className="whitespace-nowrap rounded-md bg-black p-2 text-white no-underline"
-                key={indexT}
-              >
-                {tag.name}
-              </div>
-            );
+          questionObj.tags.map((tag, idx) => {
+            return <TagPill tagName={tag.name} key={idx} />;
           })}
       </section>
 
