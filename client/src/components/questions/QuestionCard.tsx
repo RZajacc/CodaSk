@@ -53,7 +53,10 @@ function QuestionCard({questionObj, deleteQuestion, loading}: Props) {
   const problemDesc = deleteInlineStyles(divideDescString);
 
   return (
-    <div className="questionCard my-4 rounded-2xl bg-[#EDE9E6] hover:bg-gray-300">
+    <Link
+      href={`/search/questions/${questionObj.id}`}
+      className="questionCard my-4 rounded-2xl bg-[#EDE9E6] no-underline hover:bg-gray-300 hover:font-normal"
+    >
       {/* QUESTION BOX HEADER */}
       <QuestionCardHeader
         userImageURL={questionObj.author.user_photo}
@@ -140,7 +143,7 @@ function QuestionCard({questionObj, deleteQuestion, loading}: Props) {
           </>
         )}
       </section>
-    </div>
+    </Link>
   );
 }
 

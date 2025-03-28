@@ -53,7 +53,7 @@ footer {
 }
 
 pre {
-  white-space: wrap;
+  white-space: pre-wrap;
   word-wrap: break-word;
   line-clamp: 5;
 }
