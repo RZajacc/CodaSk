@@ -13,6 +13,7 @@ import {divideString} from '@/utils/QuillTextProcessor';
 import {deleteInlineStyles} from '@/utils/CleanInlineStyles';
 import ProblemDescription from './questionCard/ProblemDescription';
 import TagPill from './questionCard/TagPill';
+import AnswersCount from './questionCard/AnswersCount';
 
 type Props = {
   questionObj: questionQuery;
@@ -87,20 +88,10 @@ function QuestionCard({questionObj, deleteQuestion, loading}: Props) {
       </section>
 
       {/* Answers section */}
-      <section className="answers mb-3 flex items-center gap-1 px-6">
-        {questionObj.status === 'Solved' && <FaCheckCircle color="#088F8F" />}
-        {questionObj.answers.length === 1 ? (
-          <>
-            <span className="font-bold"> {questionObj.answers.length}</span>{' '}
-            answer
-          </>
-        ) : (
-          <>
-            <span className="font-bold">{questionObj.answers.length}</span>
-            answers
-          </>
-        )}
-      </section>
+      <AnswersCount
+        status={questionObj.status}
+        count={questionObj.answers.length}
+      />
 
       {/* Edit */}
       <section className="opt flex items-center gap-5 px-6">
