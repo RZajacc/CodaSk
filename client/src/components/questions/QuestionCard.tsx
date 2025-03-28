@@ -1,7 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
 
-import {FaTrashAlt, FaPen, FaCheckCircle} from 'react-icons/fa';
 import 'react-quill/dist/quill.snow.css';
 import {useSession} from 'next-auth/react';
 import {useRouter} from 'next/navigation';
@@ -14,6 +13,7 @@ import {deleteInlineStyles} from '@/utils/CleanInlineStyles';
 import ProblemDescription from './questionCard/ProblemDescription';
 import TagPill from './questionCard/TagPill';
 import AnswersCount from './questionCard/AnswersCount';
+import QuestionOptions from './questionCard/QuestionOptions';
 
 type Props = {
   questionObj: questionQuery;
@@ -28,11 +28,6 @@ type Props = {
 function QuestionCard({questionObj, deleteQuestion, loading}: Props) {
   const session = useSession();
   const userID = session?.data?.user?._id;
-  const router = useRouter();
-
-  const handleQuestionRedirect = (questionID: string) => {
-    router.push(`/search/questions/${questionID}`);
-  };
 
   const handeleDeleteQuestion = async (questionID: string) => {
     const deleteConfirm = window.confirm(
@@ -93,23 +88,13 @@ function QuestionCard({questionObj, deleteQuestion, loading}: Props) {
         count={questionObj.answers.length}
       />
 
-      {/* Edit */}
-      <section className="opt flex items-center gap-5 px-6">
-        {userID === questionObj?.author.id && (
-          <>
-            <button
-              onClick={() => {
-                handeleDeleteQuestion(questionObj?.id);
-              }}
-            >
-              <FaTrashAlt className="h-6" />
-            </button>
-            <button>
-              <FaPen className="h-6" />
-            </button>
-          </>
-        )}
-      </section>
+      {/* Options */}
+      <QuestionOptions
+        userId={userID}
+        questionId={questionObj.id}
+        questionAuthorId={questionObj.author.id}
+        handeleDeleteQuestion={handeleDeleteQuestion}
+      />
     </Link>
   );
 }
