@@ -12,6 +12,8 @@ import Loader from './Loader';
 
 import {questionQuery} from '@/types/questionDetailsTypes';
 import QuestionCardHeader from './questionCard/QuestionCardHeader';
+import {divideString} from '@/utils/QuillTextProcessor';
+import {deleteInlineStyles} from '@/utils/CleanInlineStyles';
 
 type Props = {
   questionObj: questionQuery;
@@ -46,6 +48,10 @@ function QuestionCard({questionObj, deleteQuestion, loading}: Props) {
     }
   };
 
+  // Prepare quill generated text to display
+  const divideDescString = divideString(questionObj.problem_description);
+  const problemDesc = deleteInlineStyles(divideDescString);
+
   return (
     <div className="questionCard my-4 rounded-2xl bg-[#EDE9E6] hover:bg-gray-300">
       {/* QUESTION BOX HEADER */}
@@ -57,65 +63,79 @@ function QuestionCard({questionObj, deleteQuestion, loading}: Props) {
       />
 
       {/* Title Section */}
-      <section className="title p-2 font-semibold text-[#6741D9]">
+      <section className="title my-3 pl-6 font-semibold text-[#6741D9]">
         {questionObj.title}
       </section>
 
-      <section className="desc px-2 pb-2">
-        {parse(questionObj.problem_description)}
-      </section>
-
-      {/* Tags */}
-      <section className="flex gap-2 p-2">
-        {questionObj.tags &&
-          questionObj.tags.map((tag, indexT) => {
+      {/* Description section */}
+      <section className="desc mb-3 line-clamp-5 px-6">
+        {problemDesc &&
+          problemDesc.map((problem, idx) => {
             return (
-              <div key={indexT} className="rounded-md bg-black p-2 text-white">
-                <Link
-                  className="no-underline"
-                  href={{
-                    pathname: `/search/questions/tagged/${tag.id}`,
-                    query: {
-                      name: tag.name,
-                    },
-                  }}
-                >
-                  {tag.name}
-                </Link>
+              <div
+                className={
+                  problem.type === 'text'
+                    ? ''
+                    : 'my-3 rounded-xl bg-black px-3 py-1 text-white'
+                }
+                key={idx}
+              >
+                {parse(problem.data)}
               </div>
             );
           })}
       </section>
 
+      {/* Tags */}
+      <section className="flex gap-2 pl-8">
+        {questionObj.tags &&
+          questionObj.tags.map((tag, indexT) => {
+            return (
+              <Link
+                className="whitespace-nowrap rounded-md bg-black p-2 text-white no-underline"
+                key={indexT}
+                href={{
+                  pathname: `/search/questions/tagged/${tag.id}`,
+                  query: {
+                    name: tag.name,
+                  },
+                }}
+              >
+                {tag.name}
+              </Link>
+            );
+          })}
+      </section>
+
       {/* Answers section */}
-      <section className="answers flex items-center gap-1 py-2 pl-4">
+      <section className="answers my-3 flex items-center gap-1 pl-6">
         {questionObj.status === 'Solved' && <FaCheckCircle color="#088F8F" />}
         {questionObj.answers.length === 1 ? (
           <>
-            {questionObj.answers.length} <span>answer</span>
+            <span className="font-bold"> {questionObj.answers.length}</span>{' '}
+            answer
           </>
         ) : (
           <>
-            {questionObj.answers.length}
-            <span>answers</span>
+            <span className="font-bold">{questionObj.answers.length}</span>
+            answers
           </>
         )}
       </section>
 
       {/* Edit */}
-      <section className="opt flex items-center justify-center">
+      <section className="opt my-3 flex items-center justify-center gap-5 pr-3">
         {userID === questionObj?.author.id && (
           <>
             <button
               onClick={() => {
                 handeleDeleteQuestion(questionObj?.id);
               }}
-              className="mx-2"
             >
-              <FaTrashAlt />
+              <FaTrashAlt className="h-6" />
             </button>
-            <button className="mx-2">
-              <FaPen />
+            <button>
+              <FaPen className="h-6" />
             </button>
           </>
         )}

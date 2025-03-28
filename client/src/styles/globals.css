@@ -52,6 +52,12 @@ footer {
   grid-area: opt;
 }
 
+pre {
+  white-space: wrap;
+  word-wrap: break-word;
+  line-clamp: 5;
+}
+
 @media (min-width: 640px) {
   body {
     display: grid;

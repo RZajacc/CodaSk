@@ -72,7 +72,7 @@ export default function QuestionDetails({params}: {params: {id: string}}) {
   const problemDiv = divideString(
     data ? data.getQuestionById.problem_description : ''
   );
-  // Cleain inline styling
+  // Clean inline styling
   const problemDesc = deleteInlineStyles(problemDiv);
   // Divide incoming input into text and code parts
   const solution_triedDiv = divideString(
