@@ -11,7 +11,11 @@ import {
 } from '@/types/askQuestionTypes';
 import {validateInputs} from '@/utils/QuestionValidator';
 import {useSession} from 'next-auth/react';
-import {POST_NEWQUESTION, UPDATE_QUESTION_T} from '@/graphQL/questionQueries';
+import {
+  GET_QUESTIONS,
+  POST_NEWQUESTION,
+  UPDATE_QUESTION_T,
+} from '@/graphQL/questionQueries';
 import {GET_ALLTAGS_MIN, UPDATE_TAGS} from '@/graphQL/tagsQueries';
 
 // Temp
@@ -50,7 +54,9 @@ function AskQuestion() {
   const [
     addQuestion,
     {data: addQuestionData, called: addQuestionCalled, error: addQuestionErr},
-  ] = useMutation<addQuestionDataType>(POST_NEWQUESTION);
+  ] = useMutation<addQuestionDataType>(POST_NEWQUESTION, {
+    refetchQueries: [GET_QUESTIONS, 'getAllQuestions'],
+  });
 
   const [updateTag, {called: updateTagCalled, error: updateTagError}] =
     useMutation(UPDATE_TAGS);
