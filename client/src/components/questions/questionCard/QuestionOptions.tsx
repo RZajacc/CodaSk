@@ -1,19 +1,32 @@
 import React from 'react';
 import {FaTrashAlt, FaPen} from 'react-icons/fa';
+import {DELETE_QUESTION, GET_QUESTIONS} from '@/graphQL/questionQueries';
+import {useMutation} from '@apollo/client';
 
 type Props = {
   userId: string | undefined;
   questionAuthorId: string;
   questionId: string;
-  handeleDeleteQuestion: (questionId: string) => void;
 };
 
-function QuestionOptions({
-  userId,
-  questionAuthorId,
-  questionId,
-  handeleDeleteQuestion,
-}: Props) {
+function QuestionOptions({userId, questionAuthorId, questionId}: Props) {
+  const [deleteQuestion] = useMutation(DELETE_QUESTION, {
+    refetchQueries: [GET_QUESTIONS, 'getAllQuestions'],
+  });
+
+  const handeleDeleteQuestion = async (questionID: string) => {
+    const deleteConfirm = window.confirm(
+      'Are you SURE you want to delete your question?'
+    );
+    if (deleteConfirm) {
+      deleteQuestion({
+        variables: {
+          deleteQuestionId: questionID,
+        },
+      });
+    }
+  };
+
   return (
     <section className="opt flex items-center gap-5 px-6">
       {userId === questionAuthorId && (

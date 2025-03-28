@@ -3,9 +3,6 @@ import Link from 'next/link';
 
 import 'react-quill/dist/quill.snow.css';
 import {useSession} from 'next-auth/react';
-import {useRouter} from 'next/navigation';
-import {getPostedOnInDays} from '@/utils/GetPostedOnInDays';
-
 import {questionQuery} from '@/types/questionDetailsTypes';
 import QuestionCardHeader from './questionCard/QuestionCardHeader';
 import {divideString} from '@/utils/QuillTextProcessor';
@@ -17,30 +14,11 @@ import QuestionOptions from './questionCard/QuestionOptions';
 
 type Props = {
   questionObj: questionQuery;
-  deleteQuestion: ({
-    variables: {deleteQuestionId},
-  }: {
-    variables: {deleteQuestionId: string};
-  }) => void;
-  loading: boolean;
 };
 
-function QuestionCard({questionObj, deleteQuestion, loading}: Props) {
+function QuestionCard({questionObj}: Props) {
   const session = useSession();
   const userID = session?.data?.user?._id;
-
-  const handeleDeleteQuestion = async (questionID: string) => {
-    const deleteConfirm = window.confirm(
-      'Are you SURE you want to delete your question?'
-    );
-    if (deleteConfirm) {
-      deleteQuestion({
-        variables: {
-          deleteQuestionId: questionID,
-        },
-      });
-    }
-  };
 
   // Prepare quill generated text to display
   const divideDescString = divideString(questionObj.problem_description);
@@ -93,7 +71,6 @@ function QuestionCard({questionObj, deleteQuestion, loading}: Props) {
         userId={userID}
         questionId={questionObj.id}
         questionAuthorId={questionObj.author.id}
-        handeleDeleteQuestion={handeleDeleteQuestion}
       />
     </div>
   );

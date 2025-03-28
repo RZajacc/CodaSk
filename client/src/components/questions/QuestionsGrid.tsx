@@ -6,15 +6,10 @@ import NoQuestionsFound from './NoQuestionsFound';
 
 type Props = {
   filteredData?: {getAllQuestions: questionQuery[]};
-  deleteQuestion: ({
-    variables: {deleteQuestionId},
-  }: {
-    variables: {deleteQuestionId: string};
-  }) => void;
   loading: boolean;
 };
 
-function QuestionsGrid({filteredData, deleteQuestion, loading}: Props) {
+function QuestionsGrid({filteredData, loading}: Props) {
   const isQuestionsArrEmpty =
     (filteredData?.getAllQuestions ?? []).length === 0;
 
@@ -28,12 +23,7 @@ function QuestionsGrid({filteredData, deleteQuestion, loading}: Props) {
       {filteredData &&
         filteredData.getAllQuestions.map((questionObj, index) => {
           return (
-            <QuestionCard
-              key={questionObj.id}
-              questionObj={questionObj}
-              deleteQuestion={deleteQuestion}
-              loading={loading}
-            />
+            <QuestionCard key={questionObj.id} questionObj={questionObj} />
           );
         })}
     </div>
