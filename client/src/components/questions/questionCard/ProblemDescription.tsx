@@ -14,7 +14,7 @@ function ProblemDescription({problem}: Props) {
       className={
         problem.type === 'text'
           ? ''
-          : 'my-3 rounded-xl bg-black px-3 py-1 text-white'
+          : 'my-3 rounded-xl bg-black px-3 py-1 text-white hover:font-bold'
       }
     >
       {parse(problem.data)}
