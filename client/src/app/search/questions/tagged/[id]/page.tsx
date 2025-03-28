@@ -146,11 +146,11 @@ export default function Question({params}: {params: {id: string}}) {
 
       {/* GRID SECTION */}
       <div className="mx-8">
-        <QuestionsGrid
+        {/* <QuestionsGrid
           filteredTagData={filteredTagData}
           deleteQuestion={deleteQuestion}
           loading={loading}
-        />
+        /> */}
       </div>
     </div>
   );
