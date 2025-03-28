@@ -6,10 +6,9 @@ type Props = {
     type: string;
     data: string;
   };
-  idx: number;
 };
 
-function ProblemDescription({problem, idx}: Props) {
+function ProblemDescription({problem}: Props) {
   return (
     <div
       className={
@@ -17,7 +16,6 @@ function ProblemDescription({problem, idx}: Props) {
           ? ''
           : 'my-3 rounded-xl bg-black px-3 py-1 text-white'
       }
-      key={idx}
     >
       {parse(problem.data)}
     </div>

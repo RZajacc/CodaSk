@@ -76,7 +76,7 @@ function QuestionCard({questionObj, deleteQuestion, loading}: Props) {
       <section className="desc line-clamp-5 px-6">
         {problemDesc &&
           problemDesc.map((problem, idx) => {
-            return <ProblemDescription problem={problem} idx={idx} />;
+            return <ProblemDescription problem={problem} key={idx} />;
           })}
       </section>
 
@@ -85,18 +85,12 @@ function QuestionCard({questionObj, deleteQuestion, loading}: Props) {
         {questionObj.tags &&
           questionObj.tags.map((tag, indexT) => {
             return (
-              <Link
+              <div
                 className="whitespace-nowrap rounded-md bg-black p-2 text-white no-underline"
                 key={indexT}
-                href={{
-                  pathname: `/search/questions/tagged/${tag.id}`,
-                  query: {
-                    name: tag.name,
-                  },
-                }}
               >
                 {tag.name}
-              </Link>
+              </div>
             );
           })}
       </section>
