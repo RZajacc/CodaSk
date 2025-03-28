@@ -38,6 +38,15 @@ footer {
 
 .questionsBody {
   grid-area: body;
+  word-break: break-all;
+}
+
+.questionTitle {
+  word-break: break-all;
+}
+
+.questionsTags {
+  grid-area: tags;
 }
 
 .answers {
@@ -50,7 +59,7 @@ footer {
 
 pre {
   white-space: pre-wrap;
-  word-wrap: break-word;
+  word-break: break-all;
   line-clamp: 5;
 }
 

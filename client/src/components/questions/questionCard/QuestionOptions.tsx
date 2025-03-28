@@ -10,10 +10,12 @@ type Props = {
 };
 
 function QuestionOptions({userId, questionAuthorId, questionId}: Props) {
+  // DELETE MUTATION
   const [deleteQuestion] = useMutation(DELETE_QUESTION, {
     refetchQueries: [GET_QUESTIONS, 'getAllQuestions'],
   });
 
+  // DELETE HANDLER
   const handeleDeleteQuestion = async (questionID: string) => {
     const deleteConfirm = window.confirm(
       'Are you SURE you want to delete your question?'
