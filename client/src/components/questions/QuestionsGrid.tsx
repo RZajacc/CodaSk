@@ -19,7 +19,7 @@ function QuestionsGrid({filteredData, deleteQuestion, loading}: Props) {
     (filteredData?.getAllQuestions ?? []).length === 0;
 
   return (
-    <div className="grid">
+    <div className="mt-4 grid gap-4">
       {/* Loading and empty array states */}
       {loading && <Loader />}
       {isQuestionsArrEmpty && <NoQuestionsFound />}

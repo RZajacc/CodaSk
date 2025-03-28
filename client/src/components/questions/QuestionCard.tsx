@@ -14,6 +14,7 @@ import {questionQuery} from '@/types/questionDetailsTypes';
 import QuestionCardHeader from './questionCard/QuestionCardHeader';
 import {divideString} from '@/utils/QuillTextProcessor';
 import {deleteInlineStyles} from '@/utils/CleanInlineStyles';
+import ProblemDescription from './questionCard/ProblemDescription';
 
 type Props = {
   questionObj: questionQuery;
@@ -52,10 +53,11 @@ function QuestionCard({questionObj, deleteQuestion, loading}: Props) {
   const divideDescString = divideString(questionObj.problem_description);
   const problemDesc = deleteInlineStyles(divideDescString);
 
+  console.log(problemDesc);
   return (
     <Link
       href={`/search/questions/${questionObj.id}`}
-      className="questionCard my-4 rounded-2xl bg-[#EDE9E6] no-underline hover:bg-gray-300 hover:font-normal"
+      className="questionCard grid gap-2 rounded-2xl bg-[#EDE9E6] no-underline hover:bg-gray-300 hover:font-normal"
     >
       {/* QUESTION BOX HEADER */}
       <QuestionCardHeader
@@ -66,31 +68,20 @@ function QuestionCard({questionObj, deleteQuestion, loading}: Props) {
       />
 
       {/* Title Section */}
-      <section className="title my-3 pl-6 font-semibold text-[#6741D9]">
+      <section className="title px-6 font-semibold text-[#6741D9]">
         {questionObj.title}
       </section>
 
       {/* Description section */}
-      <section className="desc mb-3 line-clamp-5 px-6">
+      <section className="desc line-clamp-5 px-6">
         {problemDesc &&
           problemDesc.map((problem, idx) => {
-            return (
-              <div
-                className={
-                  problem.type === 'text'
-                    ? ''
-                    : 'my-3 rounded-xl bg-black px-3 py-1 text-white'
-                }
-                key={idx}
-              >
-                {parse(problem.data)}
-              </div>
-            );
+            return <ProblemDescription problem={problem} idx={idx} />;
           })}
       </section>
 
       {/* Tags */}
-      <section className="flex gap-2 pl-8">
+      <section className="flex gap-2 px-8">
         {questionObj.tags &&
           questionObj.tags.map((tag, indexT) => {
             return (
@@ -111,7 +102,7 @@ function QuestionCard({questionObj, deleteQuestion, loading}: Props) {
       </section>
 
       {/* Answers section */}
-      <section className="answers my-3 flex items-center gap-1 pl-6">
+      <section className="answers mb-3 flex items-center gap-1 px-6">
         {questionObj.status === 'Solved' && <FaCheckCircle color="#088F8F" />}
         {questionObj.answers.length === 1 ? (
           <>
@@ -127,7 +118,7 @@ function QuestionCard({questionObj, deleteQuestion, loading}: Props) {
       </section>
 
       {/* Edit */}
-      <section className="opt my-3 flex items-center justify-center gap-5 pr-3">
+      <section className="opt flex items-center gap-5 px-6">
         {userID === questionObj?.author.id && (
           <>
             <button
