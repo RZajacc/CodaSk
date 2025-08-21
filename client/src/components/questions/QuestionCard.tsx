@@ -38,7 +38,7 @@ function QuestionCard({questionObj}: Props) {
       {/* Question Body */}
       <Link
         href={`/search/questions/${questionObj.id}`}
-        className="questionsBody grid gap-1 px-6  no-underline hover:font-normal"
+        className="questionsBody grid gap-1 px-3  no-underline hover:font-normal"
       >
         <section className="questionTitle font-semibold text-[#6741D9]">
           {questionObj.title}
@@ -53,7 +53,7 @@ function QuestionCard({questionObj}: Props) {
       </Link>
 
       {/* Tags */}
-      <section className="questionsTags flex gap-2 px-8">
+      <section className="questionsTags flex gap-2 px-4">
         {questionObj.tags &&
           questionObj.tags.map((tag) => {
             return <TagPill tagName={tag.name} tagId={tag.id} key={tag.id} />;

@@ -8,7 +8,7 @@ type Props = {
 
 function AnswersCount({status, count}: Props) {
   return (
-    <section className="answers mb-3 flex items-center gap-1 px-6">
+    <section className="answers mb-3 flex items-center gap-1 px-3">
       {status === 'Solved' && <FaCheckCircle color="#088F8F" />}
       {count === 1 ? (
         <>
