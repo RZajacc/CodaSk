@@ -38,8 +38,8 @@ type Props = {
     variables: {userId: string; tagId: string};
   }) => void;
   loading: boolean;
-  searchInput: string;
-  setSearchInput: React.Dispatch<React.SetStateAction<string>>;
+  // searchInput: string;
+  // setSearchInput: React.Dispatch<React.SetStateAction<string>>;
 };
 
 function TagCard({
@@ -48,9 +48,9 @@ function TagCard({
   unbookmarkTag,
   userData,
   loading,
-  setSearchInput,
-  searchInput,
-}: Props) {
+} // setSearchInput,
+// searchInput,
+: Props) {
   const session = useSession();
   const sessionUserID = session?.data?.user?.name as string;
   const router = useRouter();
@@ -149,13 +149,13 @@ function TagCard({
 
   //Search Bar logic
 
-  useEffect(() => {
-    const filteredTags = allTags?.filter((tag) => {
-      return tag.name.toLowerCase().includes(searchInput?.toLowerCase());
-    });
+  // useEffect(() => {
+  //   const filteredTags = allTags?.filter((tag) => {
+  //     return tag.name.toLowerCase().includes(searchInput?.toLowerCase());
+  //   });
 
-    setDisplayedTags(filteredTags && [filteredTags[0]]);
-  }, [allTags, searchInput]);
+  //   setDisplayedTags(filteredTags && [filteredTags[0]]);
+  // }, [allTags, searchInput]);
 
   return (
     <div className="flex flex-wrap justify-center">
