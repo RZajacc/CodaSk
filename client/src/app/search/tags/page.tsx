@@ -5,7 +5,7 @@ import QuestionButtons from '@/components/questions/QuestionButtons';
 import TagsGrid from '@/components/tags/TagsGrid';
 import {useMutation, useQuery} from '@apollo/client';
 import {useSession} from 'next-auth/react';
-import React, {ChangeEvent, useState} from 'react';
+import React, {useState} from 'react';
 import {SortByOptions} from '@/components/questions/SortByOptions';
 
 /// QUERIES ///
