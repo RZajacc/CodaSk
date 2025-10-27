@@ -5,7 +5,7 @@ import BoxLink from '@/components/Ui/links/BoxLink';
 
 export default async function page() {
   return (
-    <div className="my-5 grid justify-items-center">
+    <div className="my-5 grid justify-items-center p-2">
       {/* Main image for the page */}
       <Image
         className=" w-full rounded-lg md:w-4/5 lg:w-2/3"

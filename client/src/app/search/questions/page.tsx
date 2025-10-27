@@ -20,7 +20,7 @@ function Question() {
   };
 
   return (
-    <div>
+    <div className="p-2">
       {/* TOP SECTION */}
       <div className="grid justify-center px-6 sm:mb-8 sm:flex sm:justify-between">
         <h1 className=" mt-4 text-left text-2xl font-medium text-[#6741D9] sm:text-3xl">

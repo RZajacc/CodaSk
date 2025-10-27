@@ -24,7 +24,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
           <ApolloProvider client={client}>
             <MainNav />
             <Sidebar />
-            <main className="h-full p-2">{children}</main>
+            <main className="h-full">{children}</main>
             <Footer />
           </ApolloProvider>
         </SessionProvider>
