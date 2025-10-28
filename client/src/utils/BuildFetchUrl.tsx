@@ -1,15 +1,12 @@
-export const BuildFetchUrl = () => {
-  // Pick url depending if component is SSR or CSR (important for docker only)
-  const FETCH_URL =
-    process.env.API_URL_SERVER || process.env.NEXT_PUBLIC_API_URL;
-
-  // const FETCH_URL = process.env.NEXT_PUBLIC_API_URL;
-
-  // console.log('FETCH URL--->', FETCH_URL);
-  // console.log('AUTH_SECRET', process.env.NEXTAUTH_SECRET);
-  // console.log('NEXTAUTH_URL', process.env.NEXTAUTH_URL);
-  // console.log('API_URL_SERVER', process.env.API_URL_SERVER);
-  // console.log('NEXT_PUBLIC_API_URL', process.env.NEXT_PUBLIC_API_URL);
-
-  return FETCH_URL;
+/**
+ * Function to construct the base URL for making fetch API requests.
+ *
+ * Retrieves the server API URL from environment variables.
+ * It prioritizes the server-side API URL (`process.env.API_URL_SERVER`),
+ * and if unavailable, falls back to the client-side public API URL (`process.env.NEXT_PUBLIC_API_URL`).
+ *
+ * @returns {string | undefined} The base URL for the API, or undefined if none is set.
+ */
+export const BuildFetchUrl = (): string | undefined => {
+  return process.env.API_URL_SERVER || process.env.NEXT_PUBLIC_API_URL;
 };
