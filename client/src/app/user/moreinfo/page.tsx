@@ -7,36 +7,26 @@ type Props = {};
 
 export default async function MoreInfo({}: Props) {
   return (
-    <>
-      <div className="h-full bg-[#6741D9]">
-        <div className="flex flex-col ">
-          <div className=" flex flex-row items-center justify-center">
-            <h1 className="lg:text-6x text-center font-medium text-white md:text-3xl">
-              tell us more <br /> about yourself...
-            </h1>
-            <Image
-              className=" z-10 "
-              width={340}
-              height={340}
-              alt="yellow-cloud"
-              src={
-                'https://res.cloudinary.com/dfm1r4ikr/image/upload/v1701698239/codask/website_photos/pngtree-orange-blob-elements-png-image_6578663_swgnu2.png'
-              }
-            />
-          </div>
-          {/* <div className="flex justify-center"> */}
-          <div className="relative -top-20 ml-72 max-w-3xl rounded-2xl bg-[#EDE9E6] p-10 ">
-            <CompleteProfileForm />
-            <br />
-            <pre>
-              <code className="text-center text-pink-600">
-                Let's get to it!
-              </code>
-            </pre>{' '}
-          </div>
-        </div>
+    <div className=" grid h-full justify-center bg-[#6741D9]">
+      <div className="flex items-center justify-center">
+        <h1 className="lg:text-6x text-center font-medium text-white md:text-3xl">
+          tell us more <br /> about yourself...
+        </h1>
+        <Image
+          width={340}
+          height={340}
+          alt="yellow-cloud"
+          src={
+            'https://res.cloudinary.com/dfm1r4ikr/image/upload/v1701698239/codask/website_photos/pngtree-orange-blob-elements-png-image_6578663_swgnu2.png'
+          }
+        />
       </div>
-      {/* </div> */}
-    </>
+      <div className="mb-6 rounded-2xl bg-[#EDE9E6] p-6">
+        <CompleteProfileForm />
+        <pre className="mt-4">
+          <code className="text-center text-pink-600">Let's get to it!</code>
+        </pre>{' '}
+      </div>
+    </div>
   );
 }
