@@ -1,46 +1,18 @@
 'use client';
-import {User} from '@/types/custom_types';
 import {FaGithub, FaGoogle} from 'react-icons/fa';
 import {signIn} from 'next-auth/react';
 import {useRouter} from 'next/navigation';
-import React, {ChangeEvent, FormEvent, useState} from 'react';
-// import {providers, signIn, getSession, csrfToken} from 'next-auth';
-// {providers, csrfToken}
+import React from 'react';
+import FormInput from '@/components/Ui/Inputs/FormInput';
 function LogInForm() {
-  const [passwordType, setPasswordType] = useState('password');
-  const [showOrHide, setShowOrHide] = useState('show');
-  // const [user, setUser] = useState<User>({
-  //   email: '',
-  //   password: '',
-  //   last_seen: new Date(),
-  // });
-
-  const id = '656b4777d89e223b1e928c33';
-
   const router = useRouter();
-
-  const changePasswordType = () => {
-    if (passwordType === 'password') {
-      setPasswordType('text');
-      setShowOrHide('hide');
-      // console.log('hide console log :>> ');
-      return;
-    }
-    setPasswordType('password');
-    setShowOrHide('show');
-    // console.log('show console log :>> ');
-  };
-
-  // const handleLogInInput = (e: ChangeEvent<HTMLInputElement>) => {
-  //   setUser({...user, [e.target.name]: e.target.value});
-  // };
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    const email = formData.get('email');
-    const password = formData.get('password');
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
 
     try {
       const result = await signIn('credentials', {
@@ -49,7 +21,6 @@ function LogInForm() {
         redirect: false,
       });
 
-      // console.log('LOGIN RESULT', result);
       if (result?.error) {
         // console.error('Login failed:', result.error);
       } else {
@@ -65,57 +36,33 @@ function LogInForm() {
   };
 
   return (
-    <div className="mt-8 w-96 rounded-2xl bg-[#EDE9E6] p-10">
-      <form onSubmit={handleLogin} data-testid="login-form">
-        <div className="flex  w-full flex-col">
-          <label
-            className="mb-1 ml-1 font-medium text-[#6741D9]"
-            htmlFor="email"
-          >
-            Email{' '}
-          </label>
-          <input
-            className="rounded-2xl  bg-[#EDE9E6] p-2 shadow-custom"
-            // onChange={handleLogInInput}
-            type="email"
-            name="email"
-            placeholder="email"
-            required
-          />
+    <div className="w-96 rounded-2xl bg-[#EDE9E6] p-10">
+      <form
+        onSubmit={handleLogin}
+        data-testid="login-form"
+        className="mb-4 grid gap-3"
+      >
+        <FormInput
+          htmlFor={'email'}
+          type={'email'}
+          placeholder={'email'}
+          required={true}
+        />
+        <FormInput
+          htmlFor={'password'}
+          type={'password'}
+          placeholder={'password'}
+          required={true}
+        />
 
-          <br />
-          <label
-            className="mb-1 ml-1 font-medium text-[#6741D9]"
-            htmlFor="password"
-          >
-            Password
-          </label>
-          <input
-            className="rounded-2xl  bg-[#EDE9E6] p-2 shadow-custom"
-            // onChange={handleLogInInput}
-            type={passwordType}
-            name="password"
-            placeholder="password"
-            required
-          />
-        </div>
-        <br />
         <button
           type="submit"
           className="rounded-full bg-black px-4 py-2 font-bold text-white hover:bg-[#B197FC]"
         >
-          login
+          log in
         </button>
       </form>
 
-      <button
-        className="relative -right-60 -top-28 p-4"
-        onClick={changePasswordType}
-      >
-        {' '}
-        {showOrHide}
-      </button>
-      <br />
       <button
         onClick={() => {
           signIn('github', {
@@ -127,12 +74,6 @@ function LogInForm() {
         <FaGithub style={{fontSize: '2em'}} />
         log in with Github
       </button>
-      {/* <br />
-      <br />
-      <button className=" rounded border-b-4 border-[#6741D9] bg-[#D9D9D9] px-4 py-2 font-bold text-[#6741D9] hover:border-black hover:bg-[#9AFF80] hover:text-black">
-        <FaGoogle style={{fontSize: '2em'}} />
-        log in with Google
-      </button> */}
     </div>
   );
 }

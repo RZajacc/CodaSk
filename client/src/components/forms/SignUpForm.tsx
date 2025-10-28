@@ -130,8 +130,6 @@ function SignUpForm() {
         </button>
       </form>
 
-      <hr />
-
       <button
         onClick={() => {
           signIn('github', {
@@ -143,12 +141,6 @@ function SignUpForm() {
         <FaGithub style={{fontSize: '2em'}} />
         sign up with Github
       </button>
-      <br />
-      <br />
-      {/* <button className=" rounded border-b-4 border-[#6741D9] bg-[#D9D9D9] px-4 py-2 font-bold text-[#6741D9] hover:border-black hover:bg-[#9AFF80] hover:text-black">
-          <FaGoogle style={{fontSize: '2em'}} />
-          sign up with Google
-        </button> */}
     </div>
   );
 }

@@ -8,10 +8,10 @@ type Props = {};
 export default async function Register({}: Props) {
   return (
     <div className="h-full bg-[#6741D9]">
-      <div className=" relative z-20 grid justify-center">
-        <h1 className="m-4 text-center text-xl font-medium text-white md:text-3xl">
-          Please sign up
-        </h1>
+      <h1 className="p-4 text-center text-xl font-medium text-white md:text-3xl">
+        Please sign up:
+      </h1>
+      <div className="grid justify-center">
         <div className="relative z-20">
           <Image
             className="absolute -right-24 -top-20 -z-10 hidden sm:block"
