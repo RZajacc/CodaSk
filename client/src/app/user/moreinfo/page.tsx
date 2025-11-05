@@ -21,7 +21,7 @@ export default async function MoreInfo({}: Props) {
           }
         />
       </div>
-      <div className="mb-6 rounded-2xl bg-[#EDE9E6] p-6">
+      <div className="m-2 mb-6 rounded-2xl bg-[#EDE9E6] p-6">
         <CompleteProfileForm />
         <pre className="mt-4">
           <code className="text-center text-pink-600">Let's get to it!</code>

@@ -5,6 +5,7 @@ import {useSession} from 'next-auth/react';
 import Image from 'next/image';
 import {useRouter} from 'next/navigation';
 import React, {ChangeEvent, FormEvent, useEffect, useState} from 'react';
+import FormInput from '@/components/Ui/Inputs/FormInput';
 
 function CompleteProfileForm() {
   const session = useSession();
@@ -215,7 +216,8 @@ function CompleteProfileForm() {
 
   return (
     <div>
-      <div className="flex items-center">
+      {/*Image upload section */}
+      <div className="mb-4 flex items-center">
         <div className="mr-5">
           <Image
             className="rounded-full pb-2"
@@ -243,147 +245,66 @@ function CompleteProfileForm() {
           </form>
         </div>
       </div>
-      <br />
-      <br />
-      <form
-        className="flex flex-col justify-center"
-        onSubmit={handleCompleteProfile}
-      >
-        <div className="flex flex-row ">
-          <div className="flex w-full flex-col">
-            <label
-              className="mb-1 ml-1 font-medium text-[#6741D9]"
-              htmlFor="first_name"
-            >
-              first name{' '}
-            </label>
-            <input
-              value={userInfo?.first_name || ''}
-              className="mb-6 rounded-2xl bg-[#EDE9E6] p-2 shadow-custom"
-              onChange={handleInfoInput}
-              type="text"
-              name="first_name"
-              placeholder="first name"
-              required
+
+      <form className="grid gap-4" onSubmit={handleCompleteProfile}>
+        {/*First and last name section*/}
+        <div className="flex gap-4 ">
+          <div>
+            <FormInput
+              htmlFor={'firstName'}
+              type={'text'}
+              placeholder={'First name'}
             />
           </div>
-          <div className="flex flex-col">
-            <label
-              className="mb-1 ml-1 font-medium text-[#6741D9]"
-              htmlFor="last_name"
-            >
-              last name{' '}
-            </label>
-            <input
-              value={userInfo?.last_name || ''}
-              className="mb-6 rounded-2xl bg-[#EDE9E6] p-2 shadow-custom"
-              onChange={handleInfoInput}
-              type="text"
-              name="last_name"
-              placeholder="last name"
-              required
+          <div>
+            <FormInput
+              htmlFor={'lastName'}
+              type={'text'}
+              placeholder={'Last name'}
             />
           </div>
         </div>
-        <br />
 
         <div className="flex flex-row justify-around">
           <div className="flex w-full flex-col">
-            <label
-              className="mb-1 ml-1 font-medium text-[#6741D9]"
-              htmlFor="bio"
-            >
-              bio{' '}
-            </label>
-            <input
-              value={userInfo?.bio || ''}
-              className="mb-6 h-20 rounded-2xl  bg-[#EDE9E6] p-2 shadow-custom"
-              onChange={handleInfoInput}
-              type="text"
-              name="bio"
-              id="bio"
-              placeholder="Write a short bio..."
+            <FormInput
+              htmlFor={'bio'}
+              type={'textarea'}
+              placeholder={'Write a short bio...'}
             />
           </div>
         </div>
-
-        <br />
 
         <div className="mb-10 flex flex-row justify-around">
           <div className="flex  w-full flex-col">
-            <label
-              className="mb-1 ml-1 font-medium text-[#6741D9]"
-              htmlFor="city"
-            >
-              city{' '}
-            </label>
-            <input
-              value={userInfo?.location?.city || ''}
-              className="rounded-2xl bg-[#EDE9E6] p-2 shadow-custom"
-              onChange={handleLocationInput}
-              type="text"
-              name="city"
-              placeholder="city"
-              required
-            />
+            <FormInput htmlFor={'city'} type={'text'} placeholder={'city'} />
           </div>
           <div className="flex flex-col">
-            <label
-              className="mb-1 ml-1 font-medium text-[#6741D9]"
-              htmlFor="country"
-            >
-              country{' '}
-            </label>
-            <input
-              value={userInfo?.location?.country || ''}
-              className="rounded-2xl  bg-[#EDE9E6] p-2 shadow-custom"
-              onChange={handleLocationInput}
-              type="text"
-              name="country"
-              placeholder="country"
-              required
+            <FormInput
+              htmlFor={'country'}
+              type={'text'}
+              placeholder={'Country'}
             />
           </div>
         </div>
-        <div className="flex flex-row justify-around">
+        <div className="mb-6 flex flex-row justify-around">
           <div className="flex w-full flex-col">
-            <label
-              className="mb-1 ml-1 font-medium text-[#6741D9]"
-              htmlFor="github"
-            >
-              github{' '}
-            </label>
-            <input
-              value={userInfo?.github || ''}
-              className="mb-6 rounded-2xl bg-[#EDE9E6] p-2 shadow-custom"
-              onChange={handleInfoInput}
-              type="text"
-              name="github"
-              placeholder="github"
-              required
+            <FormInput
+              htmlFor={'github'}
+              type={'text'}
+              placeholder={'Github'}
             />
           </div>
           <div className="flex flex-col">
-            <label
-              className="mb-1 ml-1 font-medium text-[#6741D9]"
-              htmlFor="website"
-            >
-              website{' '}
-            </label>
-            <input
-              value={userInfo?.website || ''}
-              className="mb-6 rounded-2xl bg-[#EDE9E6] p-2 shadow-custom"
-              onChange={handleInfoInput}
-              type="text"
-              name="website"
-              placeholder="website"
-              required
+            <FormInput
+              htmlFor={'website'}
+              type={'text'}
+              placeholder={'Website'}
             />
           </div>
         </div>
-        <br />
-        <hr />
-        <br />
+
+        {/* Here select fields are starting*/}
         <div className="flex  flex-row justify-center">
           <div className="flex flex-row ">
             <label
@@ -477,22 +398,6 @@ function CompleteProfileForm() {
             />{' '}
             cohort{' '}
           </span>
-
-          {/* Removing date for now until I solve a specific issue- Also not really using it yet */}
-
-          {/* <div className="flex flex-col ">
-            <label
-              className="mx-2 text-[#6741D9]"
-              htmlFor="course_date"
-            ></label>
-            <input
-              value={formatInputDate(userInfo.course_date)}
-              className="shadow-custom mb-6 w-36 rounded-2xl bg-[#EDE9E6] p-2 font-medium"
-              onChange={handleInfoInput}
-              type="date"
-              name=""
-            />
-          </div> */}
         </div>
         <br />
         <div className="flex flex-row justify-between">
