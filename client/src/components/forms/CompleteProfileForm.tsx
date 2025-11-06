@@ -246,73 +246,58 @@ function CompleteProfileForm() {
         </div>
       </div>
 
-      <form className="grid gap-4" onSubmit={handleCompleteProfile}>
+      <form className="grid gap-5" onSubmit={handleCompleteProfile}>
         {/*First and last name section*/}
         <div className="flex gap-4 ">
-          <div>
-            <FormInput
-              label={'First Name'}
-              htmlFor={'firstName'}
-              type={'text'}
-              placeholder={'First name'}
-            />
-          </div>
-          <div>
-            <FormInput
-              label={'Last Name'}
-              htmlFor={'lastName'}
-              type={'text'}
-              placeholder={'Last name'}
-            />
-          </div>
+          <FormInput
+            label={'First Name'}
+            htmlFor={'firstName'}
+            type={'text'}
+            placeholder={'First name'}
+          />
+          <FormInput
+            label={'Last Name'}
+            htmlFor={'lastName'}
+            type={'text'}
+            placeholder={'Last name'}
+          />
         </div>
 
-        <div className="flex flex-row justify-around">
-          <div className="flex w-full flex-col">
-            <FormInput
-              label={'Bio'}
-              htmlFor={'bio'}
-              type={'textarea'}
-              placeholder={'Write a short bio...'}
-            />
-          </div>
+        <FormInput
+          label={'Bio'}
+          htmlFor={'bio'}
+          type={'textarea'}
+          placeholder={'Write a short bio...'}
+        />
+
+        <div className="flex gap-4">
+          <FormInput
+            label={'City'}
+            htmlFor={'city'}
+            type={'text'}
+            placeholder={'city'}
+          />
+          <FormInput
+            label={'Country'}
+            htmlFor={'country'}
+            type={'text'}
+            placeholder={'Country'}
+          />
         </div>
 
-        <div className="mb-10 flex flex-row justify-around">
-          <div className="flex  w-full flex-col">
-            <FormInput
-              label={'City'}
-              htmlFor={'city'}
-              type={'text'}
-              placeholder={'city'}
-            />
-          </div>
-          <div className="flex flex-col">
-            <FormInput
-              label={'Country'}
-              htmlFor={'country'}
-              type={'text'}
-              placeholder={'Country'}
-            />
-          </div>
-        </div>
-        <div className="mb-6 flex flex-row justify-around">
-          <div className="flex w-full flex-col">
-            <FormInput
-              label={'Github'}
-              htmlFor={'github'}
-              type={'text'}
-              placeholder={'Github'}
-            />
-          </div>
-          <div className="flex flex-col">
-            <FormInput
-              label={'Website'}
-              htmlFor={'website'}
-              type={'text'}
-              placeholder={'Website'}
-            />
-          </div>
+        <div className="flex gap-4">
+          <FormInput
+            label={'Github'}
+            htmlFor={'github'}
+            type={'text'}
+            placeholder={'Github'}
+          />
+          <FormInput
+            label={'Website'}
+            htmlFor={'website'}
+            type={'text'}
+            placeholder={'Website'}
+          />
         </div>
 
         {/* Here select fields are starting*/}
@@ -341,6 +326,7 @@ function CompleteProfileForm() {
             </select>
             <span className="mx-2 font-medium text-[#6741D9]">in</span>
           </div>
+
           <div className="flex flex-col">
             <label
               className="mx-2 font-medium text-black"

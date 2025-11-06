@@ -39,7 +39,7 @@ export default function FormInput({
     );
 
   return (
-    <div className={'grid gap-2'}>
+    <div className={'grid w-full gap-2'}>
       <label
         className="mb-1 ml-1 font-medium text-[#6741D9] first-letter:capitalize"
         htmlFor={htmlFor}
