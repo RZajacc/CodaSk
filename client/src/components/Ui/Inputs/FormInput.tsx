@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 
 type FormInputProps = {
+  label: string;
   htmlFor: string;
   type: string;
   placeholder: string;
@@ -9,6 +10,7 @@ type FormInputProps = {
 };
 
 export default function FormInput({
+  label,
   htmlFor,
   type,
   placeholder,
@@ -37,12 +39,12 @@ export default function FormInput({
     );
 
   return (
-    <>
+    <div className={'grid gap-2'}>
       <label
         className="mb-1 ml-1 font-medium text-[#6741D9] first-letter:capitalize"
         htmlFor={htmlFor}
       >
-        {htmlFor}
+        {label}
       </label>
       {generatedInput}
       {type === 'password' && (
@@ -57,6 +59,6 @@ export default function FormInput({
           />
         </div>
       )}
-    </>
+    </div>
   );
 }

@@ -111,12 +111,14 @@ function SignUpForm() {
     <div className="w-96 rounded-2xl bg-[#EDE9E6] p-10">
       <form onSubmit={handleRegister} className="mb-4 grid gap-3">
         <FormInput
+          label={'Email'}
           htmlFor={'email'}
           type={'email'}
           placeholder={'email'}
           required={true}
         />
         <FormInput
+          label={'Password'}
           htmlFor={'password'}
           type={'password'}
           placeholder={'password'}

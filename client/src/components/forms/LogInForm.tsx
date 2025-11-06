@@ -43,12 +43,14 @@ function LogInForm() {
         className="mb-4 grid gap-3"
       >
         <FormInput
+          label={'Email'}
           htmlFor={'email'}
           type={'email'}
           placeholder={'email'}
           required={true}
         />
         <FormInput
+          label={'Password'}
           htmlFor={'password'}
           type={'password'}
           placeholder={'password'}

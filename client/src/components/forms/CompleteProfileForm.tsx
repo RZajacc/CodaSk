@@ -251,6 +251,7 @@ function CompleteProfileForm() {
         <div className="flex gap-4 ">
           <div>
             <FormInput
+              label={'First Name'}
               htmlFor={'firstName'}
               type={'text'}
               placeholder={'First name'}
@@ -258,6 +259,7 @@ function CompleteProfileForm() {
           </div>
           <div>
             <FormInput
+              label={'Last Name'}
               htmlFor={'lastName'}
               type={'text'}
               placeholder={'Last name'}
@@ -268,6 +270,7 @@ function CompleteProfileForm() {
         <div className="flex flex-row justify-around">
           <div className="flex w-full flex-col">
             <FormInput
+              label={'Bio'}
               htmlFor={'bio'}
               type={'textarea'}
               placeholder={'Write a short bio...'}
@@ -277,10 +280,16 @@ function CompleteProfileForm() {
 
         <div className="mb-10 flex flex-row justify-around">
           <div className="flex  w-full flex-col">
-            <FormInput htmlFor={'city'} type={'text'} placeholder={'city'} />
+            <FormInput
+              label={'City'}
+              htmlFor={'city'}
+              type={'text'}
+              placeholder={'city'}
+            />
           </div>
           <div className="flex flex-col">
             <FormInput
+              label={'Country'}
               htmlFor={'country'}
               type={'text'}
               placeholder={'Country'}
@@ -290,6 +299,7 @@ function CompleteProfileForm() {
         <div className="mb-6 flex flex-row justify-around">
           <div className="flex w-full flex-col">
             <FormInput
+              label={'Github'}
               htmlFor={'github'}
               type={'text'}
               placeholder={'Github'}
@@ -297,6 +307,7 @@ function CompleteProfileForm() {
           </div>
           <div className="flex flex-col">
             <FormInput
+              label={'Website'}
               htmlFor={'website'}
               type={'text'}
               placeholder={'Website'}
