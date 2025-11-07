@@ -23,24 +23,6 @@ function CompleteProfileForm() {
     'Salmon Pink Treehoppers',
     'Orange Pigs',
     'Coral Honey Badgers',
-    'Purple Phoenixes',
-    'Cobalt Kangaroos',
-    'Bronze Elephants',
-    'Mint-Green Octopuses',
-    'Orange Pumas',
-    'Neon Narwhals',
-    'Ginger Suricatas',
-    'Rose Gold Quokkas',
-    'Wine Red Cheetahs',
-
-    'Indigo Honey Badgers',
-    'Green Wombats',
-    'Blue Puffer Fishes',
-    'Pistachio Parrots',
-    'White Flamingo',
-    'Pink Eichhörnchen',
-    'Grey Mambas',
-    'Yellow Leopards',
   ];
 
   const [userInfo, setuserInfo] = useState<User>({
@@ -295,40 +277,27 @@ function CompleteProfileForm() {
           </div>
         </div>
 
-        <div className="flex flex-row justify-center">
+        <div className="mb-2 flex flex-row justify-center">
           <label
-            className="mx-2 font-medium text-[#6741D9]"
+            className="mx-2 content-center font-medium text-[#6741D9]"
             htmlFor="cohort_name"
           >
-            from the
-            <select
-              className="mb-6 rounded-2xl bg-[#EDE9E6] p-2 text-black shadow-custom"
-              // onChange={handleDropdownInput}
-              name="cohort_name"
-              id="cohort_name"
-              // placeholder="cohort name"
-              value={userInfo?.cohort_name || 'cohort_name'}
-            >
-              <option value={'cohort_name'}>cohort name</option>
-              {cohortNames.map((optionValue, index) => (
-                <option key={index} value={optionValue}>
-                  {optionValue}
-                </option>
-              ))}
-            </select>{' '}
+            From the
           </label>
-          <span className="mx-2 font-medium text-[#6741D9]">
-            <Image
-              className="rounded-md"
-              src={`/${userInfo?.cohort_name}.png`}
-              width={35}
-              height={35}
-              alt={`Cohort ${userInfo?.cohort_name}`}
-            />{' '}
-            cohort{' '}
-          </span>
+          <select
+            className="rounded-2xl bg-[#EDE9E6] p-2 text-black shadow-custom"
+            name="cohort_name"
+            value={userInfo?.cohort_name || 'cohort_name'}
+          >
+            <option value={'cohort_name'}>Cohort name</option>
+            {cohortNames.map((optionValue, index) => (
+              <option key={index} value={optionValue}>
+                {optionValue}
+              </option>
+            ))}
+          </select>
         </div>
-        <br />
+
         <div className="flex flex-row justify-between">
           <button
             onClick={() => {
