@@ -6,6 +6,7 @@ import Image from 'next/image';
 import {useRouter} from 'next/navigation';
 import React, {ChangeEvent, FormEvent, useEffect, useState} from 'react';
 import FormInput from '@/components/Ui/Inputs/FormInput';
+import RadioButtonGroup from '@/components/Ui/Inputs/RadioButtonGroup';
 
 function CompleteProfileForm() {
   const session = useSession();
@@ -41,7 +42,6 @@ function CompleteProfileForm() {
     'Grey Mambas',
     'Yellow Leopards',
   ];
-  const studentTypes = ['Student', 'Graduate', 'Mentor'];
 
   const [userInfo, setuserInfo] = useState<User>({
     first_name: '',
@@ -98,37 +98,6 @@ function CompleteProfileForm() {
     } catch (error) {
       console.log('error :>> ', error);
     }
-  };
-
-  const handleInfoInput = (e: ChangeEvent<HTMLInputElement>) => {
-    setuserInfo({...userInfo, [e.target.name]: e.target.value});
-  };
-
-  const handleDropdownInput = (e: ChangeEvent<HTMLSelectElement>) => {
-    // console.log('e.target.value :>> ', e.target.value);
-    setuserInfo({
-      ...userInfo,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleRadioChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = e.target;
-    setuserInfo({
-      ...userInfo,
-      [name]: value,
-    });
-  };
-
-  const handleLocationInput = (e: ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = e.target;
-    setuserInfo({
-      ...userInfo,
-      location: {
-        ...userInfo.location,
-        [name]: value,
-      },
-    });
   };
 
   const handleFileInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -300,68 +269,31 @@ function CompleteProfileForm() {
           />
         </div>
 
-        {/* Here select fields are starting*/}
-        <div className="flex  flex-row justify-center">
-          <div className="flex flex-row ">
+        {/* SELECT FIELDS SECTION*/}
+        <div className="my-2 flex justify-evenly">
+          <div>
             <label
               className="mx-2 mb-1 font-medium text-[#6741D9]"
               htmlFor="user_permission"
             >
-              you're a{' '}
+              You are a:
             </label>
-            <select
-              className="mx-2 rounded-full bg-black px-2 font-medium text-white"
-              onChange={handleDropdownInput}
-              name="user_permission"
-              id="user_permission"
-              // placeholder="student type"
-              value={userInfo?.user_permission || 'user_permission'}
-            >
-              <option value={'user_permission'}>student type</option>
-              {studentTypes.map((optionValue, index) => (
-                <option key={index} value={optionValue}>
-                  {optionValue}
-                </option>
-              ))}
-            </select>
-            <span className="mx-2 font-medium text-[#6741D9]">in</span>
+            <RadioButtonGroup
+              htmlFor={'student_type'}
+              inputOptions={['Student', 'Graduate', 'Mentor']}
+            />
           </div>
 
-          <div className="flex flex-col">
-            <label
-              className="mx-2 font-medium text-black"
-              htmlFor="course_type"
-            >
-              <input
-                value="Web Development"
-                className="mx-2 font-medium "
-                onChange={handleRadioChange}
-                type="radio"
-                name="course_type"
-                id="web_development"
-                checked={userInfo?.course_type === 'Web Development'}
-              />
-              Web Development
-            </label>
-            <label
-              className="mx-2 font-medium text-black"
-              htmlFor="course_type "
-            >
-              <input
-                value="Data Analytics"
-                className="mx-2 font-medium "
-                onChange={handleRadioChange}
-                type="radio"
-                name="course_type"
-                id="data_analytics"
-                checked={userInfo?.course_type === 'Data Analytics'}
-              />
-              Data Analytics
-            </label>
+          <div>
+            <span className="mx-2 mb-1 font-medium text-[#6741D9]">
+              Enrolled to a course:
+            </span>
+            <RadioButtonGroup
+              htmlFor={'course_type'}
+              inputOptions={['Web Development', 'Data Science']}
+            />
           </div>
         </div>
-        <br />
-        <br />
 
         <div className="flex flex-row justify-center">
           <label
@@ -371,7 +303,7 @@ function CompleteProfileForm() {
             from the
             <select
               className="mb-6 rounded-2xl bg-[#EDE9E6] p-2 text-black shadow-custom"
-              onChange={handleDropdownInput}
+              // onChange={handleDropdownInput}
               name="cohort_name"
               id="cohort_name"
               // placeholder="cohort name"
