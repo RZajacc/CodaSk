@@ -7,12 +7,13 @@ type Props = {};
 
 export default async function MoreInfo({}: Props) {
   return (
-    <div className=" grid h-full justify-center bg-[#6741D9]">
-      <div className="flex items-center justify-center">
-        <h1 className="lg:text-6x text-center font-medium text-white md:text-3xl">
-          tell us more <br /> about yourself...
+    <div className="h-full bg-[#6741D9] p-4">
+      <div className="my-2 flex items-center justify-center">
+        <h1 className="text-center text-xl font-medium text-white md:text-3xl lg:text-4xl">
+          Tell us more <br className="hidden md:block" /> about yourself...
         </h1>
         <Image
+          className="hidden lg:block"
           width={340}
           height={340}
           alt="yellow-cloud"
@@ -21,7 +22,8 @@ export default async function MoreInfo({}: Props) {
           }
         />
       </div>
-      <div className="m-2 mb-6 rounded-2xl bg-[#EDE9E6] p-6">
+
+      <div className="mx-auto rounded-2xl bg-[#EDE9E6] p-6 sm:max-w-3xl">
         <CompleteProfileForm />
         <pre className="mt-4">
           <code className="text-center text-pink-600">Let's get to it!</code>
