@@ -199,7 +199,7 @@ function CompleteProfileForm() {
 
       <form className="grid gap-5" onSubmit={handleCompleteProfile}>
         {/*First and last name section*/}
-        <div className="flex gap-4 ">
+        <div className="grid gap-4 sm:flex sm:gap-4">
           <FormInput
             label={'First Name'}
             htmlFor={'firstName'}
@@ -221,7 +221,7 @@ function CompleteProfileForm() {
           placeholder={'Write a short bio...'}
         />
 
-        <div className="flex gap-4">
+        <div className="grid gap-4 sm:flex sm:gap-4">
           <FormInput
             label={'City'}
             htmlFor={'city'}
@@ -236,7 +236,7 @@ function CompleteProfileForm() {
           />
         </div>
 
-        <div className="flex gap-4">
+        <div className="grid gap-4 sm:flex sm:gap-4">
           <FormInput
             label={'Github'}
             htmlFor={'github'}
