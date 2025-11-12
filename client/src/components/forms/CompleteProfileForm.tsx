@@ -25,6 +25,7 @@ function CompleteProfileForm() {
     'Coral Honey Badgers',
   ];
 
+
   const [userInfo, setuserInfo] = useState<User>({
     first_name: '',
     last_name: '',
