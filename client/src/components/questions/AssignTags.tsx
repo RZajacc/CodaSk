@@ -42,7 +42,7 @@ function AssignTags({
 
   return (
     <>
-      <div className="container mx-auto mt-10 h-full min-h-screen w-8/12">
+      <div className=" mx-auto mt-10 max-w-3xl p-3">
         {!updateQuestionCalled && !updateTagCalled ? (
           <>
             {/* Header text */}
@@ -54,7 +54,7 @@ function AssignTags({
               </h3>
             </div>
             {/* Tags checkboxes */}
-            <div className="mb-6 flex  flex-wrap">
+            <div className="mb-6 flex flex-wrap justify-center">
               {filteredTags &&
                 filteredTags.map((tag) => {
                   return (
@@ -96,7 +96,7 @@ function AssignTags({
                   })}
               </ul>
             </div>
-            <div className="mb-6 mr-60 flex justify-end">
+            <div className="flex justify-center">
               <button
                 className="mx-1 my-1 block rounded-xl bg-black px-3 py-[0.10rem] text-white"
                 onClick={handleTagUpdate}
@@ -107,26 +107,24 @@ function AssignTags({
           </>
         ) : !UpdateQuestionErr && !updateTagError ? (
           <>
-            <div className="mx-auto mt-32 w-2/3">
-              <h1 className="text-3xl text-[#6741D9]">
+            <div className="mx-auto mt-10 grid justify-items-center gap-3 p-3 sm:w-2/3">
+              <h1 className="text-center text-3xl text-[#6741D9]">
                 Congratulations, everything went well!
               </h1>
-              <h3 className="text-xl text-[#6741D9]">
+              <h3 className="text-center text-xl text-[#6741D9]">
                 To see all questions click on the link below:
               </h3>
-              <div className="mb-8 ml-48 mt-8">
-                <Link
-                  href={'/search/questions'}
-                  className="rounded-xl bg-black p-2 text-white hover:font-semibold focus:font-semibold"
-                >
-                  Go to questions
-                </Link>
-              </div>
+              <Link
+                href={'/search/questions'}
+                className=" rounded-xl bg-black p-2 text-white no-underline hover:font-semibold focus:font-semibold"
+              >
+                Go to questions
+              </Link>
             </div>
           </>
         ) : (
           <>
-            <div className="container mx-auto mt-10 w-8/12 text-center">
+            <div className="mx-auto mt-10 grid justify-items-center gap-3 p-3 sm:w-2/3">
               <p className="text-3xl text-red-600">
                 {UpdateQuestionErr ? UpdateQuestionErr.message : ''}
               </p>
