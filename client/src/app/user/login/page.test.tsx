@@ -12,49 +12,43 @@ jest.mock('next/navigation', () => ({
 
 describe('Login component', () => {
   // Ensure the async component is rendered at each test
-  beforeEach(async () => {
-    const LoginPage = await Content();
-
-    render(LoginPage);
+  beforeEach(() => {
+    render(<Content />);
   });
 
-  it('renders a level one header', async () => {
+  it('renders a level one header with correct text', () => {
     const heading = screen.getByRole('heading', {level: 1});
 
     expect(heading).toBeInTheDocument();
+    expect(heading).toHaveTextContent('Please log in:');
   });
 
-  it('renders a LoginForm on the page', async () => {
-    const loginFrom = screen.getByTestId('login-form');
+  it('renders the LoginForm on the page', () => {
+    const loginForm = screen.getByTestId('login-form');
 
-    expect(loginFrom).toBeInTheDocument();
+    expect(loginForm).toBeInTheDocument();
   });
 
-  it('renders a link element nested in paragraph', async () => {
-    // Check if paragraph is rendered
-    const paragraph = screen.getByRole('paragraph');
+  it('renders a link nested in a paragraph', () => {
+    const paragraph = screen
+      .getByText(/Don't have an account yet\?/i)
+      .closest('p');
+
+    // Check if paragraph is present
     expect(paragraph).toBeInTheDocument();
 
-    // Check if link is rendered
-    const link = screen.getByRole('link');
+    const link = screen.getByRole('link', {name: /sign up/i});
+
+    // Check for link presence and correct attributes
     expect(link).toBeInTheDocument();
-
-    // Check if the link is nested in parapgraph
-    expect(paragraph).toContainElement(link);
-
-    // Check if link has an href attribute with proper value
     expect(link).toHaveAttribute('href', '/user/register');
-
-    // Check if the link has a proper text
-    expect(link).toHaveTextContent("Don't have an account yet? sign up!");
+    expect(paragraph).toContainElement(link);
   });
 
-  it('renders an image', async () => {
-    // Check if image element is rendered
-    const image = screen.getByRole('img');
-    expect(image).toBeInTheDocument();
+  it('renders an image with correct alt text', () => {
+    const image = screen.getByRole('img', {name: 'green-cloud'});
 
-    // Check if the image has a proper alt value
+    expect(image).toBeInTheDocument();
     expect(image).toHaveAttribute('alt', 'green-cloud');
   });
 });

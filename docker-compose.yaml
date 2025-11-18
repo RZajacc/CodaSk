@@ -44,7 +44,7 @@ services:
       - API_URL_SERVER=http://backend-dev:5008
     depends_on:
       - backend-dev
-#      - frontend-test
+      - frontend-test
   frontend-prod:
     build:
       context: ./client
