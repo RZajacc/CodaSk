@@ -6,19 +6,18 @@ type Props = {};
 
 function UpdateProfile({}: Props) {
   return (
-    <div className="h-full">
-      <div className="flex flex-col ">
-        <div className=" flex flex-row items-center justify-center">
-          <h1 className="lg:text-6x my-8 text-center font-medium text-[#6741D9] md:text-3xl">
-            <BackButton />
+    <div>
+      <div className="mt-10 grid justify-items-center">
+        <div className=" mb-4 grid justify-items-center gap-2">
+          <BackButton />
+          <h1 className="lg:text-6x text-center font-medium text-[#6741D9] md:text-3xl">
             edit your profile
           </h1>
         </div>
-        <div className=" ml-80 max-w-3xl rounded-2xl bg-[#EDE9E6] p-10 ">
+        <div className="max-w-3xl rounded-2xl bg-[#EDE9E6] p-10">
           <CompleteProfileForm />
         </div>
       </div>
-      <br />
     </div>
   );
 }
