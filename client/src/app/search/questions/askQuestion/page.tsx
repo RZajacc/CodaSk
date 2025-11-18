@@ -18,8 +18,6 @@ import {
 } from '@/graphQL/questionQueries';
 import {GET_ALLTAGS_MIN, UPDATE_TAGS} from '@/graphQL/tagsQueries';
 
-// Temp
-
 function AskQuestion() {
   const session = useSession();
   const userID = session.data?.user?._id;
