@@ -1,6 +1,6 @@
 ARG NODE_VERSION=22
 
-FROM node:${NODE_VERSION} as base
+FROM node:${NODE_VERSION}-slim as base
 
 WORKDIR /app
 
@@ -24,10 +24,10 @@ FROM base as prod
 
 COPY package.json .
 
-RUN apk add --no-cache \
-    build-base \
-    python3 \
-    vips-dev
+#RUN apk add --no-cache \
+#    build-base \
+#    python3 \
+#    vips-dev
 
 RUN npm install
 
