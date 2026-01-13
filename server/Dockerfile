@@ -28,7 +28,6 @@ RUN npm install
 
 COPY . .
 
-# Uncomment after adding TS to backend
-# RUN npm run build
+RUN npm run build
 
 CMD [ "npm", "run", "start:prod" ]
