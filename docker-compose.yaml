@@ -11,30 +11,21 @@ services:
       - ./server:/app
     env_file:
       - ./server/.env
-  backend-prod:
-    build: 
-      context: ./server
-      target: prod
-      args:
-        - NODE_VERSION=22-alpine
-    ports:
-      - '5008:5008'
-    env_file:
-      - ./server/.env
   
   # *** CLIENT SIDE SERVICES ***
-  frontend-test:
-    build: 
-      context: ./client
-      target: test
-    environment:
-      - NODE_ENV=test
+#  frontend-test:
+#    build:
+#      context: ./client
+#      target: test
+#    environment:
+#      - NODE_ENV=test
+
   frontend-dev:
     build: 
       context: ./client
       target: dev
     ports:
-      - '3001:3000'
+      - '3000:3000'
     volumes:
       - /app/node_modules
       - ./client/src:/app/src
@@ -45,20 +36,3 @@ services:
     depends_on:
       - backend-dev
 #      - frontend-test
-  frontend-prod:
-    build:
-      context: ./client
-      target: prod
-      args:
-        - NODE_VERSION=22-alpine
-        - NEXTAUTH_URL=http://frontend-prod:3000
-        - NEXT_PUBLIC_API_URL=http://localhost:5008
-    ports:
-      - '3001:3000'
-    environment:
-      - API_URL_SERVER=http://backend-prod:5008
-    env_file:
-      - ./client/.env.local
-    depends_on:
-      - backend-prod
-      - frontend-test

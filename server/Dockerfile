@@ -24,11 +24,6 @@ FROM base as prod
 
 COPY package.json .
 
-#RUN apk add --no-cache \
-#    build-base \
-#    python3 \
-#    vips-dev
-
 RUN npm install
 
 COPY . .
