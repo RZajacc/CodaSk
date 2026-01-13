@@ -1,8 +1,12 @@
 import questionModel from "../models/questionModel.js";
-import { answerModel } from "../models/answerModel.js";
 import userModel from "../models/userModel.js";
+import answerModel from "../models/answerModel.js";
+import tagModel from "../models/tagModel.js";
 
-const getAllQuestions = async (req, res) => {
+import type {RequestHandler} from "express";
+
+
+const getAllQuestions: RequestHandler = async (req, res) => {
   const allQuestions = await questionModel.find().populate([
     {
       path: "author",
@@ -18,27 +22,31 @@ const getAllQuestions = async (req, res) => {
     {
       path: "answers",
       select: ["author", "message", "votes", "posted_on"],
-      populate: {
-        path: "author",
-        select: [
-          "first_name",
-          "last_name",
-          "member_since",
-          "user_photo",
-          "course_type",
-        ],
-      },
-      populate: {
-        path: "votes",
-        select: ["first_name"],
-      },
+      populate: [
+        {
+          path: "author",
+          select: [
+            "first_name",
+            "last_name",
+            "member_since",
+            "user_photo",
+            "course_type",
+          ],
+        },
+        {
+          path: "votes",
+          select: ["first_name"],
+        },
+      ],
     },
     {
       path: "saved_by",
       select: ["first_name"],
     },
-
-    { path: "tags", select: ["first_name"] },
+    {
+      path: "tags",
+      select: ["first_name"],
+    },
   ]);
 
   res.json({
@@ -47,7 +55,7 @@ const getAllQuestions = async (req, res) => {
   });
 };
 
-const getQuestionByTitle = async (req, res) => {
+const getQuestionByTitle: RequestHandler = async (req, res) => {
   const { title } = req.params;
   console.log("title :>> ", title);
 
@@ -115,11 +123,11 @@ const getQuestionByTitle = async (req, res) => {
   }
 };
 
-const getQuestionsById = async (req, res) => {};
+const getQuestionsById: RequestHandler = async (req, res) => {};
 
-const getQuestionsByUserId = async (req, res) => {};
+const getQuestionsByUserId: RequestHandler = async (req, res) => {};
 
-const getQuestionByTagName = async (req, res) => {};
+const getQuestionByTagName: RequestHandler = async (req, res) => {};
 
 export {
   getAllQuestions,

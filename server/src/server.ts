@@ -1,17 +1,17 @@
 import express from "express";
 import mongoose from "mongoose";
-import colors from "colors";
 import cors from "cors";
 import * as dotenv from "dotenv";
+import colors from "colors";
+
+// Routes imports
+import questionRoutes from "./routes/questionRoutes.js";
 // import userRoutes from "../routes/userRoutes.js"
-// import questionRoutes from "../routes/questionRoutes.js";
 // import answerRoutes from "../routes/answerRoute.js";
 // import cloudinaryConfig from "../config/cloudinaryConfig.js";
 
 
 dotenv.config();
-
-
 
 const app = express();
 
@@ -38,7 +38,7 @@ const addRoutes = () => {
     res.send("Hello World!");
   })
   // app.use("/api/users", userRoutes);
-  // app.use("/api/questions", questionRoutes);
+  app.use("/api/questions", questionRoutes);
   // app.use("/api/answers", answerRoutes);
 };
 

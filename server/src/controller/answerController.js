@@ -1,5 +1,5 @@
-// import { questionModel } from "../models/questionModel.js";
-import { answerModel } from "../models/answerModel.js";
+// import { questionModel } from "../models/questionModel.ts";
+import { answerModel } from "../models/answerModel.ts";
 
 const getAllAnswers = async (req, res) => {
   const allAnswers = await answerModel.find().populate([

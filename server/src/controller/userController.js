@@ -1,10 +1,10 @@
-import userModel from "../models/userModel.js";
-import { tagModel } from "../models/tagModel.js";
-import questionModel from "../models/questionModel.js";
-import { answerModel } from "../models/answerModel.js";
+import userModel from "../models/userModel.ts";
+import { tagModel } from "../models/tagModel.ts";
+import questionModel from "../models/questionModel.ts";
+import { answerModel } from "../models/answerModel.ts";
 import { v2 as cloudinary } from "cloudinary";
-import { hashPassword, verifyPassword } from "../utilities/passwordServices.js";
-import { generateToken } from "../utilities/tokenServices.js";
+import { hashPassword, verifyPassword } from "../../utilities/passwordServices.js";
+import { generateToken } from "../../utilities/tokenServices.js";
 
 //GET Routes
 

@@ -1,4 +1,4 @@
-import express from "express";
+import express, {type Router} from "express";
 import {
   getAllQuestions,
   getQuestionByTagName,
@@ -7,7 +7,7 @@ import {
   getQuestionsByUserId,
 } from "../controller/questionController.js";
 
-const router = express.Router();
+const router: Router = express.Router();
 
 //GET routes
 router.get("/all", getAllQuestions);

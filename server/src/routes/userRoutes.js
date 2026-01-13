@@ -10,7 +10,7 @@ import {
   updateUser,
   uploadImage,
 } from "../controller/userController.js";
-import { multerUpload } from "../middlewares/multer.js";
+import { multerUpload } from "../../middlewares/multer.js";
 
 const router = express.Router();
 

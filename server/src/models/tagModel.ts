@@ -16,11 +16,8 @@ const tagSchema = new mongoose.Schema({
       ref: "question",
     },
   ],
-  course_type: {
-    type: String,
-  },
 });
 
 const tagModel = mongoose.model("tag", tagSchema);
 
-export { tagModel };
+export default tagModel;
