@@ -99,7 +99,6 @@ const getQuestionByTagName: RequestHandler = async (req, res) => {};
 
 export {
   getAll,
-  // getAllQuestions,
   getQuestionsByUserId,
   getQuestionsById,
   getQuestionByTagName,

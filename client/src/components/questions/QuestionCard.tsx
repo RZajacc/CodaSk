@@ -13,7 +13,7 @@ import AnswersCount from './questionCard/AnswersCount';
 import QuestionOptions from './questionCard/QuestionOptions';
 
 type Props = {
-  questionObj: questionQuery;
+  questionObj: Question;
 };
 
 function QuestionCard({questionObj}: Props) {
@@ -37,7 +37,7 @@ function QuestionCard({questionObj}: Props) {
 
       {/* Question Body */}
       <Link
-        href={`/search/questions/${questionObj.id}`}
+        href={`/search/questions/${questionObj._id}`}
         className="questionsBody grid gap-1 px-3  no-underline hover:font-normal"
       >
         <section className="questionTitle font-semibold text-[#6741D9]">
@@ -56,7 +56,7 @@ function QuestionCard({questionObj}: Props) {
       <section className="questionsTags flex gap-2 px-4">
         {questionObj.tags &&
           questionObj.tags.map((tag) => {
-            return <TagPill tagName={tag.name} tagId={tag.id} key={tag.id} />;
+            return <TagPill tagName={tag.name} tagId={tag._id} key={tag._id} />;
           })}
       </section>
 
@@ -69,8 +69,8 @@ function QuestionCard({questionObj}: Props) {
       {/* Options */}
       <QuestionOptions
         userId={userID}
-        questionId={questionObj.id}
-        questionAuthorId={questionObj.author.id}
+        questionId={questionObj._id}
+        questionAuthorId={questionObj.author._id}
       />
     </div>
   );

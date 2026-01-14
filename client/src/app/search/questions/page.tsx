@@ -1,13 +1,12 @@
 'use client';
 import React, {useEffect, useState} from 'react';
-import {useQuery} from '@apollo/client';
 import QuestionsGrid from '@/components/questions/QuestionsGrid';
 import QuestionButtons from '@/components/questions/QuestionButtons';
-import {GET_QUESTIONS} from '@/graphQL/questionQueries';
 import {SortByOptions} from '@/components/questions/SortByOptions';
 
 function Question() {
   const [sortBy, setSortBy] = useState('All');
+  const [loading, setLoading] = useState(true);
 
   const [questionsData, setQuestionsData] = useState<{
     success: boolean;
@@ -15,24 +14,23 @@ function Question() {
     data: Question[];
   }>({success: false, count: 0, data: []});
 
-  const {data: filteredData, loading} = useQuery(GET_QUESTIONS, {
-    variables: {
-      sortBy,
-    },
-  });
-
   const handleSortChange = (sortOption: string) => {
     setSortBy(sortOption);
   };
 
   useEffect(() => {
+    setLoading(true);
     fetch('http://localhost:5008/api/questions/all')
       .then((res) => res.json())
-      .then((data) => setQuestionsData(data))
-      .catch((err) => console.log(err));
+      .then((data) => {
+        setQuestionsData(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
   }, []);
-
-  console.log('DATA ====>', questionsData);
 
   return (
     <div className="p-2">
@@ -44,6 +42,7 @@ function Question() {
         <QuestionButtons />
       </div>
 
+      {/* SORTING OPTIONS */}
       <div className="border-b-2 border-b-[#D9D9D9]">
         <SortByOptions
           title="Sort by:"
@@ -53,11 +52,13 @@ function Question() {
         />
       </div>
 
-      {/* SORTING OPTIONS */}
-
       {/* GRID SECTION */}
       <div className="sm:mx-8">
-        <QuestionsGrid filteredData={filteredData} loading={loading} />
+        <QuestionsGrid
+          questionsData={questionsData.data}
+          dataCount={questionsData.count}
+          loading={loading}
+        />
       </div>
     </div>
   );

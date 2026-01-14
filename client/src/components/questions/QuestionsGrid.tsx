@@ -5,25 +5,23 @@ import Loader from './Loader';
 import NoQuestionsFound from './NoQuestionsFound';
 
 type Props = {
-  filteredData?: {getAllQuestions: questionQuery[]};
+  questionsData: Question[];
+  dataCount: number;
   loading: boolean;
 };
 
-function QuestionsGrid({filteredData, loading}: Props) {
-  const isQuestionsArrEmpty =
-    (filteredData?.getAllQuestions ?? []).length === 0;
-
+function QuestionsGrid({questionsData, dataCount, loading}: Props) {
   return (
     <div className="mt-4 grid gap-4">
       {/* Loading and empty array states */}
       {loading && <Loader />}
-      {isQuestionsArrEmpty && <NoQuestionsFound />}
+      {!loading && dataCount === 0 && <NoQuestionsFound />}
 
       {/* Display all questions */}
-      {filteredData &&
-        filteredData.getAllQuestions.map((questionObj, index) => {
+      {questionsData &&
+        questionsData.map((questionObj) => {
           return (
-            <QuestionCard key={questionObj.id} questionObj={questionObj} />
+            <QuestionCard key={questionObj._id} questionObj={questionObj} />
           );
         })}
     </div>

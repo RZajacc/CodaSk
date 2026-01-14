@@ -6,8 +6,8 @@ import colors from "colors";
 
 // Routes imports
 import questionRoutes from "./routes/questionRoutes.js";
-// import userRoutes from "../routes/userRoutes.js"
-// import answerRoutes from "../routes/answerRoute.js";
+// import userRoutes from "../routes/userRoutes.ts"
+// import answerRoutes from "../routes/answerRoute.ts";
 // import cloudinaryConfig from "../config/cloudinaryConfig.js";
 
 
@@ -34,11 +34,8 @@ const addMiddlewares = () => {
 };
 
 const addRoutes = () => {
-  app.get("/", (req, res) => {
-    res.send("Hello World!");
-  })
-  // app.use("/api/users", userRoutes);
   app.use("/api/questions", questionRoutes);
+  // app.use("/api/users", userRoutes);
   // app.use("/api/answers", answerRoutes);
 };
 
