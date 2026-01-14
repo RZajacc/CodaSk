@@ -1,10 +1,6 @@
-import questionModel from "../models/questionModel.js";
-import userModel from "../models/userModel.js";
-import answerModel from "../models/answerModel.js";
-import tagModel from "../models/tagModel.js";
-
 import type {RequestHandler} from "express";
 import questionService from "../services/questionService.js";
+import questionModel from "../models/questionModel.js";
 
 
 const getAll: RequestHandler = async (req, res) => {
@@ -23,57 +19,9 @@ const getAll: RequestHandler = async (req, res) => {
       error: errorMessage
     })
   }
-  // const allQuestions = await questionModel.find().populate([{path: "author"}]).limit(1);
 };
 
-// const getAllQuestions: RequestHandler = async (req, res) => {
-//   const allQuestions = await questionModel.find().populate([
-//     {
-//       path: "author",
-//       select: [
-//         "first_name",
-//         "last_name",
-//         "bio",
-//         "member_since",
-//         "user_photo",
-//         "course_type",
-//       ],
-//     },
-//     {
-//       path: "answers",
-//       select: ["author", "message", "votes", "posted_on"],
-//       populate: [
-//         {
-//           path: "author",
-//           select: [
-//             "first_name",
-//             "last_name",
-//             "member_since",
-//             "user_photo",
-//             "course_type",
-//           ],
-//         },
-//         {
-//           path: "votes",
-//           select: ["first_name"],
-//         },
-//       ],
-//     },
-//     {
-//       path: "saved_by",
-//       select: ["first_name"],
-//     },
-//     {
-//       path: "tags",
-//       select: ["first_name"],
-//     },
-//   ]);
-//
-//   res.json({
-//     number: allQuestions.length,
-//     data: allQuestions,
-//   });
-// };
+
 
 const getQuestionByTitle: RequestHandler = async (req, res) => {
   const { title } = req.params;
