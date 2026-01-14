@@ -7,27 +7,31 @@ const questionSchema = new mongoose.Schema({
   },
   posted_on: {
     type: Date,
-    // required: true,
+    required: true,
   },
   title: {
     type: String,
-    // required: true,
+    required: true,
   },
   problem_description: {
     type: String,
-    // required: true,
+    required: true,
   },
   solution_tried: {
     type: String,
-    // required: true,
+    required: true,
   },
   module: {
     type: String,
-    // required: true,
+    required: false,
   },
   github_repo: {
     type: String,
-    // required: true,
+    required: false,
+  },
+  status: {
+    type: String,
+    default: "unanswered",
   },
   tags: [
     {
@@ -47,10 +51,6 @@ const questionSchema = new mongoose.Schema({
       ref: "user",
     },
   ],
-  status: {
-    type: String,
-    default: "unanswered",
-  },
 });
 
 const questionModel = mongoose.model("question", questionSchema);

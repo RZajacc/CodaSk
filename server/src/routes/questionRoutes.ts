@@ -1,6 +1,7 @@
 import express, {type Router} from "express";
 import {
-  getAllQuestions,
+  // getAllQuestions,
+    getAll,
   getQuestionByTagName,
   getQuestionByTitle,
   getQuestionsById,
@@ -10,7 +11,7 @@ import {
 const router: Router = express.Router();
 
 //GET routes
-router.get("/all", getAllQuestions);
+router.get("/all", getAll);
 router.get("/id/:_id", getQuestionsById);
 router.get("/userId/:_id", getQuestionsByUserId);
 router.get("/tagname/:name", getQuestionByTagName);

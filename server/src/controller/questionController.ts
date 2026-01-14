@@ -4,56 +4,76 @@ import answerModel from "../models/answerModel.js";
 import tagModel from "../models/tagModel.js";
 
 import type {RequestHandler} from "express";
+import questionService from "../services/questionService.js";
 
 
-const getAllQuestions: RequestHandler = async (req, res) => {
-  const allQuestions = await questionModel.find().populate([
-    {
-      path: "author",
-      select: [
-        "first_name",
-        "last_name",
-        "bio",
-        "member_since",
-        "user_photo",
-        "course_type",
-      ],
-    },
-    {
-      path: "answers",
-      select: ["author", "message", "votes", "posted_on"],
-      populate: [
-        {
-          path: "author",
-          select: [
-            "first_name",
-            "last_name",
-            "member_since",
-            "user_photo",
-            "course_type",
-          ],
-        },
-        {
-          path: "votes",
-          select: ["first_name"],
-        },
-      ],
-    },
-    {
-      path: "saved_by",
-      select: ["first_name"],
-    },
-    {
-      path: "tags",
-      select: ["first_name"],
-    },
-  ]);
+const getAll: RequestHandler = async (req, res) => {
 
-  res.json({
-    number: allQuestions.length,
-    data: allQuestions,
-  });
+  try {
+    const questions = await questionService.getAllQuestions();
+    res.status(200).json({
+      success: true,
+      count: questions.length,
+      data: questions
+    })
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
+    res.status(500).json({
+      success: false,
+      error: errorMessage
+    })
+  }
+  // const allQuestions = await questionModel.find().populate([{path: "author"}]).limit(1);
 };
+
+// const getAllQuestions: RequestHandler = async (req, res) => {
+//   const allQuestions = await questionModel.find().populate([
+//     {
+//       path: "author",
+//       select: [
+//         "first_name",
+//         "last_name",
+//         "bio",
+//         "member_since",
+//         "user_photo",
+//         "course_type",
+//       ],
+//     },
+//     {
+//       path: "answers",
+//       select: ["author", "message", "votes", "posted_on"],
+//       populate: [
+//         {
+//           path: "author",
+//           select: [
+//             "first_name",
+//             "last_name",
+//             "member_since",
+//             "user_photo",
+//             "course_type",
+//           ],
+//         },
+//         {
+//           path: "votes",
+//           select: ["first_name"],
+//         },
+//       ],
+//     },
+//     {
+//       path: "saved_by",
+//       select: ["first_name"],
+//     },
+//     {
+//       path: "tags",
+//       select: ["first_name"],
+//     },
+//   ]);
+//
+//   res.json({
+//     number: allQuestions.length,
+//     data: allQuestions,
+//   });
+// };
 
 const getQuestionByTitle: RequestHandler = async (req, res) => {
   const { title } = req.params;
@@ -130,7 +150,8 @@ const getQuestionsByUserId: RequestHandler = async (req, res) => {};
 const getQuestionByTagName: RequestHandler = async (req, res) => {};
 
 export {
-  getAllQuestions,
+  getAll,
+  // getAllQuestions,
   getQuestionsByUserId,
   getQuestionsById,
   getQuestionByTagName,
