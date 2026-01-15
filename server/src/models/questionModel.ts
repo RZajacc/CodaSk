@@ -51,6 +51,13 @@ const questionSchema = new mongoose.Schema({
       ref: "user",
     },
   ],
+}, {
+  statics: {
+    findByDate() {
+      // return this.find().sort({ $expr: {$size: "$answers"} }, -1);
+    return this.find().sort({posted_on: 1});
+    }
+  }
 });
 
 const questionModel = mongoose.model("question", questionSchema);

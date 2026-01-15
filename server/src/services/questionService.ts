@@ -2,8 +2,8 @@ import questionRepository from "../repositories/questionRepository.js";
 
 class QuestionService {
 
-    async getAllQuestions() {
-        return await questionRepository.findAll();
+    async getAllQuestions(filter: string) {
+        return await questionRepository.findAll(filter);
     }
 
 }

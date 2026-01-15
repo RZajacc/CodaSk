@@ -2,29 +2,84 @@ import QuestionModel from "../models/questionModel.js";
 import userModel from "../models/userModel.js";
 import answerModel from "../models/answerModel.js";
 import tagModel from "../models/tagModel.js";
+import questionModel from "../models/questionModel.js";
+import QuestionService from "../services/questionService.js";
 
 class QuestionRepository {
 
-    async findAll() {
-        try {
-            return await QuestionModel.find().populate([
-                {
-                    path: "author",
-                    select: [
-                        "user_photo",
-                        "first_name"
-                    ]
-                },
-                {
-                    path: "tags",
-                    select: [
-                        "name"
-                    ]
-                }
-            ]);
-        } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-            throw new Error(`Error fetching questions: ${errorMessage}`)
+    async findAll(filter: string) {
+
+        // Fields to populate
+        const populateFields = [{
+            path: "author",
+            select: [
+                "user_photo",
+                "first_name"
+            ]
+        },
+            {
+                path: "tags",
+                select: [
+                    "name"
+                ]
+            }]
+
+        // Filter data based on the filter parameter
+        if (filter === "All") {
+            try {
+                return await QuestionModel.find().populate(populateFields);
+            } catch (error) {
+                const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+                throw new Error(`Error fetching questions: ${errorMessage}`)
+            }
+        } else if (filter === "Popular") {
+            try {
+                const aggData = await QuestionModel.aggregate([
+                    {
+                        $addFields: {
+                            answersCount: {$size: "$answers"}
+                        }
+                    },
+                    {
+                        $sort: {answersCount: -1}
+                    }
+                ])
+                return await QuestionModel.populate(aggData, populateFields);
+            } catch (error) {
+                const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+                throw new Error(`Error fetching questions: ${errorMessage}`)
+            }
+        } else if (filter === "Unanswered") {
+            try {
+                const aggData = await QuestionModel.aggregate([
+                    {
+                        $addFields: {
+                            answersCount: {$size: "$answers"}
+                        }
+                    },
+                    {
+                        $sort: {answersCount: 1}
+                    }
+                ])
+                return await QuestionModel.populate(aggData, populateFields);
+            } catch (error) {
+                const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+                throw new Error(`Error fetching questions: ${errorMessage}`)
+            }
+        } else if (filter === "Oldest") {
+            try {
+                return await QuestionModel.findByDate().populate(populateFields);
+            } catch (error) {
+                const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+                throw new Error(`Error fetching questions: ${errorMessage}`)
+            }
+        } else if (filter === "Solved") {
+            try {
+                return await QuestionModel.find().sort({status: 1})
+            } catch (error) {
+                const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+                throw new Error(`Error fetching questions: ${errorMessage}`)
+            }
         }
     }
 }

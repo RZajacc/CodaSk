@@ -4,9 +4,9 @@ import questionModel from "../models/questionModel.js";
 
 
 const getAll: RequestHandler = async (req, res) => {
-
+  const filter = req.query.filter as string | undefined;
   try {
-    const questions = await questionService.getAllQuestions();
+    const questions = await questionService.getAllQuestions(filter ? filter : "All");
     res.status(200).json({
       success: true,
       count: questions.length,
