@@ -1,9 +1,10 @@
-import multer from "multer";
+import multer, {type FileFilterCallback} from "multer";
 import path from "path";
+import type {Request} from "express";
 
 const storage = multer.diskStorage({});
 
-const fileFilter = (req, file, cb) => {
+const fileFilter = (req:Request, file: Express.Multer.File, cb:FileFilterCallback) => {
   console.log("req>>>", req);
   console.log("file :>> ", file);
 
