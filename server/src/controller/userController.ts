@@ -1,14 +1,15 @@
-import userModel from "../models/userModel.ts";
-import { tagModel } from "../models/tagModel.ts";
-import questionModel from "../models/questionModel.ts";
-import { answerModel } from "../models/answerModel.ts";
+import userModel from "../models/userModel.js";
+import tagModel  from "../models/tagModel.js";
+import questionModel from "../models/questionModel.js";
+import answerModel from "../models/answerModel.js";
 import { v2 as cloudinary } from "cloudinary";
 import { hashPassword, verifyPassword } from "../../utilities/passwordServices.js";
 import { generateToken } from "../../utilities/tokenServices.js";
+import type {RequestHandler} from "express";
 
 //GET Routes
 
-const getAllUsers = async (req, res) => {
+const getAllUsers: RequestHandler = async (req, res) => {
   try {
     const allUsers = await userModel.find().populate([
       {
@@ -42,102 +43,102 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-const getUserById = async (req, res) => {
-  const id = req.params._id;
-
-  try {
-    const userByID = await userModel
-      .find({
-        _id: id,
-      })
-      .populate([
-        {
-          path: "questions",
-          select: ["author", "title", "posted_on"],
-          populate: {
-            path: "author",
-            select: ["first_name", "last_name"],
-          },
-        },
-        {
-          path: "answers",
-          select: ["author", "message", "votes", "posted_on", "question"],
-          populate: [
-            {
-              path: "author",
-              select: ["first_name", "last_name"],
-            },
-            [
-              {
-                path: "question",
-                select: ["_id"],
-              },
-            ],
-          ],
-        },
-        {
-          path: "saved_tags",
-          select: ["name"],
-        },
-      ]);
-    if (userByID.length > 0) {
-      res.status(200).json({
-        number: userByID.length,
-        data: userByID,
-      });
-    } else {
-      res.status(404).json({
-        number: userByID.length,
-        errorMessage: "OH NO! No such user with this id exists",
-      });
-    }
-  } catch (error) {
-    console.log("expType error :>> ", error);
-    res.status(500).json({
-      errorMessage: "something went wrong in the request",
-      error,
-    });
-  }
+const getUserById: RequestHandler = async (req, res) => {
+  // const id = req.params._id;
+  //
+  // try {
+  //   const userByID = await userModel
+  //     .find({
+  //       _id: id,
+  //     })
+  //     .populate([
+  //       {
+  //         path: "questions",
+  //         select: ["author", "title", "posted_on"],
+  //         populate: {
+  //           path: "author",
+  //           select: ["first_name", "last_name"],
+  //         },
+  //       },
+  //       {
+  //         path: "answers",
+  //         select: ["author", "message", "votes", "posted_on", "question"],
+  //         populate: [
+  //           {
+  //             path: "author",
+  //             select: ["first_name", "last_name"],
+  //           },
+  //           [
+  //             {
+  //               path: "question",
+  //               select: ["_id"],
+  //             },
+  //           ],
+  //         ],
+  //       },
+  //       {
+  //         path: "saved_tags",
+  //         select: ["name"],
+  //       },
+  //     ]);
+  //   if (userByID.length > 0) {
+  //     res.status(200).json({
+  //       number: userByID.length,
+  //       data: userByID,
+  //     });
+  //   } else {
+  //     res.status(404).json({
+  //       number: userByID.length,
+  //       errorMessage: "OH NO! No such user with this id exists",
+  //     });
+  //   }
+  // } catch (error) {
+  //   console.log("expType error :>> ", error);
+  //   res.status(500).json({
+  //     errorMessage: "something went wrong in the request",
+  //     error,
+  //   });
+  // }
 };
 
-const getProfile = async (req, res) => {
+const getProfile: RequestHandler = async (req, res) => {
   //!Needs to be adapted to profileById
-  console.log("req.USER :>> ", req.user);
-
-  if (req.user) {
-    res.status(200).json({
-      userProfile: {
-        _id: req.user._id,
-        first_name: req.user.first_name,
-        last_name: req.user.last_name,
-        email: req.user.email,
-        user_photo: req.user.user_photo,
-        bio: req.user.bio,
-        country: req.user.location.country,
-        city: req.user.location.city,
-        course_type: req.user.course_type,
-        // course_date: req.user.course_date,
-        cohort_name: req.user.cohort_name,
-        user_permission: req.user.user_permission,
-        website: req.user.website,
-        github: req.user.github,
-        member_since: req.user.member_since,
-        last_seen: req.user.last_seen,
-        questions: req.user.questions,
-        answers: req.user.questions,
-        saved_tags: req.user.saved_tags,
-      },
-    });
-  }
-  if (!req.user) {
-    res.status(200).json({
-      message: "You need to log in to access this page",
-    });
-  }
+  // console.log("req.USER :>> ", req.user);
+  //
+  // if (req.user) {
+  //   res.status(200).json({
+  //     userProfile: {
+  //       _id: req.user._id,
+  //       first_name: req.user.first_name,
+  //       last_name: req.user.last_name,
+  //       email: req.user.email,
+  //       user_photo: req.user.user_photo,
+  //       bio: req.user.bio,
+  //       country: req.user.location.country,
+  //       city: req.user.location.city,
+  //       course_type: req.user.course_type,
+  //       // course_date: req.user.course_date,
+  //       cohort_name: req.user.cohort_name,
+  //       user_permission: req.user.user_permission,
+  //       website: req.user.website,
+  //       github: req.user.github,
+  //       member_since: req.user.member_since,
+  //       last_seen: req.user.last_seen,
+  //       questions: req.user.questions,
+  //       answers: req.user.questions,
+  //       saved_tags: req.user.saved_tags,
+  //     },
+  //   });
+  // }
+  // if (!req.user) {
+  //   res.status(200).json({
+  //     message: "You need to log in to access this page",
+  //   });
+  // }
 };
 //POST ROUTES
 
-const signUp = async (req, res) => {
+const signUp: RequestHandler = async (req, res) => {
   console.log("req.body :>> ", req.body);
 
   try {
@@ -185,7 +186,7 @@ const signUp = async (req, res) => {
   }
 };
 
-const completeProfile = async (req, res) => {
+const completeProfile: RequestHandler = async (req, res) => {
   const filter = { _id: req.body._id };
   const update = {
     first_name: req.body.first_name,
@@ -221,28 +222,28 @@ const completeProfile = async (req, res) => {
   }
 };
 
-const uploadImage = async (req, res) => {
-  if (req.file) {
-    try {
-      const uploadedImage = await cloudinary.uploader.upload(req.file.path, {
-        folder: "codask/user_photos",
-      });
-      console.log("uploadedImage>>>>>>>>", uploadedImage);
-      res.status(200).json({
-        message: "Image uploaded successfully",
-        user_photo: uploadedImage.secure_url,
-      });
-    } catch (error) {
-      console.error("error", error);
-    }
-  } else {
-    res.status(500).json({
-      error: "File type not supported",
-    });
-  }
+const uploadImage: RequestHandler = async (req, res) => {
+  // if (req.file) {
+  //   try {
+  //     const uploadedImage = await cloudinary.uploader.upload(req.file.path, {
+  //       folder: "codask/user_photos",
+  //     });
+  //     console.log("uploadedImage>>>>>>>>", uploadedImage);
+  //     res.status(200).json({
+  //       message: "Image uploaded successfully",
+  //       user_photo: uploadedImage.secure_url,
+  //     });
+  //   } catch (error) {
+  //     console.error("error", error);
+  //   }
+  // } else {
+  //   res.status(500).json({
+  //     error: "File type not supported",
+  //   });
+  // }
 };
 
-const logIn = async (req, res) => {
+const logIn: RequestHandler = async (req, res) => {
   try {
     const existingUser = await userModel.findOne({ email: req.body.email });
     if (!existingUser) {
@@ -286,9 +287,9 @@ const logIn = async (req, res) => {
   }
 };
 
-const updateUser = () => {};
+const updateUser: RequestHandler = () => {};
 
-const deleteUser = async (req, res) => {
+const deleteUser: RequestHandler = async (req, res) => {
   const userId = req.params._id;
   // console.log("userId :>> ", userId);
 

@@ -7,6 +7,14 @@ const getAll: RequestHandler = async (req, res) => {
   const filter = req.query.filter as string | undefined;
   try {
     const questions = await questionService.getAllQuestions(filter ? filter : "All");
+
+    if(!questions) {
+      return res.status(404).json({
+        fail: true,
+        error: "No questions found"
+      })
+    }
+
     res.status(200).json({
       success: true,
       count: questions.length,

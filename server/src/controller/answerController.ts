@@ -1,7 +1,8 @@
-// import { questionModel } from "../models/questionModel.ts";
-import { answerModel } from "../models/answerModel.ts";
+import questionModel from "../models/questionModel.js";
+import answerModel from "../models/answerModel.js";
+import type {RequestHandler} from "express";
 
-const getAllAnswers = async (req, res) => {
+const getAllAnswers: RequestHandler = async (req, res) => {
   const allAnswers = await answerModel.find().populate([
     {
       path: "author",
@@ -33,8 +34,8 @@ const getAllAnswers = async (req, res) => {
   });
 };
 
-const getAnswersByUserId = async (req, res) => {};
+const getAnswersByUserId: RequestHandler = async (req, res) => {};
 
-const getAnswerById = async (req, res) => {};
+const getAnswerById: RequestHandler = async (req, res) => {};
 
 export { getAllAnswers, getAnswersByUserId, getAnswerById };
