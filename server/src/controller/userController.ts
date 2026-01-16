@@ -3,8 +3,8 @@ import tagModel  from "../models/tagModel.js";
 import questionModel from "../models/questionModel.js";
 import answerModel from "../models/answerModel.js";
 import { v2 as cloudinary } from "cloudinary";
-import { hashPassword, verifyPassword } from "../../utilities/passwordServices.js";
-import { generateToken } from "../../utilities/tokenServices.js";
+import { hashPassword, verifyPassword } from "../utilities/passwordServices.js";
+import { generateToken } from "../utilities/tokenServices.js";
 import type {RequestHandler} from "express";
 
 //GET Routes
@@ -244,47 +244,47 @@ const uploadImage: RequestHandler = async (req, res) => {
 };
 
 const logIn: RequestHandler = async (req, res) => {
-  try {
-    const existingUser = await userModel.findOne({ email: req.body.email });
-    if (!existingUser) {
-      res.status(404).json({
-        msg: "no user found with this email",
-      });
-    } else {
-      const checkPassword = await verifyPassword(
-        req.body.password,
-        existingUser.password
-      );
-
-      if (!checkPassword) {
-        res.status(404).json({
-          message: "Wrong password, try again",
-        });
-      }
-      if (checkPassword) {
-        const token = generateToken(existingUser._id);
-        if (token) {
-          res.status(200).json({
-            message: "login success",
-            user: {
-              _id: existingUser._id,
-              email: existingUser.email,
-            },
-            token,
-          });
-        } else {
-          console.log("error generating token");
-          res.status(400).json({
-            message: "something went wrong with your request",
-          });
-        }
-      }
-    }
-  } catch (error) {
-    res.status(500).json({
-      message: "I don't have a clue",
-    });
-  }
+  // try {
+  //   const existingUser = await userModel.findOne({ email: req.body.email });
+  //   if (!existingUser) {
+  //     res.status(404).json({
+  //       msg: "no user found with this email",
+  //     });
+  //   } else {
+  //     const checkPassword = await verifyPassword(
+  //       req.body.password,
+  //       existingUser.password
+  //     );
+  //
+  //     if (!checkPassword) {
+  //       res.status(404).json({
+  //         message: "Wrong password, try again",
+  //       });
+  //     }
+  //     if (checkPassword) {
+  //       const token = generateToken(existingUser._id);
+  //       if (token) {
+  //         res.status(200).json({
+  //           message: "login success",
+  //           user: {
+  //             _id: existingUser._id,
+  //             email: existingUser.email,
+  //           },
+  //           token,
+  //         });
+  //       } else {
+  //         console.log("error generating token");
+  //         res.status(400).json({
+  //           message: "something went wrong with your request",
+  //         });
+  //       }
+  //     }
+  //   }
+  // } catch (error) {
+  //   res.status(500).json({
+  //     message: "I don't have a clue",
+  //   });
+  // }
 };
 
 const updateUser: RequestHandler = () => {};

@@ -8,7 +8,7 @@ import colors from "colors";
 import questionRoutes from "./routes/questionRoutes.js";
 // import userRoutes from "../routes/userRoutes.ts"
 // import answerRoutes from "../routes/answerRoute.ts";
-// import cloudinaryConfig from "../config/cloudinaryConfig.js";
+// import cloudinaryConfig from "../config/cloudinaryConfig.ts";
 
 
 dotenv.config();
