@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import QuestionsGrid from '@/components/questions/QuestionsGrid';
 import QuestionButtons from '@/components/questions/QuestionButtons';
 import {SortByOptions} from '@/components/questions/SortByOptions';
+import {BuildFetchUrl} from '@/utils/BuildFetchUrl';
 
 function Question() {
   const [sortBy, setSortBy] = useState('All');
@@ -20,7 +21,8 @@ function Question() {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`http://localhost:5008/api/questions?filter=${sortBy}`)
+    const baseUrl = BuildFetchUrl();
+    fetch(`${baseUrl}/api/questions?filter=${sortBy}`)
       .then((res) => res.json())
       .then((data) => {
         setQuestionsData(data);

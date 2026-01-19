@@ -65,17 +65,17 @@ function LogInForm() {
         </button>
       </form>
 
-      <button
-        onClick={() => {
-          signIn('github', {
-            redirect: false,
-          });
-        }}
-        className="rounded border-b-4 border-[#D9D9D9] bg-[#6741D9] px-4 py-2 font-bold text-white hover:border-black hover:bg-[#9AFF80] hover:text-black"
-      >
-        <FaGithub style={{fontSize: '2em'}} />
-        log in with Github
-      </button>
+      {/*<button*/}
+      {/*  onClick={() => {*/}
+      {/*    signIn('github', {*/}
+      {/*      redirect: false,*/}
+      {/*    });*/}
+      {/*  }}*/}
+      {/*  className="rounded border-b-4 border-[#D9D9D9] bg-[#6741D9] px-4 py-2 font-bold text-white hover:border-black hover:bg-[#9AFF80] hover:text-black"*/}
+      {/*>*/}
+      {/*  <FaGithub style={{fontSize: '2em'}} />*/}
+      {/*  log in with Github*/}
+      {/*</button>*/}
     </div>
   );
 }

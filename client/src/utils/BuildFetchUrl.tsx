@@ -8,5 +8,10 @@
  * @returns {string | undefined} The base URL for the API, or undefined if none is set.
  */
 export const BuildFetchUrl = (): string | undefined => {
-  return process.env.API_URL_SERVER || process.env.NEXT_PUBLIC_API_URL;
+  const isServer = typeof window === 'undefined';
+  if (isServer) {
+    return process.env.API_URL_SERVER || 'http://backend-dev:5008';
+  }
+
+  return process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5008';
 };
