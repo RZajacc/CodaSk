@@ -1,4 +1,4 @@
-import express from "express";
+import express, {type Router} from "express";
 import {
   completeProfile,
   deleteUser,
@@ -12,7 +12,7 @@ import {
 } from "../controller/userController.js";
 import { multerUpload } from "../middlewares/multer.js";
 
-const router = express.Router();
+const router: Router = express.Router();
 
 //GET routes
 router.get("/all", getAllUsers);

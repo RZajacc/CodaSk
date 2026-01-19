@@ -20,7 +20,7 @@ function Question() {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`http://localhost:5008/api/questions/all?filter=${sortBy}`)
+    fetch(`http://localhost:5008/api/questions?filter=${sortBy}`)
       .then((res) => res.json())
       .then((data) => {
         setQuestionsData(data);

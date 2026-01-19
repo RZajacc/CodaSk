@@ -7,8 +7,8 @@
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "NodeNext",
-    "target": "ES2020",
+    "module": "ESNext",
+    "target": "ESNext",
     "moduleResolution": "nodenext",
     "types": ["node"],
     // For nodejs:
@@ -44,7 +44,7 @@
 
     "esModuleInterop": true,
   },
-//  "ts-node": {
-//    "esm": true,
-//  }
+  "ts-node": {
+    "esm" : true
+  }
 }

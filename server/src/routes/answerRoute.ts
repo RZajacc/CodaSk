@@ -1,11 +1,11 @@
-import express from "express";
+import express, {type Router} from "express";
 import {
   getAllAnswers,
   getAnswerById,
   getAnswersByUserId,
 } from "../controller/answerController.js";
 
-const router = express.Router();
+const router: Router = express.Router();
 
 //GET routes
 router.get("/all", getAllAnswers);

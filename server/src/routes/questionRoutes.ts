@@ -11,7 +11,29 @@ import {
 const router: Router = express.Router();
 
 //GET routes
-router.get("/all", getAll);
+/**
+ * @openapi
+ * /api/questions:
+ *   get:
+ *     summary: Get all questions, including some basic filter options.
+ *     tags:
+ *       - Questions
+ *     parameters:
+ *      - in: query
+ *        name: filter
+ *        schema:
+ *          type: string
+ *        required: false
+ *        description: Filter questions by populartiy (Popular), unanswered first (Unanswered), Oldest, Solved.
+ *     responses:
+ *       200:
+ *         description: List of all questions
+ *       404:
+ *          description: No questions found
+ *       500:
+ *          description: Internal server error
+ */
+router.get("/", getAll);
 router.get("/id/:_id", getQuestionsById);
 router.get("/userId/:_id", getQuestionsByUserId);
 router.get("/tagname/:name", getQuestionByTagName);
