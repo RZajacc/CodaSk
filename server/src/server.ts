@@ -40,11 +40,14 @@ const app = express();
 const addMiddlewares = () => {
   app.use(express.json());
 
+  const allowedOrigins = [
+    process.env.CLIENT_URL,
+    process.env.DOCKER_FRONTEND_URL,
+    process.env.PRODUCTION_URL
+  ].filter(Boolean) as string[];
+
   app.use(cors({
-    origin: [process.env.LOCAL_URL!,
-      process.env.SERVICE_NAME!,
-      process.env.PUBLIC_URL!,
-      process.env.PUBLIC_DNS!,],
+    origin: allowedOrigins.length > 0 ? allowedOrigins : '*',
   }));
   
   app.use(
