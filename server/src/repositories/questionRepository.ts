@@ -82,6 +82,15 @@ class QuestionRepository {
             }
         }
     }
+
+    async findById(id: string) {
+        try {
+            return await QuestionModel.findById(id);
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+            throw new Error(`Error fetching selected question: ${errorMessage}`)
+        }
+    }
 }
 
 export default new QuestionRepository();

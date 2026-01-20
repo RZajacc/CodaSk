@@ -6,6 +6,10 @@ class QuestionService {
         return await questionRepository.findAll(filter);
     }
 
+    async getQuestionById(id: string) {
+        return await questionRepository.findById(id);
+    }
+
 }
 
 export default new QuestionService();

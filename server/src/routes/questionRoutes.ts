@@ -1,11 +1,10 @@
 import express, {type Router} from "express";
 import {
-  // getAllQuestions,
     getAll,
-  getQuestionByTagName,
-  getQuestionByTitle,
-  getQuestionsById,
-  getQuestionsByUserId,
+    getQuestionById,
+  // getQuestionByTagName,
+  // getQuestionByTitle,
+  // getQuestionsByUserId,
 } from "../controller/questionController.js";
 
 const router: Router = express.Router();
@@ -34,9 +33,12 @@ const router: Router = express.Router();
  *          description: Internal server error
  */
 router.get("/", getAll);
-router.get("/id/:_id", getQuestionsById);
-router.get("/userId/:_id", getQuestionsByUserId);
-router.get("/tagname/:name", getQuestionByTagName);
-router.get("/questionbytitle/:title", getQuestionByTitle);
+
+router.get("/:_id", getQuestionById);
+
+
+// router.get("/userId/:_id", getQuestionsByUserId);
+// router.get("/tagname/:name", getQuestionByTagName);
+// router.get("/questionbytitle/:title", getQuestionByTitle);
 
 export default router;
