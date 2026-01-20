@@ -9,7 +9,6 @@ import {
 
 const router: Router = express.Router();
 
-//GET routes
 /**
  * @openapi
  * /api/questions:
@@ -34,6 +33,28 @@ const router: Router = express.Router();
  */
 router.get("/", getAll);
 
+/**
+ * @openapi
+ * /api/questions/{_id}:
+ *   get:
+ *     summary: Get question by its id.
+ *     tags:
+ *       - Questions
+ *     parameters:
+ *      - in: path
+ *        name: _id
+ *        schema:
+ *          type: string
+ *        required: true
+ *        description: Get one question by its id.
+ *     responses:
+ *       200:
+ *         description: Requested question object
+ *       404:
+ *          description: No question found with this id
+ *       500:
+ *          description: Internal server error
+ */
 router.get("/:_id", getQuestionById);
 
 
