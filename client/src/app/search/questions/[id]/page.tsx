@@ -1,22 +1,26 @@
 'use client';
-import {gql, useMutation, useQuery} from '@apollo/client';
+
+// -------React/Nextjs-------
 import {useRouter} from 'next/navigation';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import parse from 'html-react-parser';
-import {divideString} from '@/utils/QuillTextProcessor';
-import {questionDetailsType} from '@/types/questionDetailsTypes';
-import {getPostedOnInDays} from '@/utils/GetPostedOnInDays';
-import Link from 'next/link';
-import {deleteInlineStyles} from '@/utils/CleanInlineStyles';
 import Image from 'next/image';
+import Link from 'next/link';
 import dynamic from 'next/dynamic';
-import 'react-quill/dist/quill.snow.css'; // Import Quill styles
-import {quillFormats, quillModules} from '@/types/quillTypes';
-import {AllAnswersQuery} from '@/types/AnswersQuery';
+import {useSession} from 'next-auth/react';
+// -------GraphQL leftovers to delete later-------
+import {gql, useMutation, useQuery} from '@apollo/client';
+// -------Components-------
 import AnswerCard from '@/components/AnswerCard';
 import BackButton from '@/components/Ui/buttons/BackButton';
 import DeleteModal from '@/components/DeleteModal';
-import {useSession} from 'next-auth/react';
+// -------Utils-------
+import {divideString} from '@/utils/QuillTextProcessor';
+import {getPostedOnInDays} from '@/utils/GetPostedOnInDays';
+import {deleteInlineStyles} from '@/utils/CleanInlineStyles';
+import {quillFormats, quillModules} from '@/types/quillTypes';
+import 'react-quill/dist/quill.snow.css';
+
 import {
   DELETE_QUESTION,
   GET_QUESTION_BY_ID,
@@ -27,6 +31,7 @@ import {
   POST_NEW_ANSWER,
   UPDATE_ANSWER,
 } from '@/graphQL/answersQueries';
+import {BuildFetchUrl} from '@/utils/BuildFetchUrl';
 const QuillEditor = dynamic(() => import('react-quill'), {ssr: false});
 
 export default function QuestionDetails({params}: {params: {id: string}}) {
@@ -36,18 +41,28 @@ export default function QuestionDetails({params}: {params: {id: string}}) {
   const userID = session.data?.user?.name;
 
   // UseStates
+  const [questionData, setQuestionData] = useState<{
+    success: boolean;
+    count: number;
+    data: Question;
+  } | null>(null);
+
   const [answer, setAnswer] = useState('');
   const [showDeleteQuestionModal, setShowDeleteQuestionModal] = useState(false);
   const [showDeleteAnswerModal, setShowDeleteAnswerModal] = useState(false);
 
   // -------QUERIES---------------
-  const {data} = useQuery<questionDetailsType>(GET_QUESTION_BY_ID, {
-    variables: {
-      getQuestionByIdId: postID,
-    },
-  });
-
-  // const {data: answersData} = useQuery<AllAnswersQuery>(GET_ALL_ANSWERS);
+  useEffect(() => {
+    const baseUrl = BuildFetchUrl();
+    fetch(`${baseUrl}/api/questions/${postID}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setQuestionData(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   // -------MUTATATIONS-----------
   const [addAnswer, {data: addAnswerData}] = useMutation(POST_NEW_ANSWER, {
@@ -66,17 +81,19 @@ export default function QuestionDetails({params}: {params: {id: string}}) {
   // -------------------------------
 
   // Get posted on date in days difference as string
-  const diff = getPostedOnInDays(data ? data.getQuestionById.posted_on : '');
+  const diff = getPostedOnInDays(
+    questionData ? questionData.data.posted_on : ''
+  );
 
   // Divide incoming input into text and code parts
   const problemDiv = divideString(
-    data ? data.getQuestionById.problem_description : ''
+    questionData ? questionData.data.problem_description : ''
   );
   // Clean inline styling
   const problemDesc = deleteInlineStyles(problemDiv);
   // Divide incoming input into text and code parts
   const solution_triedDiv = divideString(
-    data ? data.getQuestionById.solution_tried : ''
+    questionData ? questionData.data.solution_tried : ''
   );
   // Clean inline styling
   const solution_tried = deleteInlineStyles(solution_triedDiv);
@@ -84,9 +101,6 @@ export default function QuestionDetails({params}: {params: {id: string}}) {
   const codeSnippetClass =
     'bg-black text-white mt-4 p-6 rounded-xl shadow-custom';
   const normalText = 'text-[#6741D9] mt-4';
-
-  // // ! TEMP USER ID
-  // const tempUser = '656b4777d89e223b1e928c33';
 
   // Adding a new answer
   const handlePostNewAnswer = () => {
@@ -124,7 +138,7 @@ export default function QuestionDetails({params}: {params: {id: string}}) {
   const handleDeleteQuestion = () => {
     deleteQuestion({
       variables: {
-        deleteQuestionId: data ? data.getQuestionById.id : '',
+        deleteQuestionId: questionData ? questionData.data._id : '',
       },
     });
     setShowDeleteQuestionModal(false);
@@ -149,7 +163,7 @@ export default function QuestionDetails({params}: {params: {id: string}}) {
         updateQuestionId: postID,
         editInput: {
           status:
-            data!.getQuestionById.status === 'Unanswered'
+            questionData!.data.status === 'Unanswered'
               ? 'Solved'
               : 'Unanswered',
         },
@@ -179,14 +193,14 @@ export default function QuestionDetails({params}: {params: {id: string}}) {
       <div className=" mx-auto mb-10 mt-10 w-9/12 rounded-lg p-4 shadow-[0_4px_4px_0px_rgba(0,0,0,0.30)]">
         <div className="flex justify-between">
           <h1 className="text-3xl text-[#6741D9]">
-            {data ? data.getQuestionById.title : ''}
+            {questionData ? questionData.data.title : ''}
           </h1>
           <div className="flex">
-            {data?.getQuestionById.author.id === userID ? (
+            {questionData?.data.author._id === userID ? (
               <>
                 <Link
                   href={`/search/questions/updatequestion/${
-                    data ? data.getQuestionById.id : ''
+                    questionData ? questionData.data._id : ''
                   }`}
                 >
                   <svg
@@ -204,7 +218,7 @@ export default function QuestionDetails({params}: {params: {id: string}}) {
                 </Link>
                 {showDeleteQuestionModal && (
                   <DeleteModal
-                    title={data ? data.getQuestionById.title : ''}
+                    title={questionData ? questionData.data.title : ''}
                     itemToDelete="question"
                     onClose={handleCloseDeleteQModal}
                     confirmDel={handleDeleteQuestion}
@@ -235,10 +249,10 @@ export default function QuestionDetails({params}: {params: {id: string}}) {
           <div>
             <h3 className="text-lg text-gray-600">
               posted {diff}{' '}
-              {data?.getQuestionById.module ? (
+              {questionData?.data.module ? (
                 <>
                   <span className="mx-6 rounded-3xl bg-[#B197FC] px-3 py-1 text-white">
-                    {data ? data.getQuestionById.module : ''}
+                    {questionData ? questionData.data.module : ''}
                   </span>
                 </>
               ) : (
@@ -247,18 +261,18 @@ export default function QuestionDetails({params}: {params: {id: string}}) {
             </h3>
           </div>
           <div>
-            {data?.getQuestionById.author.id === userID ? (
+            {questionData?.data.author._id === userID ? (
               <>
                 {/* <span className="text-gray-500">Question status: </span> */}
                 <button
                   className={
-                    data?.getQuestionById.status === 'Unanswered'
+                    questionData?.data.status === 'Unanswered'
                       ? 'rounded-full bg-red-500 px-6 py-2 hover:font-bold hover:text-white '
                       : 'rounded-full bg-[#088F8F] px-6 py-2 text-white hover:font-bold '
                   }
                   onClick={handleStatusChange}
                 >
-                  {data ? data.getQuestionById.status : ''}
+                  {questionData ? questionData.data.status : ''}
                 </button>
               </>
             ) : (
@@ -300,13 +314,13 @@ export default function QuestionDetails({params}: {params: {id: string}}) {
               );
             })}
         </div>
-        {data?.getQuestionById.github_repo ? (
+        {questionData?.data.github_repo ? (
           <>
             <div className="mb-4 mt-6">
               <h1 className="text-lg">
                 <Link
                   target="_blank"
-                  href={data ? data.getQuestionById.github_repo : ''}
+                  href={questionData ? questionData.data.github_repo : ''}
                   className="flex"
                 >
                   <svg
@@ -336,13 +350,13 @@ export default function QuestionDetails({params}: {params: {id: string}}) {
       <div className="mx-auto mb-10 mt-10 w-9/12">
         <div className="mt-8 flex justify-between">
           <div className="ml-6">
-            {data &&
-              data.getQuestionById.tags.map((tag) => {
+            {questionData &&
+              questionData.data.tags.map((tag) => {
                 return (
                   <Link
-                    href={`/search/questions/tagged/${tag.id}`}
-                    className="mx-1 bg-black p-2 text-white"
-                    key={tag.id}
+                    href={`/search/questions/tagged/${tag._id}`}
+                    className="mx-1 rounded-md bg-black p-2 text-white"
+                    key={tag._id}
                   >
                     {tag.name}
                   </Link>
@@ -351,14 +365,14 @@ export default function QuestionDetails({params}: {params: {id: string}}) {
           </div>
           <div className="mr-6 flex">
             <Image
-              src={data ? data.getQuestionById.author.user_photo : ''}
+              src={questionData ? questionData.data.author.user_photo : ''}
               alt="userImage"
               width={35}
               height={35}
               className="rounded-full"
             />
             <span className="mx-2 text-lg">
-              {data ? data.getQuestionById.author.first_name : ''}
+              {questionData ? questionData.data.author.first_name : ''}
             </span>
           </div>
         </div>
@@ -399,13 +413,13 @@ export default function QuestionDetails({params}: {params: {id: string}}) {
       </div>
       {/* ANSWERS */}
       <div className="relative mx-auto mb-10 mt-10 h-fit w-9/12">
-        {data
-          ? data.getQuestionById.answers.map((answer) => {
+        {questionData
+          ? questionData.data.answers.map((answer) => {
               // console.log(answer.author);
               return (
                 <AnswerCard
                   answerData={answer}
-                  key={answer.id}
+                  key={answer._id}
                   showDeleteAnswerModal={showDeleteAnswerModal}
                   handleOpenDeleteAModal={handleOpenDeleteAModal}
                   handleCloseDeleteAModal={handleCloseDeleteAModal}

@@ -6,9 +6,15 @@ import {divideString} from '@/utils/QuillTextProcessor';
 import {deleteInlineStyles} from '@/utils/CleanInlineStyles';
 import parse from 'html-react-parser';
 import DeleteModal from './DeleteModal';
-import {Answer} from '@/types/questionDetailsTypes';
+
 type Props = {
-  answerData: Answer;
+  answerData: {
+    _id: string;
+    posted_on: string;
+    message: string;
+    author: {_id: string; first_name: string; user_photo: string};
+    votes: string[];
+  };
   showDeleteAnswerModal: boolean;
   handleOpenDeleteAModal: () => void;
   handleCloseDeleteAModal: () => void;
@@ -60,7 +66,7 @@ function AnswerCard({
       {/* BODY */}
       <div className="mb-8 grid grid-cols-12 rounded-2xl shadow-[10px_10px_0px_0px_#EDE9E6]">
         <div className="col-span-1 mx-auto my-auto p-2">
-          <button onClick={handleUpvote} id="upvote" value={answerData.id}>
+          <button onClick={handleUpvote} id="upvote" value={answerData._id}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="30"
@@ -93,7 +99,7 @@ function AnswerCard({
             })}
         </div>
         <div className="col-span-1 flex justify-end">
-          {answerData.author.id === userID ? (
+          {answerData.author._id === userID ? (
             <>
               <button onClick={handleOpenDeleteAModal}>
                 <svg
@@ -116,7 +122,7 @@ function AnswerCard({
                   itemToDelete="answer"
                   onClose={handleCloseDeleteAModal}
                   confirmDel={handleDeleteAnswer}
-                  ID={answerData.id}
+                  ID={answerData._id}
                 />
               )}
             </>

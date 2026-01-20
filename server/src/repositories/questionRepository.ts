@@ -7,27 +7,38 @@ import QuestionService from "../services/questionService.js";
 
 class QuestionRepository {
 
-    async findAll(filter: string) {
-
-        // Fields to populate
-        const populateFields = [{
+    // Fields to populate
+    private readonly populateFields = [
+        {
             path: "author",
             select: [
                 "user_photo",
                 "first_name"
             ]
         },
-            {
-                path: "tags",
-                select: [
-                    "name"
-                ]
-            }]
+        {
+            path: "answers",
+            select: "message votes posted_on author",
+            populate: {
+                path: "author",
+                select: "user_photo first_name"
+            }
+        },
+        {
+            path: "tags",
+            select: [
+                "name"
+            ]
+        }]
+
+
+    async findAll(filter: string) {
+
 
         // Filter data based on the filter parameter
         if (filter === "All") {
             try {
-                return await QuestionModel.find().populate(populateFields);
+                return await QuestionModel.find().populate(this.populateFields);
             } catch (error) {
                 const errorMessage = error instanceof Error ? error.message : 'Unknown error';
                 throw new Error(`Error fetching questions: ${errorMessage}`)
@@ -44,7 +55,7 @@ class QuestionRepository {
                         $sort: {answersCount: -1}
                     }
                 ])
-                return await QuestionModel.populate(aggData, populateFields);
+                return await QuestionModel.populate(aggData, this.populateFields);
             } catch (error) {
                 const errorMessage = error instanceof Error ? error.message : 'Unknown error';
                 throw new Error(`Error fetching questions: ${errorMessage}`)
@@ -61,14 +72,13 @@ class QuestionRepository {
                         $sort: {answersCount: 1}
                     }
                 ])
-                return await QuestionModel.populate(aggData, populateFields);
             } catch (error) {
                 const errorMessage = error instanceof Error ? error.message : 'Unknown error';
                 throw new Error(`Error fetching questions: ${errorMessage}`)
             }
         } else if (filter === "Oldest") {
             try {
-                return await QuestionModel.findByDate().populate(populateFields);
+                return await QuestionModel.findByDate().populate(this.populateFields);
             } catch (error) {
                 const errorMessage = error instanceof Error ? error.message : 'Unknown error';
                 throw new Error(`Error fetching questions: ${errorMessage}`)
@@ -85,7 +95,7 @@ class QuestionRepository {
 
     async findById(id: string) {
         try {
-            return await QuestionModel.findById(id);
+            return await QuestionModel.findById(id).populate(this.populateFields);
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : 'Unknown error';
             throw new Error(`Error fetching selected question: ${errorMessage}`)

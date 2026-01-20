@@ -1,6 +1,12 @@
 type Question = {
   _id: string;
-  answers: string[];
+  answers: {
+    _id: string;
+    posted_on: string;
+    message: string;
+    author: {_id: string; first_name: string; user_photo: string};
+    votes: string[];
+  }[];
   author: {
     _id: string;
     first_name: string;
