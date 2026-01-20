@@ -6,6 +6,8 @@ import swaggerUI from "swagger-ui-express";
 import swaggerJSDoc from "swagger-jsdoc";
 import colors from "colors";
 
+dotenv.config();
+
 const isProduction = process.env.NODE_ENV === 'production';
 const routesPath = isProduction
     ? './dist/routes/*.js'
@@ -33,7 +35,7 @@ import questionRoutes from "./routes/questionRoutes.js";
 // import cloudinaryConfig from "../config/cloudinaryConfig.ts";
 
 
-dotenv.config();
+
 
 const app = express();
 
