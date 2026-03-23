@@ -10,6 +10,7 @@ import Joi from 'joi';
 
 @Module({
   imports: [
+    ConfigModule,
     ConfigModule.forRoot({
       isGlobal: true,
       load: [configuration],
@@ -27,7 +28,6 @@ import Joi from 'joi';
       inject: [ConfigService],
     }),
     QuestionModule,
-    ConfigModule,
     UserModule,
   ],
   controllers: [AppController],
