@@ -1,5 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
+import { Question } from '../../question/entities/question.entity';
+import { Answer } from '../../answer/entities/answer.entity';
+import { Tag } from '../../tag/entities/tag.entity';
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -14,14 +17,23 @@ export class User {
   @Prop({ required: false })
   user_photo: string;
 
-  @Prop({ required: false })
-  questions: string[];
+  @Prop({
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Question' }],
+    required: false,
+  })
+  questions: Question[];
 
-  @Prop({ required: false })
-  answers: string[];
+  @Prop({
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Answer' }],
+    required: false,
+  })
+  answers: Answer[];
 
-  @Prop({ required: false })
-  saved_tags: string[];
+  @Prop({
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tag' }],
+    required: false,
+  })
+  saved_tags: Tag[];
 
   @Prop({ required: false })
   member_since: Date;
