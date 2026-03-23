@@ -72,6 +72,7 @@ class QuestionRepository {
                         $sort: {answersCount: 1}
                     }
                 ])
+                return QuestionModel.populate(aggData, this.populateFields);
             } catch (error) {
                 const errorMessage = error instanceof Error ? error.message : 'Unknown error';
                 throw new Error(`Error fetching questions: ${errorMessage}`)
