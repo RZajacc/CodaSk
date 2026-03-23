@@ -1,15 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTagDto } from './dto/create-tag.dto';
 import { UpdateTagDto } from './dto/update-tag.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Tag } from './entities/tag.entity';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class TagService {
+  constructor(@InjectModel(Tag.name) private tagModel: Model<Tag>) {}
+
   create(createTagDto: CreateTagDto) {
     return 'This action adds a new tag';
   }
 
   findAll() {
-    return `This action returns all tag`;
+    return this.tagModel.find();
   }
 
   findOne(id: number) {
