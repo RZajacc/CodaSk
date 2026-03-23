@@ -1,15 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAnswerDto } from './dto/create-answer.dto';
 import { UpdateAnswerDto } from './dto/update-answer.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Answer } from './entities/answer.entity';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class AnswerService {
+  constructor(@InjectModel(Answer.name) private answerModel: Model<Answer>) {}
+
   create(createAnswerDto: CreateAnswerDto) {
     return 'This action adds a new answer';
   }
 
   findAll() {
-    return `This action returns all answer`;
+    return this.answerModel.find();
   }
 
   findOne(id: number) {
