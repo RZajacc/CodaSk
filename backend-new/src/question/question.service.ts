@@ -16,7 +16,7 @@ export class QuestionService {
   }
 
   findAll() {
-    return this.questionModel.find();
+    return this.questionModel.find().populate('author');
   }
 
   findOne(id: number) {

@@ -1,13 +1,14 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
+import { User } from 'src/user/entities/user.entity';
 
 export type QuestionDocument = HydratedDocument<Question>;
 
 @Schema()
 export class Question {
   // Populate
-  @Prop()
-  author: string;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  author: User;
 
   @Prop({ required: true })
   posted_on: Date;
