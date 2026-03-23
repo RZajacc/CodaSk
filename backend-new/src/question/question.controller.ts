@@ -22,7 +22,6 @@ export class QuestionController {
 
   @Get()
   findAll() {
-    console.log('hello2');
     return this.questionService.findAll();
   }
 

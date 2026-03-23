@@ -5,8 +5,9 @@ export type QuestionDocument = HydratedDocument<Question>;
 
 @Schema()
 export class Question {
-  // @Prop()
-  // author: string;
+  // Populate
+  @Prop()
+  author: string;
 
   @Prop({ required: true })
   posted_on: Date;
@@ -25,6 +26,18 @@ export class Question {
 
   @Prop({ required: false })
   github_repo: string;
+
+  // Populate
+  @Prop({ required: false })
+  tags: string[];
+
+  // Populate
+  @Prop({ required: false })
+  answers: string[];
+
+  // Populate
+  @Prop({ required: false })
+  saved_by: string[];
 
   @Prop({ default: 'unanswered' })
   status: string;
