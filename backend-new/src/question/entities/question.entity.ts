@@ -1,6 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
 import { User } from 'src/user/entities/user.entity';
+import { Tag } from '../../tag/entities/tag.entity';
+import { Answer } from '../../answer/entities/answer.entity';
 
 export type QuestionDocument = HydratedDocument<Question>;
 
@@ -27,17 +29,23 @@ export class Question {
   @Prop({ required: false })
   github_repo: string;
 
-  // Populate
-  @Prop({ required: false })
-  tags: string[];
+  @Prop({
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tag' }],
+    required: false,
+  })
+  tags: Tag[];
 
-  // Populate
-  @Prop({ required: false })
-  answers: string[];
+  @Prop({
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Answer' }],
+    required: false,
+  })
+  answers: Answer[];
 
-  // Populate
-  @Prop({ required: false })
-  saved_by: string[];
+  @Prop({
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    required: false,
+  })
+  saved_by: User[];
 
   @Prop({ default: 'unanswered' })
   status: string;
