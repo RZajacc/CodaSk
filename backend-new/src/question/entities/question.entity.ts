@@ -1,0 +1,33 @@
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument } from 'mongoose';
+
+export type QuestionDocument = HydratedDocument<Question>;
+
+@Schema()
+export class Question {
+  // @Prop()
+  // author: string;
+
+  @Prop({ required: true })
+  posted_on: Date;
+
+  @Prop({ required: true })
+  title: string;
+
+  @Prop({ required: true })
+  problem_description: string;
+
+  @Prop({ required: true })
+  solution_tried: string;
+
+  @Prop({ required: false })
+  module: string;
+
+  @Prop({ required: false })
+  github_repo: string;
+
+  @Prop({ default: 'unanswered' })
+  status: string;
+}
+
+export const QuestionSchema = SchemaFactory.createForClass(Question);
