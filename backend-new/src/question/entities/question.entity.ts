@@ -6,7 +6,6 @@ export type QuestionDocument = HydratedDocument<Question>;
 
 @Schema()
 export class Question {
-  // Populate
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   author: User;
 

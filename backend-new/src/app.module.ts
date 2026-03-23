@@ -5,6 +5,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { QuestionModule } from './question/question.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './user/user.module';
+import { TagModule } from './tag/tag.module';
+import { AnswerModule } from './answer/answer.module';
 import configuration from './config/configuration';
 import Joi from 'joi';
 
@@ -29,6 +31,8 @@ import Joi from 'joi';
     }),
     QuestionModule,
     UserModule,
+    TagModule,
+    AnswerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
