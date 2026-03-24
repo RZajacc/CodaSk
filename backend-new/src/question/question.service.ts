@@ -93,8 +93,8 @@ export class QuestionService {
     return 'Query not found';
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} question`;
+  findOne(id: string) {
+    return this.questionModel.findById(id).populate(this.populateFindFields);
   }
 
   update(id: number, updateQuestionDto: UpdateQuestionDto) {
