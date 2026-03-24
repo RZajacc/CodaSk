@@ -9,11 +9,7 @@ function Question() {
   const [sortBy, setSortBy] = useState('All');
   const [loading, setLoading] = useState(true);
 
-  const [questionsData, setQuestionsData] = useState<{
-    success: boolean;
-    count: number;
-    data: Question[];
-  }>({success: false, count: 0, data: []});
+  const [questionsData, setQuestionsData] = useState<Question[]>([]);
 
   const handleSortChange = (sortOption: string) => {
     setSortBy(sortOption);
@@ -22,9 +18,11 @@ function Question() {
   useEffect(() => {
     setLoading(true);
     const baseUrl = BuildFetchUrl();
-    fetch(`${baseUrl}/api/questions?filter=${sortBy}`)
+    console.log('BASE URL :>> ', baseUrl);
+    fetch(`${baseUrl}/question/search?filter=${sortBy}`)
       .then((res) => res.json())
       .then((data) => {
+        console.log('DATA :>> ', data);
         setQuestionsData(data);
         setLoading(false);
       })
@@ -39,7 +37,7 @@ function Question() {
       {/* TOP SECTION */}
       <div className="grid justify-center px-6 sm:mb-8 sm:flex sm:justify-between">
         <h1 className=" mt-4 text-left text-2xl font-medium text-[#6741D9] sm:text-3xl">
-          Search among {questionsData.count} questions
+          Search among {questionsData.length} questions
         </h1>
         <QuestionButtons />
       </div>
@@ -57,8 +55,8 @@ function Question() {
       {/* GRID SECTION */}
       <div className="sm:mx-8">
         <QuestionsGrid
-          questionsData={questionsData.data}
-          dataCount={questionsData.count}
+          questionsData={questionsData}
+          dataCount={questionsData.length}
           loading={loading}
         />
       </div>

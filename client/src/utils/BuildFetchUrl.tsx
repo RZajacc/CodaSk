@@ -10,8 +10,8 @@
 export const BuildFetchUrl = (): string | undefined => {
   const isServer = typeof window === 'undefined';
   if (isServer) {
-    return process.env.API_URL_SERVER || 'http://backend-dev:5008';
+    return process.env.API_URL_SERVER || 'http://backend-dev:5000';
   }
 
-  return process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5008';
+  return process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 };
