@@ -16,6 +16,10 @@ export class QuestionService {
   }
 
   findAll() {
+    return this.questionModel.find();
+  }
+
+  findByQuery(query: string) {
     return this.questionModel.find().populate({
       path: 'author',
       select: ['email', 'first_name', 'last_name'],
