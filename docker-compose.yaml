@@ -1,27 +1,15 @@
 services:
-  # *** SERVER SIDE SERVICES ***
-#  backend-dev:
-#    build:
-#      context: ./server
-#      target: dev
-#    ports:
-#      - '5008:5008'
-#    volumes:
-#      - /app/node_modules
-#      - ./server:/app
-#    env_file:
-#      - ./server/.env
   backend:
     build:
-      context: ./backend-new
+      context: server
     command: npm run start:dev
     ports:
       - '5000:5000'
     volumes:
       - /usr/src/app/node_modules
-      - ./backend-new/src:/usr/src/app/src
+      - ./server/src:/usr/src/app/src
     env_file:
-      - ./backend-new/.env
+      - server/.env
 
   frontend-dev:
     build: 
