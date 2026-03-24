@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { QuestionService } from './question.service';
 import { CreateQuestionDto } from './dto/create-question.dto';
@@ -23,6 +24,11 @@ export class QuestionController {
   @Get()
   findAll() {
     return this.questionService.findAll();
+  }
+
+  @Get('search')
+  findByQuery(@Query('filter') filter: string) {
+    return this.questionService.findByQuery(filter);
   }
 
   @Get(':id')

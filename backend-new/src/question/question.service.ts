@@ -7,6 +7,26 @@ import { Model } from 'mongoose';
 
 @Injectable()
 export class QuestionService {
+  // Fields to populate
+  private readonly populateFindFields = [
+    {
+      path: 'author',
+      select: ['user_photo', 'first_name'],
+    },
+    {
+      path: 'answers',
+      select: 'message votes posted_on author',
+      populate: {
+        path: 'author',
+        select: 'user_photo first_name',
+      },
+    },
+    {
+      path: 'tags',
+      select: ['name'],
+    },
+  ];
+
   constructor(
     @InjectModel(Question.name) private questionModel: Model<Question>,
   ) {}
@@ -19,11 +39,58 @@ export class QuestionService {
     return this.questionModel.find();
   }
 
-  findByQuery(query: string) {
-    return this.questionModel.find().populate({
-      path: 'author',
-      select: ['email', 'first_name', 'last_name'],
-    });
+  async findByQuery(filter: string) {
+    switch (filter) {
+      case 'All': {
+        return this.questionModel
+          .find()
+          .populate(this.populateFindFields)
+          .sort({ posted_on: -1 });
+      }
+      case 'Popular': {
+        const aggData = await this.questionModel.aggregate([
+          {
+            $addFields: {
+              answersCount: { $size: '$answers' },
+            },
+          },
+          {
+            $sort: { answersCount: -1, posted_on: -1 },
+          },
+        ]);
+        return await this.questionModel.populate(
+          aggData,
+          this.populateFindFields,
+        );
+      }
+      case 'Unanswered': {
+        const aggData = await this.questionModel.aggregate([
+          {
+            $addFields: {
+              answersCount: { $size: '$answers' },
+            },
+          },
+          {
+            $sort: { answersCount: 1, posted_on: -1 },
+          },
+        ]);
+        return this.questionModel.populate(aggData, this.populateFindFields);
+      }
+      case 'Oldest': {
+        return this.questionModel
+          .find()
+          .populate(this.populateFindFields)
+          .sort({ posted_on: 1 });
+      }
+      case 'Solved': {
+        return this.questionModel
+          .find()
+          .populate(this.populateFindFields)
+          .sort({ status: 1 });
+      }
+    }
+
+    return 'Query not found';
   }
 
   findOne(id: number) {
