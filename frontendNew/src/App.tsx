@@ -13,7 +13,7 @@ function App() {
     const routes2: RouteObject[] = [
         {
             path: '/test',
-            element: <div>Hello from test</div>,
+            element: <div >Hello from test</div>,
         }
     ]
 
