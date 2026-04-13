@@ -1,27 +1,36 @@
-import {
-  createBrowserRouter,
-  RouterProvider,
-  type RouteObject,
-} from 'react-router';
+import {createBrowserRouter, RouterProvider} from 'react-router';
+
+import Home from '../src/pages/home';
+import Connect from '../src/pages/connect';
+import Contact from '../src/pages/contact';
+import About from './pages/about';
+import RootLayout from './layouts/RootLayout.tsx';
 
 function App() {
-  const routes: RouteObject[] = [
+  const router = createBrowserRouter([
     {
       path: '/',
-      element: (
-        <div className={'p-1 text-3xl font-bold'}>Hello from router</div>
-      ),
+      element: <RootLayout />,
+      children: [
+        {
+          index: true,
+          element: <Home />,
+        },
+        {
+          path: 'connect',
+          element: <Connect />,
+        },
+        {
+          path: 'about',
+          element: <About />,
+        },
+        {
+          path: 'contact',
+          element: <Contact />,
+        },
+      ],
     },
-  ];
-
-  const routes2: RouteObject[] = [
-    {
-      path: '/test',
-      element: <div>Hello from test</div>,
-    },
-  ];
-
-  const router = createBrowserRouter([...routes, ...routes2]);
+  ]);
 
   return <RouterProvider router={router} />;
 }

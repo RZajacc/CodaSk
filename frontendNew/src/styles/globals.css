@@ -1,0 +1,209 @@
+@import "tailwindcss";
+
+html, body, .app, main, #root {
+  height: 100%;
+}
+
+.app {
+  display: grid;
+  grid-template-rows: 80px auto 80px;
+  grid-template-areas:
+    'navigation'
+    'main'
+    'footer';
+}
+
+main {
+  grid-area: main;
+}
+
+footer {
+  grid-area: footer;
+}
+
+/* QUESTIONS CARD */
+.questionCard {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  align-items: start;
+  grid-template-areas:
+    'header header header header header header header header header header'
+    'body body body body body body body body body body'
+    'body body body body body body body body body body'
+    'tags tags tags tags tags tags tags tags tags tags'
+    'answers answers blank blank blank blank blank blank blank opt';
+}
+
+.questionHeader {
+  grid-area: header;
+}
+
+.questionsBody {
+  grid-area: body;
+  word-break: break-all;
+}
+
+.questionTitle {
+  word-break: break-all;
+}
+
+.questionsTags {
+  grid-area: tags;
+}
+
+.answers {
+  grid-area: answers;
+}
+
+.opt {
+  grid-area: opt;
+}
+
+pre {
+  white-space: pre-wrap;
+  word-break: break-all;
+  line-clamp: 5;
+}
+
+@media (min-width: 640px) {
+  .app {
+    display: grid;
+    grid-template-rows: 96px auto 96px;
+    grid-template-areas:
+      'navigation'
+      'main'
+      'footer';
+  }
+}
+
+@media (min-width: 768px) {
+  .app {
+    display: grid;
+    grid-template-rows: 112px auto 96px;
+    grid-template-columns: 192px auto;
+    grid-template-areas:
+      'navigation navigation'
+      'sidebar main'
+      'footer footer';
+  }
+
+  #desktop-sidebar {
+    grid-area: sidebar;
+  }
+}
+
+.mainLogo:hover {
+  animation-name: shake;
+  animation-duration: 3s;
+}
+@keyframes shake {
+  25% {
+    transform: rotate(10deg);
+    transform-origin: bottom;
+  }
+
+  50% {
+    transform: rotate(-10deg);
+    transform-origin: bottom;
+  }
+  75% {
+    transform: rotate(10deg);
+    transform-origin: bottom;
+  }
+}
+
+@theme {
+  /* shadows */
+  --shadow-custom: 10px 10px 0 0 #6741D9;
+  --shadow-custom2: 10px 10px 0 0 black;
+
+  /* gradients */
+  /*--background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));*/
+  /*--background-image-gradient-conic:*/
+  /*        conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops));*/
+}
+
+/* keyframes */
+@keyframes fadein {
+  0% { opacity: 0; }
+  100% { opacity: 0.7; }
+}
+
+@keyframes slidein {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes slideout {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(0%); }
+}
+
+/* animations as utilities */
+@utility animate-slidein {
+  animation: slidein 500ms ease-in forwards;
+}
+
+@utility animate-slideout {
+  animation: slideout 500ms ease-in forwards;
+}
+
+@utility animate-fadein {
+  animation: fadein 500ms ease-in forwards;
+}
+
+@layer components {
+  .title_base {
+    @apply   rounded-3xl bg-[#EDE9E6] p-2 text-[#6741D9] shadow-custom;
+  }
+  .title_err {
+    @apply   rounded-3xl border-2 border-red-500 bg-[#EDE9E6] p-2 text-[#6741D9] shadow-custom;
+  }
+  .title_ok {
+    @apply   rounded-3xl border-2 border-green-500 bg-[#EDE9E6] p-2 text-[#6741D9] shadow-custom;
+  }
+  .quill_base {
+    @apply rounded-3xl bg-[#EDE9E6] p-2 text-[#6741D9] shadow-custom;
+  }
+  .quill_err {
+    @apply  rounded-3xl border-2 border-red-500 bg-[#EDE9E6] p-2 text-[#6741D9] shadow-custom;
+  }
+  .quill_ok {
+    @apply  rounded-3xl border-2 border-green-500 bg-[#EDE9E6] p-2 text-[#6741D9] shadow-custom;
+  }
+  .coursetype_base {
+    @apply  ml-1 rounded-lg bg-[#EDE9E6] p-1 text-[#6741D9] shadow-custom;
+  }
+  .coursetype_err {
+    @apply  ml-1 rounded-lg border-2 border-red-500 bg-[#EDE9E6] p-1 text-[#6741D9] shadow-custom;
+  }
+  .coursetype_ok {
+    @apply  ml-1 rounded-lg border-2 border-green-500 bg-[#EDE9E6] p-1 text-[#6741D9] shadow-custom;
+  }
+}
+
+@layer base {
+  blockquote {
+    @apply my-4 border-s-4 border-gray-300 bg-gray-50 p-4 dark:border-gray-500 dark:bg-gray-100;
+  }
+  ul {
+    @apply mx-6 list-disc;
+  }
+  ol {
+    @apply mx-4 list-decimal;
+  }
+  a {
+    @apply underline hover:font-bold;
+  }
+}
+
+/* ? -----QUILL SETUP-------- */
+.ql-toolbar.ql-snow {
+  border: none !important;
+  height: 15%;
+}
+
+.ql-container.ql-snow {
+  border: none !important;
+  height: 85%;
+}
