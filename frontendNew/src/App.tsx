@@ -10,9 +10,12 @@ import About from './pages/about';
 import Contact from '../src/pages/contact';
 import Connect from '../src/pages/connect';
 import QuestionsList from './pages/search/questions';
+import TaggedQuestions from './pages/search/questions/taggedQuestions';
 import QuestionDetails from './pages/search/questions/questionDetails';
 import AskQuestion from './pages/search/questions/askQuestion';
 import UpdateQuestion from './pages/search/questions/updateQuestion';
+import Tags from './pages/search/tags';
+import Modules from './pages/search/modules';
 
 function App() {
   const router = createBrowserRouter([
@@ -24,7 +27,7 @@ function App() {
           index: true,
           element: <Home />,
         },
-        // Search questions routes
+        // SearchBy routes
         {
           path: 'search',
           element: <SearchLayout />,
@@ -40,6 +43,17 @@ function App() {
                 {
                   path: 'askQuestion',
                   element: <AskQuestion />,
+                },
+                {
+                  path: 'tagged',
+                  element: <SearchLayout />,
+                  children: [
+                    {
+                      index: false,
+                      path: ':id',
+                      element: <TaggedQuestions />,
+                    },
+                  ],
                 },
                 {
                   path: 'updateQuestion',
@@ -58,8 +72,18 @@ function App() {
                 },
               ],
             },
+            {
+              path: 'tags',
+              element: <Tags />,
+            },
+            {
+              path: 'modules',
+              element: <Modules />,
+            },
           ],
         },
+
+        // Other routes
         {
           path: 'connect',
           element: <Connect />,
