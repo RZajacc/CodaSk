@@ -1,15 +1,13 @@
-'use client';
 import {FaGithub} from 'react-icons/fa';
-import {User} from '@/types/custom_types';
-import {signIn} from 'next-auth/react';
-import {useRouter} from 'next/navigation';
-import React, {FormEvent, useEffect, useState} from 'react';
-import {BuildFetchUrl} from '@/utils/BuildFetchUrl';
-import FormInput from '@/components/Ui/Inputs/FormInput';
+import {type User} from '../../types/custom_types';
+import {type FormEvent, useEffect, useState} from 'react';
+// import {BuildFetchUrl} from '@/utils/BuildFetchUrl';
+import FormInput from '../../components/Ui/Inputs/FormInput';
 
 function SignUpForm() {
   // Build Fetch url
-  const FETCH_URL = BuildFetchUrl();
+  // const FETCH_URL = BuildFetchUrl();
+  const FETCH_URL = 'http://localhost:3000/';
 
   const [newUser, setNewUser] = useState<User>({
     first_name: '',
@@ -35,8 +33,6 @@ function SignUpForm() {
     answers: [],
     saved_tags: [],
   });
-
-  const router = useRouter();
 
   const handleRegister = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -87,12 +83,12 @@ function SignUpForm() {
 
             setNewUser(result);
             alert('Thank you for signing up!  🤓');
-            await signIn('credentials', {
-              ...newUser,
-              redirect: false,
-            });
+            // await signIn('credentials', {
+            //   ...newUser,
+            //   redirect: false,
+            // });
           }
-          router.push('/user/moreinfo');
+          // router.push('/user/moreinfo');
           // location.reload();
         } catch (error) {
           console.log('error in your /signup fetch:>> ', error);
@@ -104,7 +100,7 @@ function SignUpForm() {
   };
 
   useEffect(() => {
-    setNewUser(newUser);
+    // setNewUser(newUser);
   }, []);
 
   return (
@@ -132,17 +128,17 @@ function SignUpForm() {
         </button>
       </form>
 
-      <button
-        onClick={() => {
-          signIn('github', {
-            redirect: false,
-          });
-        }}
-        className="w-max rounded border-b-4 border-[#D9D9D9] bg-[#6741D9] px-4 py-2 font-bold text-white hover:border-black hover:bg-[#9AFF80] hover:text-black"
-      >
-        <FaGithub style={{fontSize: '2em'}} />
-        sign up with Github
-      </button>
+      {/*<button*/}
+      {/*  onClick={() => {*/}
+      {/*    // signIn('github', {*/}
+      {/*    //   redirect: false,*/}
+      {/*    // });*/}
+      {/*  }}*/}
+      {/*  className="w-max rounded border-b-4 border-[#D9D9D9] bg-[#6741D9] px-4 py-2 font-bold text-white hover:border-black hover:bg-[#9AFF80] hover:text-black"*/}
+      {/*>*/}
+      {/*  <FaGithub style={{fontSize: '2em'}} />*/}
+      {/*  sign up with Github*/}
+      {/*</button>*/}
     </div>
   );
 }

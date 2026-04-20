@@ -19,6 +19,12 @@ import Modules from './pages/search/modules';
 import StudentProjects from './pages/discover/studentProjects';
 import Polls from './pages/discover/polls';
 import Discussions from './pages/discover/discussions';
+import Login from './pages/user/login';
+import Register from './pages/user/register';
+import MoreInfo from './pages/user/moreinfo';
+import Profile from './pages/user/profile/userProfile';
+import UpdateProfile from './pages/user/profile/updateProfile';
+import NotFound from './pages/NotFound.tsx';
 
 function App() {
   const router = createBrowserRouter([
@@ -106,7 +112,47 @@ function App() {
           ],
         },
         // User routes
-
+        {
+          path: 'user',
+          element: <BaseNestedLayout />,
+          children: [
+            {
+              index: false,
+              path: 'login',
+              element: <Login />,
+            },
+            {
+              path: 'register',
+              element: <Register />,
+            },
+            {
+              path: 'moreinfo',
+              element: <MoreInfo />,
+            },
+            {
+              path: 'profile',
+              element: <BaseNestedLayout />,
+              children: [
+                {
+                  index: false,
+                  path: ':id',
+                  element: <Profile />,
+                },
+              ],
+            },
+            {
+              path: 'update-profile',
+              element: <BaseNestedLayout />,
+              children: [
+                {
+                  index: false,
+                  path: ':id',
+                  element: <UpdateProfile />,
+                },
+              ],
+            },
+          ],
+        },
         // Other routes
         {
           path: 'connect',
@@ -119,6 +165,10 @@ function App() {
         {
           path: 'contact',
           element: <Contact />,
+        },
+        {
+          path: '*',
+          element: <NotFound />,
         },
       ],
     },
