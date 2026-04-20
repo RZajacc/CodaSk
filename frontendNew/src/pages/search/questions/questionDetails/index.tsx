@@ -1,22 +1,19 @@
-// -------React/Nextjs-------
+// -------React-------
 import React, {useEffect, useState} from 'react';
 import parse from 'html-react-parser';
 import {Link, useParams} from 'react-router';
 // -------Components-------
-
 import AnswerCard from '../../../../components/AnswerCard.tsx';
 import BackButton from '../../../../components/Ui/buttons/BackButton';
 import DeleteModal from '../../../../components/DeleteModal';
 // -------Utils-------
-// import {divideString} from '@/utils/QuillTextProcessor';
 import {divideString} from '../../../../utils/QuillTextProcessor.tsx';
 import {getPostedOnInDays} from '../../../../utils/GetPostedOnInDays';
 import {deleteInlineStyles} from '../../../../utils/CleanInlineStyles';
 import {quillFormats, quillModules} from '../../../../types/quillTypes';
-// import 'react-quill/dist/quill.snow.css';
+import 'react-quill/dist/quill.snow.css';
 import type {Question} from '../../../../types/QuestionTypes.ts';
-
-// const QuillEditor = dynamic(() => import('react-quill'), {ssr: false});
+import QuillEditor from 'react-quill';
 
 export default function QuestionDetails() {
   const params = useParams<{id: string}>();
@@ -342,36 +339,36 @@ export default function QuestionDetails() {
         <hr className="border-[1px] border-gray-500" />
       </div>
       {/* Adding a new answer */}
-      {/*<div className="relative mx-auto mb-10 mt-10 h-fit w-9/12">*/}
-      {/*  <QuillEditor*/}
-      {/*    className={*/}
-      {/*      'rounded-3xl border-2 bg-[#EDE9E6] p-5 text-[#6741D9] shadow-custom'*/}
-      {/*    }*/}
-      {/*    value={answer}*/}
-      {/*    placeholder="*Provide an answer..."*/}
-      {/*    onChange={(newContent: string) => {*/}
-      {/*      setAnswer(newContent);*/}
-      {/*    }}*/}
-      {/*    modules={quillModules}*/}
-      {/*    formats={quillFormats}*/}
-      {/*  />*/}
-      {/*  <div className="absolute bottom-2 right-8">*/}
-      {/*    <svg*/}
-      {/*      xmlns="http://www.w3.org/2000/svg"*/}
-      {/*      width="27"*/}
-      {/*      height="27"*/}
-      {/*      viewBox="0 0 58 55"*/}
-      {/*      fill="none"*/}
-      {/*      className="hover:cursor-pointer"*/}
-      {/*      onClick={handlePostNewAnswer}*/}
-      {/*    >*/}
-      {/*      <path*/}
-      {/*        d="M4.83398 48.125L55.584 27.5L4.83398 6.875V22.9167L41.084 27.5L4.83398 32.0833V48.125Z"*/}
-      {/*        fill="black"*/}
-      {/*      />*/}
-      {/*    </svg>*/}
-      {/*  </div>*/}
-      {/*</div>*/}
+      <div className="relative mx-auto mt-10 mb-10 h-fit w-9/12">
+        <QuillEditor
+          className={
+            'shadow-custom rounded-3xl border-2 bg-[#EDE9E6] p-5 text-[#6741D9]'
+          }
+          value={answer}
+          placeholder="*Provide an answer..."
+          onChange={(newContent: string) => {
+            setAnswer(newContent);
+          }}
+          modules={quillModules}
+          formats={quillFormats}
+        />
+        <div className="absolute right-8 bottom-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="27"
+            height="27"
+            viewBox="0 0 58 55"
+            fill="none"
+            className="hover:cursor-pointer"
+            onClick={handlePostNewAnswer}
+          >
+            <path
+              d="M4.83398 48.125L55.584 27.5L4.83398 6.875V22.9167L41.084 27.5L4.83398 32.0833V48.125Z"
+              fill="black"
+            />
+          </svg>
+        </div>
+      </div>
       {/* ANSWERS */}
       <div className="relative mx-auto mt-10 mb-10 h-fit w-9/12">
         {questionData

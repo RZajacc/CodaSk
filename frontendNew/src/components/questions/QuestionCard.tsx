@@ -1,4 +1,4 @@
-// import 'react-quill/dist/quill.snow.css';
+import 'react-quill/dist/quill.snow.css';
 import QuestionCardHeader from './questionCard/QuestionCardHeader';
 import ProblemDescription from './questionCard/ProblemDescription';
 import TagPill from './questionCard/TagPill';

@@ -1,13 +1,13 @@
 import React, {type ChangeEvent} from 'react';
-// import 'react-quill/dist/quill.snow.css'; // Import Quill styles
-// import {quillFormats, quillModules} from '../../types/quillTypes';
+import 'react-quill/dist/quill.snow.css'; // Import Quill styles
+import {quillFormats, quillModules} from '../../types/quillTypes';
 import type {
   AllTagsQuery,
   Tag,
   questionInput,
 } from '../../types/askQuestionTypes';
 
-// const QuillEditor = dynamic(() => import('react-quill'), {ssr: false});
+import QuillEditor from 'react-quill';
 
 type Props = {
   tagData: AllTagsQuery | undefined;
@@ -93,13 +93,13 @@ function NewQuestionForm({
             : 'quill_base'
         }
       >
-        {/*<QuillEditor*/}
-        {/*  value={questionInput.problem_description}*/}
-        {/*  placeholder="*Describe your problem in details..."*/}
-        {/*  onChange={handleProblemDescription}*/}
-        {/*  modules={quillModules}*/}
-        {/*  formats={quillFormats}*/}
-        {/*/>*/}
+        <QuillEditor
+          value={questionInput.problem_description}
+          placeholder="*Describe your problem in details..."
+          onChange={handleProblemDescription}
+          modules={quillModules}
+          formats={quillFormats}
+        />
       </div>
 
       {/* Solutions tried */}
@@ -113,13 +113,13 @@ function NewQuestionForm({
             : 'quill_base'
         }
       >
-        {/*<QuillEditor*/}
-        {/*  value={questionInput.solution_tried}*/}
-        {/*  placeholder="*What solution(s) did you try?"*/}
-        {/*  onChange={handleTriedSolutions}*/}
-        {/*  modules={quillModules}*/}
-        {/*  formats={quillFormats}*/}
-        {/*/>*/}
+        <QuillEditor
+          value={questionInput.solution_tried}
+          placeholder="*What solution(s) did you try?"
+          onChange={handleTriedSolutions}
+          modules={quillModules}
+          formats={quillFormats}
+        />
       </div>
 
       {/* Course type and module */}

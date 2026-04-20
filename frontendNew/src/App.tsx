@@ -12,6 +12,7 @@ import Connect from '../src/pages/connect';
 import QuestionsList from './pages/search/questions';
 import QuestionDetails from './pages/search/questions/questionDetails';
 import AskQuestion from './pages/search/questions/askQuestion';
+import UpdateQuestion from './pages/search/questions/updateQuestion';
 
 function App() {
   const router = createBrowserRouter([
@@ -23,6 +24,7 @@ function App() {
           index: true,
           element: <Home />,
         },
+        // Search questions routes
         {
           path: 'search',
           element: <SearchLayout />,
@@ -38,6 +40,17 @@ function App() {
                 {
                   path: 'askQuestion',
                   element: <AskQuestion />,
+                },
+                {
+                  path: 'updateQuestion',
+                  element: <SearchLayout />,
+                  children: [
+                    {
+                      index: false,
+                      path: ':id',
+                      element: <UpdateQuestion />,
+                    },
+                  ],
                 },
                 {
                   path: ':id',

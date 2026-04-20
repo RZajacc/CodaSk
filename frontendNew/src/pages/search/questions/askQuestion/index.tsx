@@ -94,37 +94,40 @@ function AskQuestion() {
   };
   // console.log(questionInput);
 
+  // Temp
+  const addQuestionCalled = false;
+  const tagData = {};
+  const addQuestionErr = undefined;
   return (
     <div className="h-full min-h-screen">
-      <h1>Ask a question page</h1>
-      {/*{!addQuestionCalled ? (*/}
-      {/*  <NewQuestionForm*/}
-      {/*    tagData={tagData ? tagData : undefined}*/}
-      {/*    questionInput={questionInput}*/}
-      {/*    setQuestionInput={setQuestionInput}*/}
-      {/*    setFilteredTags={setFilteredTags}*/}
-      {/*    postQuestion={postQuestion}*/}
-      {/*    errorArr={errorArr}*/}
-      {/*    postQCalled={postQCalled}*/}
-      {/*  />*/}
-      {/*) : !addQuestionErr ? (*/}
-      {/*  <AssignTags*/}
-      {/*    filteredTags={filteredTags}*/}
-      {/*    selectedTags={selectedTags}*/}
-      {/*    setSelectedTags={setSelectedTags}*/}
-      {/*    handleTagUpdate={handleTagUpdate}*/}
-      {/*    updateQuestionCalled={updateQuestionCalled}*/}
-      {/*    updateTagCalled={updateTagCalled}*/}
-      {/*    UpdateQuestionErr={UpdateQuestionErr}*/}
-      {/*    updateTagError={updateTagError}*/}
-      {/*  />*/}
-      {/*) : (*/}
-      {/*  <>*/}
-      {/*    <div className="container mx-auto mb-6 mt-10 w-8/12 text-center">*/}
-      {/*      <p className="text-3xl text-red-600">{addQuestionErr.message}</p>*/}
-      {/*    </div>*/}
-      {/*  </>*/}
-      {/*)}*/}
+      {!addQuestionCalled ? (
+        <NewQuestionForm
+          tagData={tagData ? tagData : undefined}
+          questionInput={questionInput}
+          setQuestionInput={setQuestionInput}
+          setFilteredTags={setFilteredTags}
+          postQuestion={postQuestion}
+          errorArr={errorArr}
+          postQCalled={postQCalled}
+        />
+      ) : !addQuestionErr ? (
+        <AssignTags
+          filteredTags={filteredTags}
+          selectedTags={selectedTags}
+          setSelectedTags={setSelectedTags}
+          handleTagUpdate={handleTagUpdate}
+          updateQuestionCalled={updateQuestionCalled}
+          updateTagCalled={updateTagCalled}
+          UpdateQuestionErr={UpdateQuestionErr}
+          updateTagError={updateTagError}
+        />
+      ) : (
+        <>
+          <div className="container mx-auto mt-10 mb-6 w-8/12 text-center">
+            <p className="text-3xl text-red-600">{'Error'}</p>
+          </div>
+        </>
+      )}
     </div>
   );
 }
