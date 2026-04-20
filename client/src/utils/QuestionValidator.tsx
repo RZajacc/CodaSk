@@ -1,7 +1,7 @@
-import {questionInput} from '@/types/askQuestionTypes';
+import {type questionInput} from '../types/askQuestionTypes';
 
-export const validateInputs = (questionInput: questionInput): String[] => {
-  const errArr: String[] = [];
+export const validateInputs = (questionInput: questionInput): string[] => {
+  const errArr: string[] = [];
 
   if (questionInput.title === '') {
     errArr.push('You need to provide a title!');

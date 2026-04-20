@@ -1,12 +1,9 @@
-import {useSession} from 'next-auth/react';
 import {BsFillPinFill} from 'react-icons/bs';
-import {useRouter} from 'next/navigation';
-import React, {useEffect, useState} from 'react';
-import Link from 'next/link';
-import {userQuery} from '@/app/search/tags/page';
-import Loader from '@/components/questions/Loader';
+import {useEffect, useState} from 'react';
+import Loader from '../../components/questions/Loader';
 import Modal from '../Modal';
-import {BuildFetchUrl} from '@/utils/BuildFetchUrl';
+import type {tagQuery, userQuery} from '../../pages/search/tags';
+import {Link} from 'react-router';
 
 type tagProps = {
   getAllTags: [
@@ -25,7 +22,7 @@ type tagProps = {
 };
 
 type Props = {
-  data: tagProps;
+  data: tagQuery[];
   userData: userQuery;
   bookmarkTag: ({
     variables: {userId, tagId},
@@ -47,23 +44,24 @@ function TagCard({
   bookmarkTag,
   unbookmarkTag,
   userData,
-  loading,
-} // setSearchInput,
-// searchInput,
-: Props) {
-  const session = useSession();
-  const sessionUserID = session?.data?.user?.name as string;
-  const router = useRouter();
+  loading, // setSearchInput,
+  // searchInput,
+}: Props) {
+  const allTags = data;
+  const displayedTags = allTags;
+  // const [displayedTags, setDisplayedTags] = useState(allTags);
 
-  const allTags = data && data.getAllTags;
-  const [displayedTags, setDisplayedTags] = useState(allTags);
+  console.log('DATA IN CARD', data);
+  console.log('All tags IN CARD', allTags);
+  console.log('Displayed tags', displayedTags);
+  // console.log('Displayed tags len', displayedTags.length);
 
   // Bookmark logic
-  const tagIds = data?.getAllTags?.map((tag) => tag.id);
+  const tagIds = data?.map((tag) => tag.id);
   const savedTags = userData?.getUserById.saved_tags || [];
 
-  const isAlreadyBookmarked = tagIds?.map(
-    (tagId) => savedTags?.includes(tagId)
+  const isAlreadyBookmarked = tagIds?.map((tagId) =>
+    savedTags?.includes(tagId)
   );
 
   const [isBookmarked, setIsBookmarked] = useState<boolean | boolean[]>(
@@ -71,66 +69,66 @@ function TagCard({
   );
 
   const bookmarkTagClick = async (userID: string, tagID: string) => {
-    try {
-      const result = await bookmarkTag({
-        variables: {
-          userId: userID,
-          tagId: tagID,
-        },
-      });
-      console.log('Bookmark result:', result);
-    } catch (error) {
-      console.error('Bookmark error:', error);
-    }
+    // try {
+    //   const result = await bookmarkTag({
+    //     variables: {
+    //       userId: userID,
+    //       tagId: tagID,
+    //     },
+    //   });
+    //   console.log('Bookmark result:', result);
+    // } catch (error) {
+    //   console.error('Bookmark error:', error);
+    // }
   };
 
   const unbookmarkTagClick = async (userID: string, tagID: string) => {
-    try {
-      const result = await unbookmarkTag({
-        variables: {
-          userId: userID,
-          tagId: tagID,
-        },
-      });
-      console.log('Unbookmark result:', result);
-    } catch (error) {
-      console.error('Unbookmark error:', error);
-    }
+    // try {
+    //   const result = await unbookmarkTag({
+    //     variables: {
+    //       userId: userID,
+    //       tagId: tagID,
+    //     },
+    //   });
+    //   console.log('Unbookmark result:', result);
+    // } catch (error) {
+    //   console.error('Unbookmark error:', error);
+    // }
   };
 
   const handleBookMarkClick = async (userID: string, tagID: string) => {
-    if (!sessionUserID) {
-      alert('You need to log in first!');
-      return;
-    }
-    try {
-      await bookmarkTagClick(userID, tagID);
-      setShowAddModal(true);
-    } catch (error) {
-      console.log('error :>> ', error);
-    }
-    setIsBookmarked(isBookmarked);
+    // if (!sessionUserID) {
+    //   alert('You need to log in first!');
+    //   return;
+    // }
+    // try {
+    //   await bookmarkTagClick(userID, tagID);
+    //   setShowAddModal(true);
+    // } catch (error) {
+    //   console.log('error :>> ', error);
+    // }
+    // setIsBookmarked(isBookmarked);
   };
 
   const handleUnBookMarkClick = async (userID: string, tagID: string) => {
-    if (!sessionUserID) {
-      alert('You need to log in first!');
-      return;
-    }
-    try {
-      await unbookmarkTagClick(userID, tagID);
-      setShowRemoveModal(true);
-    } catch (error) {
-      console.log('error :>> ', error);
-    }
-    setIsBookmarked(!isBookmarked);
+    // if (!sessionUserID) {
+    //   alert('You need to log in first!');
+    //   return;
+    // }
+    // try {
+    //   await unbookmarkTagClick(userID, tagID);
+    //   setShowRemoveModal(true);
+    // } catch (error) {
+    //   console.log('error :>> ', error);
+    // }
+    // setIsBookmarked(!isBookmarked);
   };
   //
 
   // Div redirect
   const handleTagRedirect = (tagID: string) => {
-    const FETCH_URL = BuildFetchUrl();
-    router.push(`/search/questions/tagged/${tagID}`);
+    // const FETCH_URL = BuildFetchUrl();
+    // router.push(`/search/questions/tagged/${tagID}`);
   };
 
   //
@@ -157,6 +155,10 @@ function TagCard({
   //   setDisplayedTags(filteredTags && [filteredTags[0]]);
   // }, [allTags, searchInput]);
 
+  // console.log('Displayed tags', displayedTags);
+  // console.log('All tags', allTags);
+  // console.log('Displayed tags len', displayedTags.length);
+
   return (
     <div className="flex flex-wrap justify-center">
       {loading && <Loader />}
@@ -175,11 +177,8 @@ function TagCard({
                 <div className="flex w-full items-center justify-between">
                   <Link
                     className="no-underline"
-                    href={{
-                      pathname: `/search/questions/tagged/${tag.id}`,
-                      query: {
-                        name: tag.name,
-                      },
+                    to={{
+                      pathname: `/search/questions/tagged/${tag._id}`,
                     }}
                   >
                     {tag?.name}
@@ -187,18 +186,18 @@ function TagCard({
                   {/* BOOKMARK / UNBOOKMARK BUTTON */}
                   {isTagBookmarked ? (
                     <button
-                      onClick={() => {
-                        handleUnBookMarkClick(sessionUserID!, tag.id);
-                      }}
+                      // onClick={() => {
+                      //   handleUnBookMarkClick(sessionUserID!, tag.id);
+                      // }}
                       className="mx-2"
                     >
                       <BsFillPinFill color="#B197FC" />
                     </button>
                   ) : (
                     <button
-                      onClick={() => {
-                        handleBookMarkClick(sessionUserID!, tag.id);
-                      }}
+                      // onClick={() => {
+                      //   handleBookMarkClick(sessionUserID!, tag.id);
+                      // }}
                       className="mx-2"
                     >
                       <BsFillPinFill color="white" />
@@ -210,9 +209,9 @@ function TagCard({
               <div className="flex h-full flex-row items-center">
                 <div className="questionBoxBody mx-2 p-2">
                   <div
-                    onClick={() => {
-                      handleTagRedirect(tag.id);
-                    }}
+                    // onClick={() => {
+                    //   handleTagRedirect(tag.id);
+                    // }}
                     className="flex flex-col"
                   >
                     <p className="line-clamp-4">{tag?.description}</p>
@@ -231,7 +230,7 @@ function TagCard({
           );
         })
       ) : (
-        <p className=" my-14  font-medium text-[#6741D9] md:text-3xl">
+        <p className="my-14 font-medium text-[#6741D9] md:text-3xl">
           No tags found
         </p>
       )}
@@ -242,8 +241,8 @@ function TagCard({
           title="Added to your bookmarks!"
           message={
             <Link
-              className=" rounded-full bg-[#B197FC] px-2 py-2 font-light text-white no-underline hover:bg-black hover:font-light"
-              href={`/user/profile/${sessionUserID}`}
+              className="rounded-full bg-[#B197FC] px-2 py-2 font-light text-white no-underline hover:bg-black hover:font-light"
+              to={`/user/profile/${sessionUserID}`}
             >
               Go to profile
             </Link>
@@ -258,8 +257,8 @@ function TagCard({
           title="Removed from bookmarks!"
           message={
             <Link
-              className=" rounded-full bg-[#B197FC] px-2 py-2 font-light text-white no-underline hover:bg-black hover:font-light"
-              href={`/user/profile/${sessionUserID}`}
+              className="rounded-full bg-[#B197FC] px-2 py-2 font-light text-white no-underline hover:bg-black hover:font-light"
+              to={`/user/profile/${sessionUserID}`}
             >
               Go to profile
             </Link>

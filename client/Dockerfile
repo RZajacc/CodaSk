@@ -1,49 +1,20 @@
-ARG NODE_VERSION=22
+# Use the latest LTS version of Node.js
+FROM node:22-alpine
 
-FROM node:${NODE_VERSION} as base
-
+# Set the working directory inside the container
 WORKDIR /app
 
-EXPOSE 3000
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
-# Test stage
-FROM base as test
-
-COPY package.json .
-
+# Install dependencies
 RUN npm install
 
+# Copy the rest of your application files
 COPY . .
 
-RUN npm run test
+# Expose the port your app runs on
+EXPOSE 5173
 
-
-# Dev stage
-FROM base as dev
-
-COPY package.json .
-
-RUN npm install
-
-COPY . .
-
-CMD [ "npm", "run", "dev" ]
-
-# Prod stage
-FROM base as prod
-
-ARG NEXTAUTH_URL
-ARG NEXT_PUBLIC_API_URL
-
-COPY package.json .
-
-RUN npm install
-
-COPY . .
-
-ENV NEXTAUTH_URL=${NEXTAUTH_URL}
-ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
-
-RUN npm run build
-
-CMD [ "npm", "start" ]
+# Define the command to run your app
+CMD ["npm", "run", "dev"]

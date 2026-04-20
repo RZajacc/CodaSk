@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import {FaGithub} from 'react-icons/fa';
+import {Link} from 'react-router';
 
 function Footer() {
   return (
@@ -8,7 +8,7 @@ function Footer() {
       <div className="flex justify-center gap-3">
         <Link
           className="flex gap-1 font-light no-underline hover:animate-pulse"
-          href={'https://github.com/helene-abiassi'}
+          to={'https://github.com/helene-abiassi'}
           target="_blank"
         >
           <FaGithub style={{fontSize: '1.3em'}} />
@@ -17,7 +17,7 @@ function Footer() {
         |{' '}
         <Link
           className="flex gap-1 font-light no-underline"
-          href={'https://github.com/ThairOr'}
+          to={'https://github.com/ThairOr'}
           target="_blank"
         >
           <FaGithub style={{fontSize: '1.3em'}} />
@@ -26,7 +26,7 @@ function Footer() {
         |{' '}
         <Link
           className="flex gap-1 font-light no-underline"
-          href={'https://github.com/RZajacc'}
+          to={'https://github.com/RZajacc'}
           target="_blank"
         >
           <FaGithub style={{fontSize: '1.3em'}} />

@@ -1,12 +1,10 @@
-import {ApolloClient, InMemoryCache, gql} from '@apollo/client';
-import React, {useEffect} from 'react';
-import {GetServerSideProps} from 'next';
-import QuestionCard from '@/components/questions/QuestionsGrid';
-import {tagQuery, userQuery} from '@/app/search/tags/page';
+// import QuestionCard from '@/components/questions/QuestionsGrid';
+// import {tagQuery, userQuery} from '@/app/search/tags/page';
 import TagCard from './TagCard';
+import type {tagQuery} from '../../pages/search/tags';
 
 type Props = {
-  data: tagQuery;
+  data: tagQuery[];
   userData: userQuery;
   bookmarkTag: ({
     variables: {userId, tagId},
@@ -28,10 +26,9 @@ function TagsGrid({
   bookmarkTag,
   unbookmarkTag,
   userData,
-  loading,
-} // setSearchInput,
-// searchInput,
-: Props) {
+  loading, // setSearchInput,
+  // searchInput,
+}: Props) {
   return (
     <div className="flex flex-col">
       <TagCard

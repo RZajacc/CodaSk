@@ -1,21 +1,12 @@
-'use client';
-import {User, UserPhoto} from '@/types/custom_types';
-import {BuildFetchUrl} from '@/utils/BuildFetchUrl';
-import {useSession} from 'next-auth/react';
-import Image from 'next/image';
-import {useRouter} from 'next/navigation';
-import React, {ChangeEvent, FormEvent, useEffect, useState} from 'react';
-import FormInput from '@/components/Ui/Inputs/FormInput';
-import RadioButtonGroup from '@/components/Ui/Inputs/RadioButtonGroup';
+import type {User, UserPhoto} from '../../types/custom_types';
+import {type ChangeEvent, type FormEvent, useEffect, useState} from 'react';
+import FormInput from '../../components/Ui/Inputs/FormInput';
+import RadioButtonGroup from '../../components/Ui/Inputs/RadioButtonGroup';
 
 function CompleteProfileForm() {
-  const session = useSession();
-
   // Build Fetch url
-  const FETCH_URL = BuildFetchUrl();
-  const id = session!.data?.user?.name as string;
-  console.log('id :>> ', id);
-  ``;
+  // const FETCH_URL = BuildFetchUrl();
+  const FETCH_URL = 'http://localhost:3000/';
 
   const cohortNames = [
     'Blue Ants',
@@ -24,7 +15,6 @@ function CompleteProfileForm() {
     'Orange Pigs',
     'Coral Honey Badgers',
   ];
-
 
   const [userInfo, setuserInfo] = useState<User>({
     first_name: '',
@@ -51,12 +41,10 @@ function CompleteProfileForm() {
   });
   const [selectedFile, setSelectedFile] = useState<File | string>('');
 
-  const router = useRouter();
-
   const getUserInfo = async () => {
-    if (!id) {
-      // console.log(' whatxws going on?:>>');
-    }
+    // if (!id) {
+    // console.log(' whatxws going on?:>>');
+    // }
     // await location.reload();
 
     const requestOptions = {
@@ -64,7 +52,7 @@ function CompleteProfileForm() {
     };
     try {
       const response = await fetch(
-        `${FETCH_URL}/api/users/id/${id}`,
+        `${FETCH_URL}/api/users/id/${'123'}`,
         requestOptions
       );
       if (response.ok) {
@@ -122,7 +110,7 @@ function CompleteProfileForm() {
 
     try {
       const urlencoded = new URLSearchParams();
-      urlencoded.append('_id', id!);
+      urlencoded.append('_id', '123'!);
       urlencoded.append('first_name', userInfo.first_name);
       urlencoded.append('last_name', userInfo.last_name);
       urlencoded.append('user_photo', userInfo.user_photo);
@@ -152,7 +140,7 @@ function CompleteProfileForm() {
           const result = await response.json();
           // console.log('result from update :>> ', result);
           setuserInfo(result);
-          router.push(`${FETCH_URL}/user/profile/${id}`);
+          // router.push(`${FETCH_URL}/user/profile/${id}`);
         }
       } catch (error) {
         console.log('error in your /completeProfile route:>> ', error);
@@ -164,14 +152,14 @@ function CompleteProfileForm() {
 
   useEffect(() => {
     getUserInfo();
-  }, [id]);
+  }, []);
 
   return (
     <div>
       {/*Image upload section */}
       <div className="mb-4 flex items-center">
         <div className="mr-5">
-          <Image
+          <img
             className="rounded-full pb-2"
             alt="user_photo"
             src={
@@ -286,7 +274,7 @@ function CompleteProfileForm() {
             From the
           </label>
           <select
-            className="rounded-2xl bg-[#EDE9E6] p-2 text-black shadow-custom"
+            className="shadow-custom rounded-2xl bg-[#EDE9E6] p-2 text-black"
             name="cohort_name"
             value={userInfo?.cohort_name || 'cohort_name'}
           >
@@ -301,9 +289,9 @@ function CompleteProfileForm() {
 
         <div className="flex flex-row justify-between">
           <button
-            onClick={() => {
-              router.back();
-            }}
+            // onClick={() => {
+            //   router.back();
+            // }}
             type="button"
             className="mx-1 my-1 w-min rounded-xl bg-black p-3 py-[0.10rem] text-white"
           >

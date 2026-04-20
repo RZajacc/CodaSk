@@ -1,10 +1,13 @@
-import React, {ChangeEvent} from 'react';
-import dynamic from 'next/dynamic';
+import React, {type ChangeEvent} from 'react';
 import 'react-quill/dist/quill.snow.css'; // Import Quill styles
-import {quillFormats, quillModules} from '@/types/quillTypes';
-import {AllTagsQuery, Tag, questionInput} from '@/types/askQuestionTypes';
+import {quillFormats, quillModules} from '../../types/quillTypes';
+import type {
+  AllTagsQuery,
+  Tag,
+  questionInput,
+} from '../../types/askQuestionTypes';
 
-const QuillEditor = dynamic(() => import('react-quill'), {ssr: false});
+import QuillEditor from 'react-quill';
 
 type Props = {
   tagData: AllTagsQuery | undefined;
@@ -120,7 +123,7 @@ function NewQuestionForm({
       </div>
 
       {/* Course type and module */}
-      <div className="grid grid-cols-2 gap-4 ">
+      <div className="grid grid-cols-2 gap-4">
         <select
           name="course_type"
           id="course_type"
@@ -140,7 +143,7 @@ function NewQuestionForm({
         <select
           name="module"
           id="module"
-          className="rounded-lg bg-[#EDE9E6] p-1 text-[#6741D9] shadow-custom"
+          className="shadow-custom rounded-lg bg-[#EDE9E6] p-1 text-[#6741D9]"
           onChange={getUserInput}
         >
           <option value="none">Select Module</option>
@@ -154,7 +157,7 @@ function NewQuestionForm({
       <input
         type="text"
         placeholder="Link your github repo"
-        className="ml-1 block rounded-lg bg-[#EDE9E6] p-1 text-[#6741D9] shadow-custom"
+        className="shadow-custom ml-1 block rounded-lg bg-[#EDE9E6] p-1 text-[#6741D9]"
         name="github_repo"
         onChange={getUserInput}
       />

@@ -1,12 +1,8 @@
-'use client';
 import {FaGithub, FaGoogle} from 'react-icons/fa';
-import {signIn} from 'next-auth/react';
-import {useRouter} from 'next/navigation';
 import React from 'react';
-import FormInput from '@/components/Ui/Inputs/FormInput';
-function LogInForm() {
-  const router = useRouter();
+import FormInput from '../../components/Ui/Inputs/FormInput';
 
+export default function LogInForm() {
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -14,25 +10,25 @@ function LogInForm() {
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
 
-    try {
-      const result = await signIn('credentials', {
-        email: email,
-        password: password,
-        redirect: false,
-      });
-
-      if (result?.error) {
-        // console.error('Login failed:', result.error);
-      } else {
-        // router.push(`../user/moreinfo`);
-        router.push(`/`);
-        // location.reload();
-
-        // console.log('Result of login successfully:', result);
-      }
-    } catch (error) {
-      console.error('Login error:', error);
-    }
+    // try {
+    //   const result = await signIn('credentials', {
+    //     email: email,
+    //     password: password,
+    //     redirect: false,
+    //   });
+    //
+    //   if (result?.error) {
+    //     // console.error('Login failed:', result.error);
+    //   } else {
+    //     // router.push(`../user/moreinfo`);
+    //     router.push(`/`);
+    //     // location.reload();
+    //
+    //     // console.log('Result of login successfully:', result);
+    //   }
+    // } catch (error) {
+    //   console.error('Login error:', error);
+    // }
   };
 
   return (
@@ -79,5 +75,3 @@ function LogInForm() {
     </div>
   );
 }
-
-export default LogInForm;

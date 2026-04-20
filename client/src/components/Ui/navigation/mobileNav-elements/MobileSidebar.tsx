@@ -1,9 +1,7 @@
-import Image from 'next/image';
-import Link from 'next/link';
 import React from 'react';
-import CodaskLogo from '@/../public/CodaskLogo.png';
-import {usePathname} from 'next/navigation';
+import CodaskLogo from '../../../../assets/CodaskLogo.png';
 import SideBarLink from './SideBarLink';
+import {Link} from 'react-router';
 
 type Props = {
   showMobileNav: boolean;
@@ -22,22 +20,22 @@ function MobileSidebar({
     setShowMobileNav((prev) => !prev);
     setHideMobileNav(true);
   };
-  const pathname = usePathname();
+  // const pathname = usePathname();
 
   return (
     <div
       className={`h-full ${showMobileNav && 'animate-slidein'} ${
         hideMobileNav && 'animate-slideout'
-      }  fixed -left-1/2 top-0 z-20 w-1/2 bg-white`}
+      } fixed top-0 -left-1/2 z-20 w-1/2 bg-white`}
     >
       {/* Logo and contact section */}
       <section className="mt-12">
         <Link
-          href={'/'}
+          to={'/'}
           onClick={handleSideNavVisibility}
           className="hover:animate-pulse"
         >
-          <Image
+          <img
             src={CodaskLogo}
             alt="logo"
             width={84}
@@ -64,7 +62,7 @@ function MobileSidebar({
           url="/search/modules"
           text="Modules"
         />
-        <h1 className="mb-3 mt-6 text-xl font-bold">DISCOVER:</h1>
+        <h1 className="mt-6 mb-3 text-xl font-bold">DISCOVER:</h1>
         <SideBarLink
           handleSideNavVisibility={handleSideNavVisibility}
           url="/discover/studentprojects"

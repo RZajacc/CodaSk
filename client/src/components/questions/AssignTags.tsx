@@ -1,7 +1,6 @@
-import {Tag} from '@/types/askQuestionTypes';
-import Link from 'next/link';
-import {ApolloError} from '@apollo/client';
-import React, {ChangeEvent} from 'react';
+import {type Tag} from '../../types/askQuestionTypes';
+import {type ChangeEvent} from 'react';
+import {Link} from 'react-router';
 
 type Props = {
   filteredTags: Tag[];
@@ -10,8 +9,8 @@ type Props = {
   handleTagUpdate: () => void;
   updateQuestionCalled: boolean;
   updateTagCalled: boolean;
-  UpdateQuestionErr: ApolloError | undefined;
-  updateTagError: ApolloError | undefined;
+  UpdateQuestionErr: undefined;
+  updateTagError: undefined;
 };
 
 function AssignTags({
@@ -42,11 +41,11 @@ function AssignTags({
 
   return (
     <>
-      <div className=" mx-auto mt-10 max-w-3xl p-3">
+      <div className="mx-auto mt-10 max-w-3xl p-3">
         {!updateQuestionCalled && !updateTagCalled ? (
           <>
             {/* Header text */}
-            <div className="mb-6 ">
+            <div className="mb-6">
               <h1 className="text-3xl text-[#6741D9]">Almost there!</h1>
               <h3 className="text-xl text-[#6741D9]">
                 To make it easier for others to find your question please select
@@ -115,8 +114,8 @@ function AssignTags({
                 To see all questions click on the link below:
               </h3>
               <Link
-                href={'/search/questions'}
-                className=" rounded-xl bg-black p-2 text-white no-underline hover:font-semibold focus:font-semibold"
+                to={'/search/questions'}
+                className="rounded-xl bg-black p-2 text-white no-underline hover:font-semibold focus:font-semibold"
               >
                 Go to questions
               </Link>
@@ -126,10 +125,10 @@ function AssignTags({
           <>
             <div className="mx-auto mt-10 grid justify-items-center gap-3 p-3 sm:w-2/3">
               <p className="text-3xl text-red-600">
-                {UpdateQuestionErr ? UpdateQuestionErr.message : ''}
+                {/*{UpdateQuestionErr ? UpdateQuestionErr.message : ''}*/}
               </p>
               <p className="text-3xl text-red-600">
-                {updateTagError ? updateTagError.message : ''}
+                {/*{updateTagError ? updateTagError.message : ''}*/}
               </p>
             </div>
           </>

@@ -1,11 +1,10 @@
-import Image from 'next/image';
-import React, {ReactElement, useState} from 'react';
+import React from 'react';
 
 type ModalProps = {
   title: string;
   message: React.JSX.Element[] | React.JSX.Element | string | undefined;
   onClose: () => void;
-  image?: JSX.Element;
+  image?: React.JSX.Element;
 };
 
 const Modal = ({message, onClose, title, image}: ModalProps) => {

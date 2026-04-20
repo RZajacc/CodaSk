@@ -1,6 +1,5 @@
-import Link from 'next/link';
-import React from 'react';
 import {BsPatchQuestion} from 'react-icons/bs';
+import {Link} from 'react-router';
 
 type Props = {
   userId: string | undefined;
@@ -12,8 +11,8 @@ function LinksAuthUser({userId}: Props) {
       {' '}
       <li>
         <Link
-          href={`/user/profile/${userId}`}
-          className="mx-1 text-2xl text-white	 no-underline hover:font-semibold focus:font-semibold"
+          to={`/user/profile/${userId}`}
+          className="mx-1 text-2xl text-white no-underline hover:font-semibold focus:font-semibold"
         >
           👀 |
         </Link>
@@ -24,7 +23,7 @@ function LinksAuthUser({userId}: Props) {
     </li> */}
       <li>
         {' '}
-        <Link href={'/search/questions/askQuestion'}>
+        <Link to={'/search/questions/askQuestion'}>
           <BsPatchQuestion style={{fontSize: '2rem', color: 'white'}} />
         </Link>
       </li>

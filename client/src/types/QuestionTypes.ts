@@ -1,4 +1,4 @@
-type Question = {
+export type Question = {
   _id: string;
   answers: {
     _id: string;

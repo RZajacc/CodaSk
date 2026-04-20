@@ -1,4 +1,4 @@
-import {EntriesType} from './QuillTextProcessor';
+import type {EntriesType} from './QuillTextProcessor.tsx';
 
 export const deleteInlineStyles = (data: EntriesType[]) => {
   data.forEach((entry) => {

@@ -1,8 +1,10 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-body {
+html, body, .app, main, #root {
+  height: 100%;
+}
+
+.app {
   display: grid;
   grid-template-rows: 80px auto 80px;
   grid-template-areas:
@@ -64,7 +66,7 @@ pre {
 }
 
 @media (min-width: 640px) {
-  body {
+  .app {
     display: grid;
     grid-template-rows: 96px auto 96px;
     grid-template-areas:
@@ -72,16 +74,12 @@ pre {
       'main'
       'footer';
   }
-
-  #desktop-sidebar {
-    grid-area: sidebar;
-  }
 }
 
 @media (min-width: 768px) {
-  body {
+  .app {
     display: grid;
-    grid-template-rows: 112px auto 117px;
+    grid-template-rows: 112px auto 96px;
     grid-template-columns: 192px auto;
     grid-template-areas:
       'navigation navigation'
@@ -112,6 +110,46 @@ pre {
     transform: rotate(10deg);
     transform-origin: bottom;
   }
+}
+
+@theme {
+  /* shadows */
+  --shadow-custom: 10px 10px 0 0 #6741D9;
+  --shadow-custom2: 10px 10px 0 0 black;
+
+  /* gradients */
+  /*--background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));*/
+  /*--background-image-gradient-conic:*/
+  /*        conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops));*/
+}
+
+/* keyframes */
+@keyframes fadein {
+  0% { opacity: 0; }
+  100% { opacity: 0.7; }
+}
+
+@keyframes slidein {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes slideout {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(0%); }
+}
+
+/* animations as utilities */
+@utility animate-slidein {
+  animation: slidein 500ms ease-in forwards;
+}
+
+@utility animate-slideout {
+  animation: slideout 500ms ease-in forwards;
+}
+
+@utility animate-fadein {
+  animation: fadein 500ms ease-in forwards;
 }
 
 @layer components {

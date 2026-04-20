@@ -1,25 +1,19 @@
-import React from 'react';
-import Link from 'next/link';
-
 import 'react-quill/dist/quill.snow.css';
-import {useSession} from 'next-auth/react';
-import {questionQuery} from '@/types/questionDetailsTypes';
 import QuestionCardHeader from './questionCard/QuestionCardHeader';
-import {divideString} from '@/utils/QuillTextProcessor';
-import {deleteInlineStyles} from '@/utils/CleanInlineStyles';
 import ProblemDescription from './questionCard/ProblemDescription';
 import TagPill from './questionCard/TagPill';
 import AnswersCount from './questionCard/AnswersCount';
 import QuestionOptions from './questionCard/QuestionOptions';
+import type {Question} from '../../types/QuestionTypes.ts';
+import {divideString} from '../../utils/QuillTextProcessor.tsx';
+import {deleteInlineStyles} from '../../utils/CleanInlineStyles.tsx';
+import {Link} from 'react-router';
 
 type Props = {
   questionObj: Question;
 };
 
 function QuestionCard({questionObj}: Props) {
-  const session = useSession();
-  const userID = session?.data?.user?._id;
-
   // Prepare quill generated text to display
   const divideDescString = divideString(questionObj.problem_description);
   const problemDesc = deleteInlineStyles(divideDescString);
@@ -37,14 +31,14 @@ function QuestionCard({questionObj}: Props) {
 
       {/* Question Body */}
       <Link
-        href={`/search/questions/${questionObj._id}`}
-        className="questionsBody grid gap-1 px-3  no-underline hover:font-normal"
+        to={`/search/questions/${questionObj._id}`}
+        className="questionsBody grid gap-1 px-3 no-underline hover:font-normal"
       >
         <section className="questionTitle font-semibold text-[#6741D9]">
           {questionObj.title}
         </section>
         {/* Content section */}
-        <section className="line-clamp-5 ">
+        <section className="line-clamp-5">
           {problemDesc &&
             problemDesc.map((problem, idx) => {
               return <ProblemDescription problem={problem} key={idx} />;
@@ -68,7 +62,7 @@ function QuestionCard({questionObj}: Props) {
 
       {/* Options */}
       <QuestionOptions
-        userId={userID}
+        userId={'123'}
         questionId={questionObj._id}
         questionAuthorId={questionObj.author._id}
       />
