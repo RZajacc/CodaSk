@@ -9,7 +9,9 @@ import Home from '../src/pages/home';
 import About from './pages/about';
 import Contact from '../src/pages/contact';
 import Connect from '../src/pages/connect';
-import Search from './pages/search/questions';
+import QuestionsList from './pages/search/questions';
+import QuestionDetails from './pages/search/questions/questionDetails';
+import AskQuestion from './pages/search/questions/askQuestion';
 
 function App() {
   const router = createBrowserRouter([
@@ -26,9 +28,22 @@ function App() {
           element: <SearchLayout />,
           children: [
             {
-              index: false,
               path: 'questions',
-              element: <Search />,
+              element: <SearchLayout />,
+              children: [
+                {
+                  index: true,
+                  element: <QuestionsList />,
+                },
+                {
+                  path: 'askQuestion',
+                  element: <AskQuestion />,
+                },
+                {
+                  path: ':id',
+                  element: <QuestionDetails />,
+                },
+              ],
             },
           ],
         },

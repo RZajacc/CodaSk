@@ -4,7 +4,7 @@ import QuestionsGrid from '../../../components/questions/QuestionsGrid.tsx';
 import type {Question} from '../../../types/QuestionTypes.ts';
 import {Link} from 'react-router';
 
-export default function Question() {
+export default function QuestionsList() {
   const [sortBy, setSortBy] = useState('All');
   const [loading, setLoading] = useState(true);
 

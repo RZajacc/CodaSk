@@ -1,9 +1,8 @@
 import React from 'react';
-import Image from 'next/image';
-import 'react-quill/dist/quill.snow.css';
-import {getPostedOnInDays} from '@/utils/GetPostedOnInDays';
-import {divideString} from '@/utils/QuillTextProcessor';
-import {deleteInlineStyles} from '@/utils/CleanInlineStyles';
+// import 'react-quill/dist/quill.snow.css';
+import {getPostedOnInDays} from '../utils/GetPostedOnInDays';
+import {divideString} from '../utils/QuillTextProcessor';
+import {deleteInlineStyles} from '../utils/CleanInlineStyles';
 import parse from 'html-react-parser';
 import DeleteModal from './DeleteModal';
 
@@ -47,7 +46,7 @@ function AnswerCard({
       {/* HEADER */}
       <div className="flex justify-between rounded-2xl bg-black p-2 text-white">
         <div className="flex">
-          <Image
+          <img
             src={answerData.author.user_photo}
             height={27}
             width={27}

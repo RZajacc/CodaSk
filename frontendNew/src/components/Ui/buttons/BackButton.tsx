@@ -1,11 +1,10 @@
-'use client';
-import {useRouter} from 'next/navigation';
+import {useNavigate} from 'react-router';
 
 function BackButton() {
-  const router = useRouter();
+  const navigate = useNavigate();
 
   const goBack = () => {
-    router.back();
+    navigate(-1);
   };
 
   return (
