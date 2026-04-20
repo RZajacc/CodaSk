@@ -1,8 +1,7 @@
-import React from 'react';
 import QuestionCard from './QuestionCard';
-import {questionQuery} from '@/types/questionDetailsTypes';
 import Loader from './Loader';
 import NoQuestionsFound from './NoQuestionsFound';
+import type {Question} from '../../types/QuestionTypes.ts';
 
 type Props = {
   questionsData: Question[];

@@ -1,10 +1,15 @@
 import {createBrowserRouter, RouterProvider} from 'react-router';
 
-import Home from '../src/pages/home';
-import Connect from '../src/pages/connect';
-import Contact from '../src/pages/contact';
-import About from './pages/about';
+// Layouts
 import RootLayout from './layouts/RootLayout.tsx';
+import SearchLayout from './layouts/SearchLayout.tsx';
+
+// Routes
+import Home from '../src/pages/home';
+import About from './pages/about';
+import Contact from '../src/pages/contact';
+import Connect from '../src/pages/connect';
+import Search from './pages/search/questions';
 
 function App() {
   const router = createBrowserRouter([
@@ -15,6 +20,17 @@ function App() {
         {
           index: true,
           element: <Home />,
+        },
+        {
+          path: 'search',
+          element: <SearchLayout />,
+          children: [
+            {
+              index: false,
+              path: 'questions',
+              element: <Search />,
+            },
+          ],
         },
         {
           path: 'connect',

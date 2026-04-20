@@ -1,6 +1,3 @@
-import Image from 'next/image';
-import React from 'react';
-
 function Loader() {
   return (
     <div className="flex flex-col items-center justify-center">
@@ -8,7 +5,7 @@ function Loader() {
         Running on a free instance so a first query might take a while but then
         it's gonna run smooth!
       </h1>
-      <Image
+      <img
         className="loader"
         src={'/Loader.png'}
         alt="logo"

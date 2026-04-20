@@ -1,6 +1,4 @@
-import {getPostedOnInDays} from '@/utils/GetPostedOnInDays';
-import Image from 'next/image';
-import React from 'react';
+import {getPostedOnInDays} from '../../../utils/GetPostedOnInDays.tsx';
 
 type Props = {
   userImageURL: string;
@@ -18,7 +16,7 @@ function QuestionCardHeader({
   return (
     <section className="questionHeader line-clamp-2 flex items-center justify-between rounded-xl bg-black p-2 text-base font-light text-white">
       <div className="flex items-center">
-        <Image
+        <img
           alt="user_photo"
           src={userImageURL}
           width={40}
