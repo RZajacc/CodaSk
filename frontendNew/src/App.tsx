@@ -2,7 +2,7 @@ import {createBrowserRouter, RouterProvider} from 'react-router';
 
 // Layouts
 import RootLayout from './layouts/RootLayout.tsx';
-import SearchLayout from './layouts/SearchLayout.tsx';
+import BaseNestedLayout from './layouts/BaseNestedLayout.tsx';
 
 // Routes
 import Home from '../src/pages/home';
@@ -16,6 +16,9 @@ import AskQuestion from './pages/search/questions/askQuestion';
 import UpdateQuestion from './pages/search/questions/updateQuestion';
 import Tags from './pages/search/tags';
 import Modules from './pages/search/modules';
+import StudentProjects from './pages/discover/studentProjects';
+import Polls from './pages/discover/polls';
+import Discussions from './pages/discover/discussions';
 
 function App() {
   const router = createBrowserRouter([
@@ -30,11 +33,11 @@ function App() {
         // SearchBy routes
         {
           path: 'search',
-          element: <SearchLayout />,
+          element: <BaseNestedLayout />,
           children: [
             {
               path: 'questions',
-              element: <SearchLayout />,
+              element: <BaseNestedLayout />,
               children: [
                 {
                   index: true,
@@ -46,7 +49,7 @@ function App() {
                 },
                 {
                   path: 'tagged',
-                  element: <SearchLayout />,
+                  element: <BaseNestedLayout />,
                   children: [
                     {
                       index: false,
@@ -57,7 +60,7 @@ function App() {
                 },
                 {
                   path: 'updateQuestion',
-                  element: <SearchLayout />,
+                  element: <BaseNestedLayout />,
                   children: [
                     {
                       index: false,
@@ -82,6 +85,27 @@ function App() {
             },
           ],
         },
+        // Discover routes
+        {
+          path: 'discover',
+          element: <BaseNestedLayout />,
+          children: [
+            {
+              index: false,
+              path: 'studentprojects',
+              element: <StudentProjects />,
+            },
+            {
+              path: 'polls',
+              element: <Polls />,
+            },
+            {
+              path: 'discussions',
+              element: <Discussions />,
+            },
+          ],
+        },
+        // User routes
 
         // Other routes
         {
