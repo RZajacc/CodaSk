@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument } from 'mongoose';
+import mongoose, { HydratedDocument, Types } from 'mongoose';
 import { Question } from '../../question/entities/question.entity';
 import { Answer } from '../../answer/entities/answer.entity';
 import { Tag } from '../../tag/entities/tag.entity';
@@ -8,6 +8,8 @@ export type UserDocument = HydratedDocument<User>;
 
 @Schema()
 export class User {
+  _id: Types.ObjectId;
+
   @Prop({ required: true })
   email: string;
 
