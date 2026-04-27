@@ -7,6 +7,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { TagModule } from './tag/tag.module';
 import { AnswerModule } from './answer/answer.module';
+import { AuthModule } from './auth/auth.module';
 import configuration from './config/configuration';
 import Joi from 'joi';
 
@@ -34,6 +35,7 @@ import Joi from 'joi';
     UserModule,
     TagModule,
     AnswerModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
