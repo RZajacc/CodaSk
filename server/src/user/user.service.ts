@@ -17,6 +17,10 @@ export class UserService {
     return this.userModel.find();
   }
 
+  findByEmail(email: string): Promise<User | null> {
+    return this.userModel.findOne({ email });
+  }
+
   findOne(id: number) {
     return `This action returns a #${id} user`;
   }
