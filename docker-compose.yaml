@@ -7,7 +7,7 @@ services:
       - '5000:5000'
     volumes:
       - /usr/src/app/node_modules
-      - ./server/src:/usr/src/app/src
+      - ./server:/usr/src/app
     env_file:
       - server/.env
 

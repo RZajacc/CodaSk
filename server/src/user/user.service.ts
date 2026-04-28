@@ -14,7 +14,8 @@ export class UserService {
   }
 
   findAll() {
-    return this.userModel.find();
+    // return this.userModel.findOne({ email: 'rafal@codac.com' });
+    return this.userModel.find().select('-password').lean().exec();
   }
 
   findByEmail(email: string): Promise<User | null> {

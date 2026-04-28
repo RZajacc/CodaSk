@@ -1,7 +1,15 @@
-import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
-import { LocalAuthGuard } from './local-auth.guard';
-import { AuthService } from './auth.service';
-import { JwtAuthGuard } from './jwt-auth.guard';
+import {
+  Controller,
+  Get,
+  Post,
+  Req,
+  UnauthorizedException,
+  UseGuards,
+} from '@nestjs/common';
+import { LocalAuthGuard } from './guards/local-auth.guard';
+import { AuthService, SafeUser } from './auth.service';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import type { Request } from 'express';
 
 @Controller('auth')
 export class AuthController {
@@ -9,19 +17,26 @@ export class AuthController {
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  login(@Request() req) {
+  login(@Req() req: Request & { user: SafeUser }) {
+    if (!req.user) {
+      throw new UnauthorizedException();
+    }
     return this.authService.login(req.user);
   }
 
   @UseGuards(LocalAuthGuard)
   @Post('logout')
-  logout(@Request() req) {
-    return req.logout();
+  logout(@Req() req: Request) {
+    if (!req.user) {
+      throw new UnauthorizedException();
+    }
+
+    return 'Loggging out...';
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  getProfile(@Request() req) {
+  getProfile(@Req() req: Request) {
     return req.user;
   }
 }

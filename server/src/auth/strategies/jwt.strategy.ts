@@ -2,6 +2,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { ConfigService } from '@nestjs/config';
 import { Injectable } from '@nestjs/common';
+import { JwtPayload } from 'jsonwebtoken';
 
 interface AuthType {
   auth: {
@@ -20,7 +21,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: any) {
-    return { userId: payload.sub, username: payload.username };
+  validate(payload: JwtPayload) {
+    // Zwróć usera przez find one
+    return { userId: payload.sub };
   }
 }

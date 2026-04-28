@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument } from 'mongoose';
+import mongoose, { HydratedDocument, Types } from 'mongoose';
 import { User } from 'src/user/entities/user.entity';
 import { Tag } from '../../tag/entities/tag.entity';
 import { Answer } from '../../answer/entities/answer.entity';
@@ -8,6 +8,8 @@ export type QuestionDocument = HydratedDocument<Question>;
 
 @Schema()
 export class Question {
+  _id: Types.ObjectId;
+
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   author: User;
 
