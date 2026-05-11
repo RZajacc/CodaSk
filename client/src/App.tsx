@@ -25,6 +25,8 @@ import MoreInfo from './pages/user/moreinfo';
 import Profile from './pages/user/profile/userProfile';
 import UpdateProfile from './pages/user/profile/updateProfile';
 import NotFound from './pages/NotFound.tsx';
+import {ProtectedRoute} from './components/ProtectedRoute.tsx';
+import {AuthProvider} from './context/AuthContext.tsx';
 
 function App() {
   const router = createBrowserRouter([
@@ -77,7 +79,11 @@ function App() {
                 },
                 {
                   path: ':id',
-                  element: <QuestionDetails />,
+                  element: (
+                    <ProtectedRoute>
+                      <QuestionDetails />
+                    </ProtectedRoute>
+                  ),
                 },
               ],
             },
@@ -174,7 +180,11 @@ function App() {
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
+  );
 }
 
 export default App;

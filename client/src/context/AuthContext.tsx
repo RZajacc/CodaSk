@@ -125,7 +125,9 @@ export function AuthProvider({children}: {children: ReactNode}) {
   }, []);
 
   const logout = useCallback(async () => {
-    //   To be implemented
+    //   Call backend to be implemented
+    localStorage.removeItem('accessToken');
+    dispatch({type: 'LOGOUT'});
   }, []);
 
   const checkAuth = useCallback(async () => {

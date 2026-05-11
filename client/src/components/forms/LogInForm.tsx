@@ -2,9 +2,11 @@ import {FaGithub, FaGoogle} from 'react-icons/fa';
 import React from 'react';
 import FormInput from '../../components/Ui/Inputs/FormInput';
 import {useAuth} from '../../context/AuthContext.tsx';
+import {useNavigate} from 'react-router';
 
 export default function LogInForm() {
-  const {login} = useAuth();
+  const {login, user} = useAuth();
+  const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -13,7 +15,12 @@ export default function LogInForm() {
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
 
-    login(email, password);
+    try {
+      await login(email, password);
+      navigate(`/user/profile/${user?._id}`);
+    } catch (error) {
+      console.log(error);
+    }
 
     // try {
     //   const result = await signIn('credentials', {
