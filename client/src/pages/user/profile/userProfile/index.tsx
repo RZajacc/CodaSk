@@ -1,9 +1,9 @@
 import {formatDate} from '../../../../components/questions/Functions';
-import parse from 'html-react-parser';
+// import parse from 'html-react-parser';
 import {FaGithub} from 'react-icons/fa';
 import {MdLocationOn} from 'react-icons/md';
 import {TbWorld} from 'react-icons/tb';
-import {MdModeEditOutline} from 'react-icons/md';
+// import {MdModeEditOutline} from 'react-icons/md';
 import type {
   Answers,
   Questions,
@@ -51,36 +51,37 @@ export default function Profile() {
   };
   //
 
-  const getProfile = async () => {
-    const requestOptions = {
-      method: 'GET',
-    };
-    try {
-      const response = await fetch(
-        `${FETCH_URL}/api/users/id/${id}`,
-        requestOptions
-      );
-      if (response.ok) {
-        const results = await response.json();
-        // console.log('RESULTS :>> ', results);
-
-        const userData = results!.data[0];
-
-        // console.log('USERDATA :>> ', userData);
-        setUser(userData);
-      } else {
-        console.log('Error when fetching your user data');
-      }
-    } catch (error) {
-      console.log('error :>> ', error);
-    }
-  };
+  // const getProfile = async () => {
+  //   const requestOptions = {
+  //     method: 'GET',
+  //   };
+  //   try {
+  //     const response = await fetch(
+  //       `${FETCH_URL}/api/users/id/${id}`,
+  //       requestOptions
+  //     );
+  //     if (response.ok) {
+  //       const results = await response.json();
+  //       // console.log('RESULTS :>> ', results);
+  //
+  //       const userData = results!.data[0];
+  //
+  //       // console.log('USERDATA :>> ', userData);
+  //       setUser(userData);
+  //     } else {
+  //       console.log('Error when fetching your user data');
+  //     }
+  //   } catch (error) {
+  //     console.log('error :>> ', error);
+  //   }
+  // };
 
   const handleDeleteAccount = async (userId: string) => {
+    console.log(userId);
     if (window.confirm('Are you SURE you want to delete your account?')) {
-      const requestOptions = {
-        method: 'DELETE',
-      };
+      // const requestOptions = {
+      //   method: 'DELETE',
+      // };
       // try {
       //   const response = await fetch(
       //     `${FETCH_URL}/api/users/deleteuser/${userId}`,
@@ -104,6 +105,7 @@ export default function Profile() {
   };
 
   const handleQuestionRedirect = (questionID: string) => {
+    console.log(questionID);
     // router.push(`${FETCH_URL}/search/questions/${questionID}`);
   };
 
@@ -115,9 +117,9 @@ export default function Profile() {
             className="no-underline"
             to={{
               pathname: `${FETCH_URL}/search/questions/tagged/${tag?._id}`,
-              query: {
-                name: tag?.name,
-              },
+              // query: {
+              //   name: tag?.name,
+              // },
             }}
           >
             {tag?.name}
@@ -136,9 +138,7 @@ export default function Profile() {
         key={qIndex}
         className="mb-2 w-60 cursor-pointer rounded-md p-1 shadow-md"
       >
-        <p className="mb-3 truncate overflow-hidden p-1 ...">
-          {question?.title}
-        </p>
+        <p className="mb-3 truncate overflow-hidden p-1">{question?.title}</p>
       </div>
     )
   );
@@ -152,15 +152,38 @@ export default function Profile() {
         key={ansIndex}
         className="mb-2 w-60 cursor-pointer rounded-md p-1 shadow-md"
       >
-        <p className="mb-3 truncate overflow-hidden p-1 ...">
-          {answer?.message}
-        </p>
+        <p className="mb-3 truncate overflow-hidden p-1">{answer?.message}</p>
       </div>
     )
   );
 
   useEffect(() => {
-    // getProfile();
+    const getProfile = async () => {
+      const requestOptions = {
+        method: 'GET',
+      };
+      try {
+        const response = await fetch(
+          `${FETCH_URL}/api/users/id/${id}`,
+          requestOptions
+        );
+        if (response.ok) {
+          const results = await response.json();
+          // console.log('RESULTS :>> ', results);
+
+          const userData = results!.data[0];
+
+          // console.log('USERDATA :>> ', userData);
+          setUser(userData);
+        } else {
+          console.log('Error when fetching your user data');
+        }
+      } catch (error) {
+        console.log('error :>> ', error);
+      }
+    };
+
+    getProfile();
   }, [id]);
 
   return (
@@ -190,7 +213,7 @@ export default function Profile() {
         </div>
         {/* MIDDLE SIDE */}
         <div className="text-center">
-          <h3 className="lg:text-6x font-bold text-[#6741D9] md:text-3xl">
+          <h3 className="font-bold text-[#6741D9] md:text-3xl lg:text-6xl">
             {user?.first_name} {user?.last_name}
           </h3>
           {user?.course_type && (
@@ -235,7 +258,7 @@ export default function Profile() {
           </div>
           <br />
           <div>
-            <span className="flex-ro mb-2 flex">
+            <span className="mb-2 flex flex-row">
               <TbWorld style={{fontSize: '1.5em'}} />
               <button
                 className="ml-1"
@@ -289,7 +312,7 @@ export default function Profile() {
                       key={quIndex}
                       className="mb-2 w-60 cursor-pointer rounded-md p-1 shadow-md"
                     >
-                      <p className="mb-3 truncate overflow-hidden p-1 ...">
+                      <p className="mb-3 truncate overflow-hidden p-1">
                         {question?.title}
                       </p>
                     </div>
@@ -332,7 +355,7 @@ export default function Profile() {
                       key={ansIndex}
                       className="mb-2 w-60 cursor-pointer rounded-md p-1 shadow-md"
                     >
-                      <p className="mb-3 truncate overflow-hidden p-1 ...">
+                      <p className="mb-3 truncate overflow-hidden p-1">
                         {answer?.message}
                         {/* {parse(answer?.message)} */}
                       </p>
@@ -359,7 +382,7 @@ export default function Profile() {
 
         {/* YOUR TAGS */}
         <div className="rounded-2xl bg-[#EDE9E6]">
-          <div className="profileBoxHeader rounded-xl bg-[#6741D9] p-4 text-white">
+          <div className="rounded-xl bg-[#6741D9] p-4 text-white">
             <h4 className="text-lg font-bold">your tags</h4>
           </div>
           <div className="flex flex-row flex-wrap p-3">
@@ -369,14 +392,14 @@ export default function Profile() {
               user?.saved_tags.map((tag: Tags, tagIndex: number) => {
                 return (
                   <div key={tagIndex} className="w-60">
-                    <div className="tagList mx-2 my-1 w-min rounded-md bg-black p-2 text-white">
+                    <div className="mx-2 my-1 w-min rounded-md bg-black p-2 text-white">
                       <Link
                         className="no-underline"
                         to={{
                           pathname: `http://localhost:3000/search/questions/tagged/${tag?._id}`,
-                          query: {
-                            name: tag?.name,
-                          },
+                          // query: {
+                          //   name: tag?.name,
+                          // },
                         }}
                       >
                         {tag?.name}

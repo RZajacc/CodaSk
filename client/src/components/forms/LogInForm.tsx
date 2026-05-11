@@ -1,14 +1,19 @@
 import {FaGithub, FaGoogle} from 'react-icons/fa';
-import React from 'react';
+import React, {useContext} from 'react';
 import FormInput from '../../components/Ui/Inputs/FormInput';
+import {useAuth} from '../../context/AuthContext.tsx';
 
 export default function LogInForm() {
+  const {login} = useAuth();
+
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
+
+    login(email, password);
 
     // try {
     //   const result = await signIn('credentials', {

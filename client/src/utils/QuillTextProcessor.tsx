@@ -1,7 +1,7 @@
 /**
  * Quill text editor saves its output in a form of html tags and
  * and text values between them. This function aims to find locations
- * where tags <pre>***</pre> are located and store its values separately.
+ * where tags <pre>***</pre> are located and context its values separately.
  * Those are code snippets provided by the user. The purpose of that is that
  * we want to style them differenlty than other parts of text.
  * @param {String} quillText
@@ -18,7 +18,7 @@ export const divideString = (quillText: string): EntriesType[] => {
   const regexp = /<pre/gi;
   const regexp2 = /pre>/gi;
 
-  //   Match regex with incoming string and store result in []
+  //   Match regex with incoming string and context result in []
   const codeStart = [...quillText.matchAll(regexp)];
   const CodeEnd = [...quillText.matchAll(regexp2)];
 
