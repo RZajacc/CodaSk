@@ -22,8 +22,8 @@ export class UserService {
     return this.userModel.findOne({ email }).lean().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  findOne(id: string): Promise<User | null> {
+    return this.userModel.findOne({ _id: id }).lean().exec();
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
