@@ -1,6 +1,6 @@
 import {StrictMode} from 'react';
 import {createRoot} from 'react-dom/client';
-import {App} from './AppContent.tsx';
+import {App} from './App.tsx';
 import './styles/globals.css';
 import {AuthProvider} from './context/AuthContext.tsx';
 

@@ -29,7 +29,7 @@ import {ProtectedRoute} from './components/ProtectedRoute.tsx';
 import {useAuth} from './context/AuthContext.tsx';
 import LoadingScreen from './components/Ui/LoadingScreen.tsx';
 
-export function AppContent() {
+export function AppComponent() {
   const router = createBrowserRouter([
     {
       path: '/',
@@ -195,5 +195,5 @@ export function App() {
     return <LoadingScreen />;
   }
 
-  return <AppContent />;
+  return <AppComponent />;
 }
