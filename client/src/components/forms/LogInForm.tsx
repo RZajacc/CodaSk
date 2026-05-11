@@ -3,9 +3,10 @@ import React from 'react';
 import FormInput from '../../components/Ui/Inputs/FormInput';
 import {useAuth} from '../../context/AuthContext.tsx';
 import {useNavigate} from 'react-router';
+import LoadingScreen from '../Ui/LoadingScreen.tsx';
 
 export default function LogInForm() {
-  const {login, user} = useAuth();
+  const {login} = useAuth();
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -16,8 +17,8 @@ export default function LogInForm() {
     const password = formData.get('password') as string;
 
     try {
-      await login(email, password);
-      navigate(`/user/profile/${user?._id}`);
+      const user = await login(email, password);
+      navigate(`/user/profile/${user._id}`);
     } catch (error) {
       console.log(error);
     }

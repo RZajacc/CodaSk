@@ -41,7 +41,7 @@ export interface AuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
-  login: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<User>;
   logout: () => Promise<void>;
   checkAuth: () => Promise<void>;
 }
@@ -115,6 +115,7 @@ export function AuthProvider({children}: {children: ReactNode}) {
       localStorage.setItem('accessToken', responseData.access_token);
 
       dispatch({type: 'LOGIN_SUCCESS', payload: responseData.user});
+      return responseData.user;
     } catch (error) {
       dispatch({
         type: 'LOGIN_ERROR',

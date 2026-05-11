@@ -6,12 +6,13 @@ import Backdrop from './mobileNav-elements/Backdrop';
 import MobileSidebar from './mobileNav-elements/MobileSidebar';
 import CodaskLogo from '../../../assets/CodaskLogo.png';
 import {Link} from 'react-router';
+import {useAuth} from '../../../context/AuthContext.tsx';
 
 function MainNav() {
   const [showMobileNav, setShowMobileNav] = useState(false);
   const [hideMobileNav, setHideMobileNav] = useState(false);
 
-  const status = '';
+  const {isAuthenticated} = useAuth();
 
   return (
     <>
@@ -45,7 +46,7 @@ function MainNav() {
 
         {/* RIGHT SECTION */}
         <ul className="flex list-none">
-          {status ? <LinksAuthUser userId={'12'} /> : <LinksNoUser />}
+          {isAuthenticated ? <LinksAuthUser userId={'12'} /> : <LinksNoUser />}
         </ul>
       </nav>
     </>

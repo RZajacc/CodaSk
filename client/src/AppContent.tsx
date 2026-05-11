@@ -26,9 +26,10 @@ import Profile from './pages/user/profile/userProfile';
 import UpdateProfile from './pages/user/profile/updateProfile';
 import NotFound from './pages/NotFound.tsx';
 import {ProtectedRoute} from './components/ProtectedRoute.tsx';
-import {AuthProvider} from './context/AuthContext.tsx';
+import {useAuth} from './context/AuthContext.tsx';
+import LoadingScreen from './components/Ui/LoadingScreen.tsx';
 
-function App() {
+export function AppContent() {
   const router = createBrowserRouter([
     {
       path: '/',
@@ -142,7 +143,11 @@ function App() {
                 {
                   index: false,
                   path: ':id',
-                  element: <Profile />,
+                  element: (
+                    <ProtectedRoute>
+                      <Profile />
+                    </ProtectedRoute>
+                  ),
                 },
               ],
             },
@@ -180,11 +185,15 @@ function App() {
     },
   ]);
 
-  return (
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
-  );
+  return <RouterProvider router={router} />;
 }
 
-export default App;
+export function App() {
+  const {isLoading} = useAuth();
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
+
+  return <AppContent />;
+}

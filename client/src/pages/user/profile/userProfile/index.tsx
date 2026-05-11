@@ -4,28 +4,26 @@ import {FaGithub} from 'react-icons/fa';
 import {MdLocationOn} from 'react-icons/md';
 import {TbWorld} from 'react-icons/tb';
 // import {MdModeEditOutline} from 'react-icons/md';
-import type {
-  Answers,
-  Questions,
-  Tags,
-  User,
-} from '../../../../types/custom_types';
+import type {Answers, Questions, Tags} from '../../../../types/custom_types';
 import {useEffect, useState} from 'react';
 import Modal from '../../../../components/Modal';
-import {Link} from 'react-router';
+import {Link, useNavigate} from 'react-router';
+import {useAuth} from '../../../../context/AuthContext.tsx';
 
 export default function Profile() {
-  const [user, setUser] = useState<User | null>();
   const [showTagModal, setShowTagModal] = useState(false);
   const [showContributionsModal, setShowContributionsModal] = useState(false);
   const [showQuestionsModal, setShowQuestionsModal] = useState(false);
 
   const id = '123';
 
+  const {logout, user} = useAuth();
+  const navigate = useNavigate();
+
   // Build Fetch url
   const FETCH_URL = 'http://localhost:3000/';
-  // Modals
 
+  // Modals
   const handleShowTagModal = () => {
     setShowTagModal(true);
   };
@@ -98,6 +96,8 @@ export default function Profile() {
 
   const handleLogOut = async () => {
     window.confirm('Are you sure you want to log out?');
+    await logout();
+    navigate('/');
     // await signOut({redirect: false});
     // setUser(null);
     // router.push('../login');
