@@ -1,5 +1,5 @@
 import {FaGithub, FaGoogle} from 'react-icons/fa';
-import React, {useContext} from 'react';
+import React from 'react';
 import FormInput from '../../components/Ui/Inputs/FormInput';
 import {useAuth} from '../../context/AuthContext.tsx';
 

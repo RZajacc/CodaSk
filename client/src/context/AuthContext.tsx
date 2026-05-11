@@ -3,16 +3,47 @@ import {
   type ReactNode,
   useCallback,
   useContext,
+  useEffect,
   useReducer,
 } from 'react';
 
 export interface User {
   _id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  user_photo: string;
+  questions: string[];
+  answers: string[];
+  saved_tags: string[];
+  member_since: string;
+  last_seen: string;
+  bio: string;
+  cohort_name: string;
+  course_type: string;
+  github: string;
+  location: {
+    country: string;
+    city: string;
+  };
+  user_permission: string;
+  website: string;
+  course_date: string;
+}
+
+export interface LoginResponse {
+  access_token: string;
+  user: User;
 }
 
 export interface AuthContextType {
   user: User | null;
+  isAuthenticated: boolean;
+  isLoading: boolean;
+  error: string | null;
   login: (email: string, password: string) => Promise<void>;
+  logout: () => Promise<void>;
+  checkAuth: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -62,6 +93,10 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
 export function AuthProvider({children}: {children: ReactNode}) {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
   const login = useCallback(async (email: string, password: string) => {
     dispatch({type: 'LOGIN_START'});
 
@@ -76,11 +111,10 @@ export function AuthProvider({children}: {children: ReactNode}) {
         throw new Error('Login failed');
       }
 
-      const user: User = await response.json();
+      const responseData: LoginResponse = await response.json();
+      localStorage.setItem('accessToken', responseData.access_token);
 
-      console.log('USER', user);
-
-      dispatch({type: 'LOGIN_SUCCESS', payload: user});
+      dispatch({type: 'LOGIN_SUCCESS', payload: responseData.user});
     } catch (error) {
       dispatch({
         type: 'LOGIN_ERROR',
@@ -90,11 +124,47 @@ export function AuthProvider({children}: {children: ReactNode}) {
     }
   }, []);
 
+  const logout = useCallback(async () => {
+    //   To be implemented
+  }, []);
+
+  const checkAuth = useCallback(async () => {
+    dispatch({type: 'CHECK_AUTH_START'});
+
+    try {
+      const token = localStorage.getItem('accessToken');
+      if (!token) {
+        dispatch({type: 'CHECK_AUTH_ERROR'});
+        return;
+      }
+
+      const response = await fetch('http://localhost:5000/auth/profile', {
+        method: 'GET',
+        headers: {Authorization: `Bearer ${token}`},
+      });
+
+      if (!response.ok) {
+        throw new Error('Auth check failed');
+      }
+
+      const user: User = await response.json();
+      dispatch({type: 'CHECK_AUTH_SUCCESS', payload: user});
+    } catch (error) {
+      dispatch({type: 'CHECK_AUTH_ERROR'});
+      console.log(error);
+    }
+  }, []);
+
   return (
     <AuthContext.Provider
       value={{
         user: state.user,
+        isAuthenticated: state.user !== null,
+        isLoading: state.isLoading,
+        error: state.error,
         login,
+        logout,
+        checkAuth,
       }}
     >
       {children}
