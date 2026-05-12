@@ -14,8 +14,8 @@ function SideBarLink({handleSideNavVisibility, url, text}: Props) {
         onClick={handleSideNavVisibility}
         className={({isActive}) =>
           isActive
-            ? 'text-lg font-bold hover:animate-pulse hover:cursor-default'
-            : 'hover:animate-pulse hover:text-[#6741D9]'
+            ? 'text-lg font-bold no-underline hover:animate-pulse hover:cursor-default'
+            : 'no-underline hover:animate-pulse hover:text-[#6741D9]'
         }
         // className={`no-underline ${
         //   pathname === url

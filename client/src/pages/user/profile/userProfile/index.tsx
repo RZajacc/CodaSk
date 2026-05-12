@@ -5,74 +5,13 @@ import {MdLocationOn} from 'react-icons/md';
 import {TbWorld} from 'react-icons/tb';
 // import {MdModeEditOutline} from 'react-icons/md';
 import type {Answers, Questions, Tags} from '../../../../types/custom_types';
-import {useEffect, useState} from 'react';
-import Modal from '../../../../components/Modal';
-import {Link, useNavigate} from 'react-router';
+import {Link} from 'react-router';
 import {useAuth} from '../../../../context/AuthContext.tsx';
 
 export default function Profile() {
-  const [showTagModal, setShowTagModal] = useState(false);
-  const [showContributionsModal, setShowContributionsModal] = useState(false);
-  const [showQuestionsModal, setShowQuestionsModal] = useState(false);
-
   const id = '123';
 
   const {logout, user} = useAuth();
-  const navigate = useNavigate();
-
-  // Build Fetch url
-  const FETCH_URL = 'http://localhost:3000/';
-
-  // Modals
-  const handleShowTagModal = () => {
-    setShowTagModal(true);
-  };
-
-  const handleCloseTagModal = () => {
-    setShowTagModal(false);
-  };
-
-  const handleShowContributionsModal = () => {
-    setShowContributionsModal(true);
-  };
-
-  const handleCloseContributionsModal = () => {
-    setShowContributionsModal(false);
-  };
-
-  const handleShowQuestionsModal = () => {
-    setShowQuestionsModal(true);
-  };
-
-  const handleCloseQuestionsModal = () => {
-    setShowQuestionsModal(false);
-  };
-  //
-
-  // const getProfile = async () => {
-  //   const requestOptions = {
-  //     method: 'GET',
-  //   };
-  //   try {
-  //     const response = await fetch(
-  //       `${FETCH_URL}/api/users/id/${id}`,
-  //       requestOptions
-  //     );
-  //     if (response.ok) {
-  //       const results = await response.json();
-  //       // console.log('RESULTS :>> ', results);
-  //
-  //       const userData = results!.data[0];
-  //
-  //       // console.log('USERDATA :>> ', userData);
-  //       setUser(userData);
-  //     } else {
-  //       console.log('Error when fetching your user data');
-  //     }
-  //   } catch (error) {
-  //     console.log('error :>> ', error);
-  //   }
-  // };
 
   const handleDeleteAccount = async (userId: string) => {
     console.log(userId);
@@ -103,83 +42,6 @@ export default function Profile() {
     console.log(questionID);
     // router.push(`${FETCH_URL}/search/questions/${questionID}`);
   };
-
-  const tagsInModal = user?.saved_tags.map((tag: Tags, tagIndex: number) => (
-    <div key={tagIndex} className="flex flex-wrap">
-      <div className="flex flex-row">
-        <div className="m-2 rounded-md bg-black p-2 text-white">
-          <Link
-            className="no-underline"
-            to={{
-              pathname: `${FETCH_URL}/search/questions/tagged/${tag?._id}`,
-              // query: {
-              //   name: tag?.name,
-              // },
-            }}
-          >
-            {tag?.name}
-          </Link>
-        </div>
-      </div>
-    </div>
-  ));
-
-  const questionsInModal = user?.questions.map(
-    (question: Questions, qIndex: number) => (
-      <div
-        onClick={() => {
-          handleQuestionRedirect(question._id);
-        }}
-        key={qIndex}
-        className="mb-2 w-60 cursor-pointer rounded-md p-1 shadow-md"
-      >
-        <p className="mb-3 truncate overflow-hidden p-1">{question?.title}</p>
-      </div>
-    )
-  );
-
-  const contributionsInModal = user?.answers.map(
-    (answer: Answers, ansIndex: number) => (
-      <div
-        onClick={() => {
-          handleQuestionRedirect(answer?.question._id);
-        }}
-        key={ansIndex}
-        className="mb-2 w-60 cursor-pointer rounded-md p-1 shadow-md"
-      >
-        <p className="mb-3 truncate overflow-hidden p-1">{answer?.message}</p>
-      </div>
-    )
-  );
-
-  useEffect(() => {
-    const getProfile = async () => {
-      const requestOptions = {
-        method: 'GET',
-      };
-      try {
-        const response = await fetch(
-          `${FETCH_URL}/api/users/id/${id}`,
-          requestOptions
-        );
-        if (response.ok) {
-          const results = await response.json();
-          // console.log('RESULTS :>> ', results);
-
-          const userData = results!.data[0];
-
-          // console.log('USERDATA :>> ', userData);
-          setUser(userData);
-        } else {
-          console.log('Error when fetching your user data');
-        }
-      } catch (error) {
-        console.log('error :>> ', error);
-      }
-    };
-
-    getProfile();
-  }, [id]);
 
   return (
     <div className="mt-8 grid gap-20 p-3 md:mx-auto md:max-w-6xl md:p-10">
@@ -315,17 +177,10 @@ export default function Profile() {
                 })
               )}
             </div>
-            {showQuestionsModal && (
-              <Modal
-                title="your questions"
-                message={questionsInModal!}
-                onClose={handleCloseQuestionsModal}
-              />
-            )}{' '}
           </div>
           <button
             className="m-4 text-[#6741D9] hover:text-black"
-            onClick={handleShowQuestionsModal}
+            onClick={() => console.log('Button clicked')}
           >
             view all
           </button>
@@ -359,17 +214,10 @@ export default function Profile() {
                 })
               )}
             </div>
-            {showContributionsModal && (
-              <Modal
-                title="your contributions"
-                message={contributionsInModal}
-                onClose={handleCloseContributionsModal}
-              />
-            )}{' '}
           </div>
           <button
             className="m-4 text-[#6741D9] hover:text-black"
-            onClick={handleShowContributionsModal}
+            onClick={() => console.log('Button clicked')}
           >
             view all
           </button>
@@ -380,21 +228,18 @@ export default function Profile() {
           <div className="rounded-xl bg-[#6741D9] p-4 text-white">
             <h4 className="text-lg font-bold">your tags</h4>
           </div>
-          <div className="flex flex-row flex-wrap p-3">
+          <div className="flex flex-row flex-wrap gap-2 p-2">
             {user?.saved_tags && user?.saved_tags?.length <= 0 ? (
               <p>Nothing saved yet</p>
             ) : (
               user?.saved_tags.map((tag: Tags, tagIndex: number) => {
                 return (
-                  <div key={tagIndex} className="w-60">
-                    <div className="mx-2 my-1 w-min rounded-md bg-black p-2 text-white">
+                  <div key={tagIndex}>
+                    <div className="w-min rounded-md bg-black p-2 text-white">
                       <Link
                         className="no-underline"
                         to={{
                           pathname: `http://localhost:3000/search/questions/tagged/${tag?._id}`,
-                          // query: {
-                          //   name: tag?.name,
-                          // },
                         }}
                       >
                         {tag?.name}
@@ -404,17 +249,10 @@ export default function Profile() {
                 );
               })
             )}
-            {showTagModal && (
-              <Modal
-                title="your tags"
-                message={tagsInModal}
-                onClose={handleCloseTagModal}
-              />
-            )}{' '}
           </div>
           <button
             className="m-4 text-[#6741D9] hover:text-black"
-            onClick={handleShowTagModal}
+            onClick={() => console.log('Button clicked')}
           >
             view all
           </button>

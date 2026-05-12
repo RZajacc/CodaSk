@@ -6,30 +6,7 @@ import {
   useEffect,
   useReducer,
 } from 'react';
-
-export interface User {
-  _id: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  user_photo: string;
-  questions: string[];
-  answers: string[];
-  saved_tags: string[];
-  member_since: string;
-  last_seen: string;
-  bio: string;
-  cohort_name: string;
-  course_type: string;
-  github: string;
-  location: {
-    country: string;
-    city: string;
-  };
-  user_permission: string;
-  website: string;
-  course_date: string;
-}
+import type {User} from '../types/UserTypes.ts';
 
 export interface LoginResponse {
   access_token: string;
