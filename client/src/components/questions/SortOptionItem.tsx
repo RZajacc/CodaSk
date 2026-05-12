@@ -1,5 +1,3 @@
-import React from 'react';
-
 type Props = {
   handleSortChange: (option: string) => void;
   option: string;

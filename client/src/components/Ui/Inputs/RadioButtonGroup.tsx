@@ -1,5 +1,3 @@
-import React from 'react';
-
 type RadioButtonGroupProps = {
   htmlFor: string;
   inputOptions: string[];
@@ -14,7 +12,7 @@ export default function RadioButtonGroup({
       <div className="flex">
         <input
           value={option}
-          className="mx-2 font-medium "
+          className="mx-2 font-medium"
           type="radio"
           name={htmlFor}
         />

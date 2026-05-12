@@ -1,13 +1,11 @@
-import React from 'react';
-
 type Props = {
   tagName: string;
   tagId: string;
 };
 
-function TagPill({tagName, tagId}: Props) {
+function TagPill({tagName}: Props) {
   return (
-    <div className="whitespace-nowrap rounded-md bg-black p-2 text-white no-underline">
+    <div className="rounded-md bg-black p-2 whitespace-nowrap text-white no-underline">
       {tagName}
     </div>
   );

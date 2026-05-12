@@ -1,5 +1,3 @@
-import React from 'react';
-
 type Props = {
   handleSortChange: (label: string) => void;
   option: string;
@@ -10,7 +8,7 @@ function SortListOptionItem({handleSortChange, option, separator}: Props) {
   return (
     <li
       onClick={() => handleSortChange(option)}
-      className=" px-1"
+      className="px-1"
       value={option}
     >
       {option}

@@ -1,4 +1,3 @@
-import {FaGithub} from 'react-icons/fa';
 import {type User} from '../../types/custom_types';
 import {type FormEvent, useEffect, useState} from 'react';
 // import {BuildFetchUrl} from '@/utils/BuildFetchUrl';

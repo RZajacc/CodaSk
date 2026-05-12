@@ -1,9 +1,7 @@
-import {FaGithub, FaGoogle} from 'react-icons/fa';
 import React from 'react';
 import FormInput from '../../components/Ui/Inputs/FormInput';
 import {useAuth} from '../../context/AuthContext.tsx';
 import {useNavigate} from 'react-router';
-import LoadingScreen from '../Ui/LoadingScreen.tsx';
 
 export default function LogInForm() {
   const {login} = useAuth();

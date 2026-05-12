@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 
 type FormInputProps = {
   label: string;
@@ -26,11 +26,11 @@ export default function FormInput({
         name={htmlFor}
         placeholder={placeholder}
         required={required}
-        className="w-full rounded-2xl border-2 border-[#6741D9] bg-[#EDE9E6] px-3 py-2 shadow-custom"
+        className="shadow-custom w-full rounded-2xl border-2 border-[#6741D9] bg-[#EDE9E6] px-3 py-2"
       />
     ) : (
       <input
-        className="w-full rounded-2xl border-2 border-[#6741D9] bg-[#EDE9E6] px-3 py-2 shadow-custom"
+        className="shadow-custom w-full rounded-2xl border-2 border-[#6741D9] bg-[#EDE9E6] px-3 py-2"
         type={type !== 'password' ? type : showPassword ? 'text' : 'password'}
         name={htmlFor}
         placeholder={placeholder}

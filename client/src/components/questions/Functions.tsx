@@ -1,7 +1,5 @@
 const formatDate = (date: Date | string) => {
-  const formattedDate = new Date(date).toLocaleDateString('en-US');
-  // console.log("formattedDate :>> ", formattedDate);
-  return formattedDate;
+  return new Date(date).toLocaleDateString('en-US');
 };
 
 const formatDateAndTime = (dateAndTime: Date | string) => {
@@ -14,7 +12,9 @@ const formatDateAndTime = (dateAndTime: Date | string) => {
   );
 };
 
+// TO FIX
 const formatInputDate = (date: Date | string) => {
+  console.log('DATE', date);
   const formattedDate = new Date().toISOString().split('T')[0];
   return formattedDate;
 };

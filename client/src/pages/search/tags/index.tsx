@@ -15,7 +15,7 @@ export type tagQuery = {
 };
 
 export default function Tags() {
-  const filteredTags = {};
+  // const filteredTags = {};
   const [sortBy, setSortBy] = useState('All');
 
   const [tagData, setTagData] = useState<tagQuery[]>();

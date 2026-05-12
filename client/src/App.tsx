@@ -54,7 +54,11 @@ export function AppComponent() {
                 },
                 {
                   path: 'askQuestion',
-                  element: <AskQuestion />,
+                  element: (
+                    <ProtectedRoute>
+                      <AskQuestion />
+                    </ProtectedRoute>
+                  ),
                 },
                 {
                   path: 'tagged',
@@ -74,7 +78,11 @@ export function AppComponent() {
                     {
                       index: false,
                       path: ':id',
-                      element: <UpdateQuestion />,
+                      element: (
+                        <ProtectedRoute>
+                          <UpdateQuestion />
+                        </ProtectedRoute>
+                      ),
                     },
                   ],
                 },
@@ -158,7 +166,11 @@ export function AppComponent() {
                 {
                   index: false,
                   path: ':id',
-                  element: <UpdateProfile />,
+                  element: (
+                    <ProtectedRoute>
+                      <UpdateProfile />
+                    </ProtectedRoute>
+                  ),
                 },
               ],
             },

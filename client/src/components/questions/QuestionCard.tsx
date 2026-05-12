@@ -8,23 +8,28 @@ import type {Question} from '../../types/QuestionTypes.ts';
 import {divideString} from '../../utils/QuillTextProcessor.tsx';
 import {deleteInlineStyles} from '../../utils/CleanInlineStyles.tsx';
 import {Link} from 'react-router';
+import {useAuth} from '../../context/AuthContext.tsx';
 
 type Props = {
   questionObj: Question;
 };
 
 function QuestionCard({questionObj}: Props) {
+  const {user} = useAuth();
   // Prepare quill generated text to display
   const divideDescString = divideString(questionObj.problem_description);
   const problemDesc = deleteInlineStyles(divideDescString);
+
+  const questionAuthor =
+    typeof questionObj.author !== 'string' && questionObj.author;
 
   // console.log(questionObj.tags[0]);
   return (
     <div className="questionCard grid gap-2 rounded-2xl bg-[#EDE9E6] no-underline hover:bg-gray-300 hover:font-normal">
       {/* QUESTION BOX HEADER */}
       <QuestionCardHeader
-        userImageURL={questionObj.author.user_photo}
-        userName={questionObj.author.first_name}
+        userImageURL={questionAuthor ? questionAuthor.user_photo : ''}
+        userName={questionAuthor ? questionAuthor.first_name : ''}
         postedOn={questionObj.posted_on}
         courseModule={questionObj.module}
       />
@@ -50,6 +55,9 @@ function QuestionCard({questionObj}: Props) {
       <section className="questionsTags flex gap-2 px-4">
         {questionObj.tags &&
           questionObj.tags.map((tag) => {
+            if (typeof tag === 'string') {
+              return <div>{tag}</div>;
+            }
             return <TagPill tagName={tag.name} tagId={tag._id} key={tag._id} />;
           })}
       </section>
@@ -62,9 +70,9 @@ function QuestionCard({questionObj}: Props) {
 
       {/* Options */}
       <QuestionOptions
-        userId={'123'}
+        userId={user?._id}
         questionId={questionObj._id}
-        questionAuthorId={questionObj.author._id}
+        questionAuthorId={questionAuthor ? questionAuthor._id : ''}
       />
     </div>
   );
