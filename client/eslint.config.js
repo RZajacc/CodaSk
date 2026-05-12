@@ -6,6 +6,7 @@ import tseslint from 'typescript-eslint';
 import tailwindcss from 'eslint-plugin-tailwindcss';
 import prettier from 'eslint-config-prettier';
 import {defineConfig, globalIgnores} from 'eslint/config';
+import css from '@eslint/css';
 
 export default defineConfig([
   globalIgnores(['dist']),
@@ -23,5 +24,9 @@ export default defineConfig([
       ecmaVersion: 2020,
       globals: globals.browser,
     },
+  },
+  css.configs.recommended,
+  {
+    files: ['**/*.css'],
   },
 ]);
