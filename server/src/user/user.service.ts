@@ -15,7 +15,16 @@ export class UserService {
 
   findAll() {
     // return this.userModel.findOne({ email: 'rafal@codac.com' });
-    return this.userModel.find().select('-password').lean().exec();
+    return this.userModel
+      .find()
+      .select('-password')
+      .populate([
+        { path: 'questions' },
+        { path: 'answers' },
+        { path: 'saved_tags' },
+      ])
+      .lean()
+      .exec();
   }
 
   findByEmail(email: string): Promise<User | null> {
@@ -23,7 +32,15 @@ export class UserService {
   }
 
   findOne(id: string): Promise<User | null> {
-    return this.userModel.findOne({ _id: id }).lean().exec();
+    return this.userModel
+      .findOne({ _id: id })
+      .populate([
+        { path: 'questions' },
+        { path: 'answers' },
+        { path: 'saved_tags' },
+      ])
+      .lean()
+      .exec();
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
