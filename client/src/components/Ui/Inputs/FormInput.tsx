@@ -52,7 +52,7 @@ export default function FormInput({
           <p className={'p-1'}>Show password</p>
           <input
             type="checkbox"
-            checked={showPassword}
+            defaultChecked={showPassword}
             onClick={() => {
               setShowPassword((prev) => !prev);
             }}

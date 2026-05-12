@@ -4,7 +4,7 @@ import {useAuth} from '../../context/AuthContext.tsx';
 import {useNavigate} from 'react-router';
 
 export default function LogInForm() {
-  const {login} = useAuth();
+  const {login, error} = useAuth();
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -70,6 +70,8 @@ export default function LogInForm() {
         >
           log in
         </button>
+
+        {error && <div className={'text-center text-red-500'}>{error}</div>}
       </form>
 
       {/*<button*/}

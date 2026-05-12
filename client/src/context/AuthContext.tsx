@@ -85,7 +85,7 @@ export function AuthProvider({children}: {children: ReactNode}) {
       });
 
       if (!response.ok) {
-        throw new Error('Login failed');
+        throw new Error('Login failed! Email or password is incorrect');
       }
 
       const responseData: LoginResponse = await response.json();
