@@ -1,10 +1,9 @@
 import {formatDate} from '../../../../components/questions/Functions';
-// import parse from 'html-react-parser';
+import parse from 'html-react-parser';
 import {FaGithub} from 'react-icons/fa';
 import {MdLocationOn} from 'react-icons/md';
 import {TbWorld} from 'react-icons/tb';
 // import {MdModeEditOutline} from 'react-icons/md';
-import type {Answers, Questions, Tags} from '../../../../types/custom_types';
 import {Link} from 'react-router';
 import {useAuth} from '../../../../context/AuthContext.tsx';
 
@@ -42,6 +41,65 @@ export default function Profile() {
     console.log(questionID);
     // router.push(`${FETCH_URL}/search/questions/${questionID}`);
   };
+
+  const userQuestions = user?.questions.map((question) => {
+    if (typeof question === 'string') {
+      return <div>{question}</div>;
+    }
+
+    return (
+      <div
+        onClick={() => {
+          handleQuestionRedirect(question._id);
+        }}
+        key={question._id}
+        className="mb-2 w-60 cursor-pointer rounded-md p-1 shadow-md"
+      >
+        <p className="mb-3 truncate overflow-hidden p-1">{question.title}</p>
+      </div>
+    );
+  });
+
+  const userContributions = user?.answers.map((answer) => {
+    if (typeof answer === 'string') {
+      return <div>{answer}</div>;
+    }
+
+    return (
+      <div
+        onClick={() => {
+          handleQuestionRedirect(answer?._id);
+        }}
+        key={answer._id}
+        className="mb-2 w-60 cursor-pointer rounded-md p-1 shadow-md"
+      >
+        <p className="mb-3 truncate overflow-hidden p-1">
+          {parse(answer?.message)}
+        </p>
+      </div>
+    );
+  });
+
+  const userTags = user?.saved_tags.map((tag) => {
+    if (typeof tag === 'string') {
+      return <div>{tag}</div>;
+    }
+
+    return (
+      <div key={tag._id}>
+        <div className="w-min rounded-md bg-black p-2 text-white">
+          <Link
+            className="no-underline"
+            to={{
+              pathname: `http://localhost:3000/search/questions/tagged/${tag?._id}`,
+            }}
+          >
+            {tag?.name}
+          </Link>
+        </div>
+      </div>
+    );
+  });
 
   return (
     <div className="mt-8 grid gap-20 p-3 md:mx-auto md:max-w-6xl md:p-10">
@@ -153,28 +211,16 @@ export default function Profile() {
         {/* YOUR QUESTIONS */}
         <div className="rounded-2xl bg-[#EDE9E6]">
           <div className="rounded-xl bg-[#6741D9] p-4 text-white">
-            <h4 className="text-lg font-bold">your questions</h4>
+            <h4 className="text-lg font-bold">
+              your questions ({user?.questions.length})
+            </h4>
           </div>
           <div className="p-1">
             <div className="flex flex-col p-4">
-              {user?.questions && user?.questions?.length <= 0 ? (
+              {user && user.questions.length <= 0 ? (
                 <p>Nothing saved yet</p>
               ) : (
-                user?.questions.map((question: Questions, quIndex: number) => {
-                  return (
-                    <div
-                      onClick={() => {
-                        handleQuestionRedirect(question._id);
-                      }}
-                      key={quIndex}
-                      className="mb-2 w-60 cursor-pointer rounded-md p-1 shadow-md"
-                    >
-                      <p className="mb-3 truncate overflow-hidden p-1">
-                        {question?.title}
-                      </p>
-                    </div>
-                  );
-                })
+                userQuestions
               )}
             </div>
           </div>
@@ -189,29 +235,16 @@ export default function Profile() {
         {/* YOUR CONTRIBUTIONS */}
         <div className="rounded-2xl bg-[#EDE9E6]">
           <div className="rounded-xl bg-[#6741D9] p-4 text-white">
-            <h4 className="text-lg font-bold">your contributions</h4>
+            <h4 className="text-lg font-bold">
+              your contributions ({user?.answers.length})
+            </h4>
           </div>
           <div className="p-1">
             <div className="flex flex-col p-4">
-              {user?.answers && user?.answers?.length <= 0 ? (
+              {user && user.answers.length <= 0 ? (
                 <p>Nothing saved yet</p>
               ) : (
-                user?.answers.map((answer: Answers, ansIndex: number) => {
-                  return (
-                    <div
-                      onClick={() => {
-                        handleQuestionRedirect(answer?.question._id);
-                      }}
-                      key={ansIndex}
-                      className="mb-2 w-60 cursor-pointer rounded-md p-1 shadow-md"
-                    >
-                      <p className="mb-3 truncate overflow-hidden p-1">
-                        {answer?.message}
-                        {/* {parse(answer?.message)} */}
-                      </p>
-                    </div>
-                  );
-                })
+                userContributions
               )}
             </div>
           </div>
@@ -226,28 +259,15 @@ export default function Profile() {
         {/* YOUR TAGS */}
         <div className="rounded-2xl bg-[#EDE9E6]">
           <div className="rounded-xl bg-[#6741D9] p-4 text-white">
-            <h4 className="text-lg font-bold">your tags</h4>
+            <h4 className="text-lg font-bold">
+              your tags ({user?.saved_tags.length})
+            </h4>
           </div>
           <div className="flex flex-row flex-wrap gap-2 p-2">
-            {user?.saved_tags && user?.saved_tags?.length <= 0 ? (
+            {user && user.saved_tags.length <= 0 ? (
               <p>Nothing saved yet</p>
             ) : (
-              user?.saved_tags.map((tag: Tags, tagIndex: number) => {
-                return (
-                  <div key={tagIndex}>
-                    <div className="w-min rounded-md bg-black p-2 text-white">
-                      <Link
-                        className="no-underline"
-                        to={{
-                          pathname: `http://localhost:3000/search/questions/tagged/${tag?._id}`,
-                        }}
-                      >
-                        {tag?.name}
-                      </Link>
-                    </div>
-                  </div>
-                );
-              })
+              userTags
             )}
           </div>
           <button
