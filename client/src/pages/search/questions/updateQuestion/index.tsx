@@ -1,5 +1,5 @@
 import BackButton from '../../../../components/Ui/buttons/BackButton';
-import NewQuestionForm from '../../../../components/forms/NewQuestionForm';
+// import NewQuestionForm from '../../../../components/forms/NewQuestionForm';
 
 // export type updatedQuestionQuery = {};
 

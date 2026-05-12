@@ -1,6 +1,6 @@
 import {useState} from 'react';
-import QuestionsGrid from '../../../../components/questions/QuestionsGrid';
-import {Link, useParams} from 'react-router';
+// import QuestionsGrid from '../../../../components/questions/QuestionsGrid';
+import {Link} from 'react-router';
 
 export type questionByTagQuery = {
   getQuestionsByTagName: [
@@ -37,10 +37,11 @@ export type questionByTagQuery = {
 };
 
 export default function TaggedQuestions() {
-  const params = useParams<{id: string}>();
-  const questionId = params.id;
+  // const params = useParams<{id: string}>();
+  // const questionId = params.id;
 
-  const [sortBy, setSortBy] = useState('All');
+  // TO BE CHANGED
+  const [_sortBy, setSortBy] = useState('All');
 
   const handleSortChange = (sortOption: string) => {
     setSortBy(sortOption);

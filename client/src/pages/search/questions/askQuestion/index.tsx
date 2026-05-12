@@ -1,13 +1,8 @@
 import {useState} from 'react';
 import NewQuestionForm from '../../../../components/forms/NewQuestionForm';
 import AssignTags from '../../../../components/questions/AssignTags';
-import type {
-  AllTagsQuery,
-  Tag,
-  addQuestionDataType,
-  questionInput,
-} from '../../../../types/askQuestionTypes';
-import {validateInputs} from '../../../../utils/QuestionValidator';
+import type {Tag, questionInput} from '../../../../types/askQuestionTypes';
+// import {validateInputs} from '../../../../utils/QuestionValidator';
 
 function AskQuestion() {
   // Initialize user question object
