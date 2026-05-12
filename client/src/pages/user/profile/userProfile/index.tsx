@@ -97,11 +97,6 @@ export default function Profile() {
   const handleLogOut = async () => {
     window.confirm('Are you sure you want to log out?');
     await logout();
-    navigate('/');
-    // await signOut({redirect: false});
-    // setUser(null);
-    // router.push('../login');
-    // location.reload();
   };
 
   const handleQuestionRedirect = (questionID: string) => {

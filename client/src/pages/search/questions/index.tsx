@@ -3,6 +3,7 @@ import {SortByOptions} from '../../../components/questions/SortByOptions.tsx';
 import QuestionsGrid from '../../../components/questions/QuestionsGrid.tsx';
 import type {Question} from '../../../types/QuestionTypes.ts';
 import {Link} from 'react-router';
+import {useAuth} from '../../../context/AuthContext.tsx';
 
 export default function QuestionsList() {
   const [sortBy, setSortBy] = useState('All');
@@ -14,8 +15,9 @@ export default function QuestionsList() {
     setSortBy(sortOption);
   };
 
+  const {isAuthenticated} = useAuth();
+
   useEffect(() => {
-    setLoading(true);
     // const baseUrl = BuildFetchUrl();
     const baseUrl = 'http://localhost:5000';
     // console.log('BASE URL :>> ', baseUrl);
@@ -39,12 +41,14 @@ export default function QuestionsList() {
         <h1 className="content-center text-left text-2xl font-medium text-[#6741D9] sm:text-3xl">
           Search among {questionsData.length} questions
         </h1>
-        <Link
-          className="my-2 rounded-full bg-black px-4 py-2 text-center font-bold text-white no-underline hover:bg-[#B197FC]"
-          to={'/search/questions/askQuestion'}
-        >
-          Ask a question
-        </Link>
+        {isAuthenticated && (
+          <Link
+            className="my-2 rounded-full bg-black px-4 py-2 text-center font-bold text-white no-underline hover:bg-[#B197FC]"
+            to={'/search/questions/askQuestion'}
+          >
+            Ask a question
+          </Link>
+        )}
       </div>
 
       {/* SORTING OPTIONS */}

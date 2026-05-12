@@ -15,9 +15,12 @@ export class UserService {
 
   findAll() {
     // return this.userModel.findOne({ email: 'rafal@codac.com' });
+    return this.userModel.find().select('-password').lean().exec();
+  }
+
+  findByEmail(email: string): Promise<User | null> {
     return this.userModel
-      .find()
-      .select('-password')
+      .findOne({ email })
       .populate([
         { path: 'questions' },
         { path: 'answers' },
@@ -25,10 +28,6 @@ export class UserService {
       ])
       .lean()
       .exec();
-  }
-
-  findByEmail(email: string): Promise<User | null> {
-    return this.userModel.findOne({ email }).lean().exec();
   }
 
   findOne(id: string): Promise<User | null> {
