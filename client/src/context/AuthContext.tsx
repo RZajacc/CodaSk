@@ -7,6 +7,7 @@ import {
   useReducer,
 } from 'react';
 import type {User} from '../types/UserTypes.ts';
+import {authService} from '../services/authService.ts';
 
 export interface LoginResponse {
   access_token: string;
@@ -78,20 +79,16 @@ export function AuthProvider({children}: {children: ReactNode}) {
     dispatch({type: 'LOGIN_START'});
 
     try {
-      const response = await fetch('http://localhost:5000/auth/login', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({email, password}),
-      });
+      // Use service method for fetching
+      const responseData = await authService.login(email, password);
 
-      if (!response.ok) {
-        throw new Error('Login failed! Email or password is incorrect');
-      }
-
-      const responseData: LoginResponse = await response.json();
+      // Until cookie authentication is set
       localStorage.setItem('accessToken', responseData.access_token);
 
+      // Dispatch success
       dispatch({type: 'LOGIN_SUCCESS', payload: responseData.user});
+
+      // To be able to redirect after login properly user is needed
       return responseData.user;
     } catch (error) {
       dispatch({
@@ -113,21 +110,14 @@ export function AuthProvider({children}: {children: ReactNode}) {
 
     try {
       const token = localStorage.getItem('accessToken');
+
       if (!token) {
         dispatch({type: 'CHECK_AUTH_ERROR'});
         return;
       }
 
-      const response = await fetch('http://localhost:5000/auth/profile', {
-        method: 'GET',
-        headers: {Authorization: `Bearer ${token}`},
-      });
+      const user = await authService.getProfile(token);
 
-      if (!response.ok) {
-        throw new Error('Auth check failed');
-      }
-
-      const user: User = await response.json();
       dispatch({type: 'CHECK_AUTH_SUCCESS', payload: user});
     } catch (error) {
       dispatch({type: 'CHECK_AUTH_ERROR'});
