@@ -5,7 +5,7 @@ import type {tagQuery} from '../../pages/search/tags';
 
 type Props = {
   data: tagQuery[];
-  userData: userQuery;
+  userData: {};
   bookmarkTag: ({
     variables: {userId, tagId},
   }: {

@@ -1,5 +1,5 @@
 // -------React-------
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import parse from 'html-react-parser';
 import {Link, useParams} from 'react-router';
 // -------Components-------
@@ -14,11 +14,12 @@ import {quillFormats, quillModules} from '../../../../types/quillTypes';
 import 'react-quill/dist/quill.snow.css';
 import type {Question} from '../../../../types/QuestionTypes.ts';
 import QuillEditor from 'react-quill';
+import {useAuth} from '../../../../context/AuthContext.tsx';
 
 export default function QuestionDetails() {
   const params = useParams<{id: string}>();
   const postID = params.id;
-
+  const {user} = useAuth();
   // UseStates
   const [questionData, setQuestionData] = useState<Question | null>(null);
 
@@ -103,9 +104,7 @@ export default function QuestionDetails() {
     // router.push('/search/questions');
   };
 
-  const handleDeleteAnswer = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const handleDeleteAnswer = () => {
     // const target = e.target as HTMLButtonElement;
     // deleteAnswer({
     //   variables: {
@@ -129,7 +128,7 @@ export default function QuestionDetails() {
     // });
   };
 
-  const handleUpvote = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleUpvote = () => {
     // const target = e.target as HTMLButtonElement;
     // const closest = target.closest('#upvote') as HTMLButtonElement;
     // const targetID = closest.value;
@@ -141,6 +140,11 @@ export default function QuestionDetails() {
     //   },
     // });
   };
+
+  const questionAuthor =
+    questionData && typeof questionData.author !== 'string'
+      ? questionData.author
+      : null;
 
   return (
     <>
@@ -154,7 +158,7 @@ export default function QuestionDetails() {
             {questionData ? questionData.title : ''}
           </h1>
           <div className="flex">
-            {questionData?.author._id === '123' ? (
+            {questionAuthor && questionAuthor._id === user?._id ? (
               <>
                 <Link
                   to={`/search/questions/updatequestion/${
@@ -219,7 +223,7 @@ export default function QuestionDetails() {
             </h3>
           </div>
           <div>
-            {questionData?.author._id === '123' ? (
+            {questionAuthor && questionAuthor._id === user?._id ? (
               <>
                 {/* <span className="text-gray-500">Question status: </span> */}
                 <button
@@ -310,6 +314,10 @@ export default function QuestionDetails() {
           <div className="ml-6">
             {questionData &&
               questionData.tags.map((tag) => {
+                if (typeof tag === 'string') {
+                  return <div>tag</div>;
+                }
+
                 return (
                   <Link
                     to={`/search/questions/tagged/${tag._id}`}
@@ -323,14 +331,14 @@ export default function QuestionDetails() {
           </div>
           <div className="mr-6 flex">
             <img
-              src={questionData ? questionData.author.user_photo : ''}
+              src={questionAuthor ? questionAuthor.user_photo : ''}
               alt="userImage"
               width={35}
               height={35}
               className="rounded-full"
             />
             <span className="mx-2 text-lg">
-              {questionData ? questionData.author.first_name : ''}
+              {questionAuthor ? questionAuthor.first_name : ''}
             </span>
           </div>
         </div>
@@ -374,6 +382,10 @@ export default function QuestionDetails() {
         {questionData
           ? questionData.answers.map((answer) => {
               // console.log(answer.author);
+              if (typeof answer === 'string') {
+                return <div>answer</div>;
+              }
+
               return (
                 <AnswerCard
                   answerData={answer}

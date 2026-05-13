@@ -5,15 +5,10 @@ import {divideString} from '../utils/QuillTextProcessor';
 import {deleteInlineStyles} from '../utils/CleanInlineStyles';
 import parse from 'html-react-parser';
 import DeleteModal from './DeleteModal';
+import type {Answer} from '../types/AnswerTypes.ts';
 
 type Props = {
-  answerData: {
-    _id: string;
-    posted_on: string;
-    message: string;
-    author: {_id: string; first_name: string; user_photo: string};
-    votes: string[];
-  };
+  answerData: Answer;
   showDeleteAnswerModal: boolean;
   handleOpenDeleteAModal: () => void;
   handleCloseDeleteAModal: () => void;
@@ -41,19 +36,25 @@ function AnswerCard({
   const message = deleteInlineStyles(answersDiv);
   const codeSnippetClass = 'bg-black text-white mt-4 p-6 rounded-xl mb-4';
   const normalText = 'text-black mt-4 mb-4';
+
+  const answerAuthor =
+    typeof answerData.author !== 'string' ? answerData.author : null;
+
   return (
     <>
       {/* HEADER */}
       <div className="flex justify-between rounded-2xl bg-black p-2 text-white">
         <div className="flex">
           <img
-            src={answerData.author.user_photo}
+            src={answerAuthor ? answerAuthor.user_photo : ''}
             height={27}
             width={27}
             alt="User avatar"
             className="mx-1 rounded-full"
           />
-          <span className="mx-1">{answerData.author.first_name}</span>
+          <span className="mx-1">
+            {answerAuthor ? answerAuthor.first_name : ''}
+          </span>
           <span className="mx-1">
             posted {getPostedOnInDays(answerData.posted_on)}
           </span>
@@ -98,33 +99,37 @@ function AnswerCard({
             })}
         </div>
         <div className="col-span-1 flex justify-end">
-          {answerData.author._id === userID ? (
-            <>
-              <button onClick={handleOpenDeleteAModal}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="25"
-                  height="25"
-                  viewBox="0 0 30 30"
-                  fill="none"
-                  className="m-4"
-                >
-                  <path
-                    d="M11.25 3.75V5H5V7.5H6.25V23.75C6.25 24.413 6.51339 25.0489 6.98223 25.5178C7.45107 25.9866 8.08696 26.25 8.75 26.25H21.25C21.913 26.25 22.5489 25.9866 23.0178 25.5178C23.4866 25.0489 23.75 24.413 23.75 23.75V7.5H25V5H18.75V3.75H11.25ZM8.75 7.5H21.25V23.75H8.75V7.5ZM11.25 10V21.25H13.75V10H11.25ZM16.25 10V21.25H18.75V10H16.25Z"
-                    fill="black"
+          {answerAuthor ? (
+            answerAuthor._id === userID ? (
+              <>
+                <button onClick={handleOpenDeleteAModal}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="25"
+                    height="25"
+                    viewBox="0 0 30 30"
+                    fill="none"
+                    className="m-4"
+                  >
+                    <path
+                      d="M11.25 3.75V5H5V7.5H6.25V23.75C6.25 24.413 6.51339 25.0489 6.98223 25.5178C7.45107 25.9866 8.08696 26.25 8.75 26.25H21.25C21.913 26.25 22.5489 25.9866 23.0178 25.5178C23.4866 25.0489 23.75 24.413 23.75 23.75V7.5H25V5H18.75V3.75H11.25ZM8.75 7.5H21.25V23.75H8.75V7.5ZM11.25 10V21.25H13.75V10H11.25ZM16.25 10V21.25H18.75V10H16.25Z"
+                      fill="black"
+                    />
+                  </svg>
+                </button>
+                {showDeleteAnswerModal && (
+                  <DeleteModal
+                    title={''}
+                    itemToDelete="answer"
+                    onClose={handleCloseDeleteAModal}
+                    confirmDel={handleDeleteAnswer}
+                    ID={answerData._id}
                   />
-                </svg>
-              </button>
-              {showDeleteAnswerModal && (
-                <DeleteModal
-                  title={''}
-                  itemToDelete="answer"
-                  onClose={handleCloseDeleteAModal}
-                  confirmDel={handleDeleteAnswer}
-                  ID={answerData._id}
-                />
-              )}
-            </>
+                )}
+              </>
+            ) : (
+              ''
+            )
           ) : (
             ''
           )}

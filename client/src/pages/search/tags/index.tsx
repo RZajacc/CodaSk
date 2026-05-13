@@ -1,6 +1,6 @@
-import TagsGrid from '../../../components/tags/TagsGrid';
-import {SortByOptions} from '../../../components/questions/SortByOptions';
-import {useEffect, useState} from 'react';
+// import TagsGrid from '../../../components/tags/TagsGrid';
+// import {useEffect, useState} from 'react';
+// import {SortByOptions} from '../../../components/questions/SortByOptions';
 import {Link} from 'react-router';
 
 /// QUERIES ///
@@ -16,22 +16,22 @@ export type tagQuery = {
 
 export default function Tags() {
   // const filteredTags = {};
-  const [sortBy, setSortBy] = useState('All');
+  // const [sortBy, setSortBy] = useState('All');
 
-  const [tagData, setTagData] = useState<tagQuery[]>();
+  // const [tagData, setTagData] = useState<tagQuery[]>();
 
-  useEffect(() => {
-    fetch('http://localhost:5000/tag')
-      .then((res) => res.json())
-      .then((data) => {
-        console.log('DATA :>> ', data);
-        setTagData(data);
-      });
-  }, [sortBy]);
+  // useEffect(() => {
+  //   fetch('http://localhost:5000/tag')
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       console.log('DATA :>> ', data);
+  //       setTagData(data);
+  //     });
+  // }, [sortBy]);
 
-  const handleSortChange = (sortOption: string) => {
-    setSortBy(sortOption);
-  };
+  // const handleSortChange = (sortOption: string) => {
+  //   setSortBy(sortOption);
+  // };
 
   return (
     <div className="p-2">
@@ -63,32 +63,35 @@ export default function Tags() {
         <h2 className="text-center font-medium text-[#6741D9] sm:text-start md:text-2xl">
           Search options:
         </h2>
-        <SortByOptions
-          title="Course:"
-          handleSortChange={handleSortChange}
-          options={['All', 'Web Development', 'Data Analytics']}
-          // width="w-full"
-        />
+        {/*<SortByOptions*/}
+        {/*  title="Course:"*/}
+        {/*  handleSortChange={handleSortChange}*/}
+        {/*  options={['All', 'Web Development', 'Data Analytics']}*/}
+        {/*  // width="w-full"*/}
+        {/*/>*/}
 
-        <SortByOptions
-          title="Sort by:"
-          handleSortChange={handleSortChange}
-          options={['All', 'Popular', 'Oldest', 'Unanswered', 'Solved']}
-          width="w-full"
-          margin="mb-4"
-        />
+        {/*<SortByOptions*/}
+        {/*  title="Sort by:"*/}
+        {/*  handleSortChange={handleSortChange}*/}
+        {/*  options={['All', 'Popular', 'Oldest', 'Unanswered', 'Solved']}*/}
+        {/*  width="w-full"*/}
+        {/*  margin="mb-4"*/}
+        {/*/>*/}
       </div>
       {/* TAGS GRID */}
       <div className="mx-8">
-        <TagsGrid
-          data={tagData}
-          // bookmarkTag={bookmarkTag}
-          // unbookmarkTag={unbookmarkTag}
-          // userData={userData}
-          // loading={loading}
-          // searchInput={searchInput}
-          // setSearchInput={setSearchInput}
-        />
+        <p className={'mt-7 text-center text-red-500'}>
+          Currently under reconstruction. Coming back soon!
+        </p>
+        {/*<TagsGrid*/}
+        {/*  data={tagData}*/}
+        {/*  bookmarkTag={bookmarkTag}*/}
+        {/*  unbookmarkTag={unbookmarkTag}*/}
+        {/*  userData={userData}*/}
+        {/*  loading={loading}*/}
+        {/*  searchInput={searchInput}*/}
+        {/*  setSearchInput={setSearchInput}*/}
+        {/*/>*/}
       </div>
     </div>
   );
