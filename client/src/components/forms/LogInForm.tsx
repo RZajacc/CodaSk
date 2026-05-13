@@ -21,25 +21,6 @@ export default function LogInForm() {
       console.log(error);
     }
 
-    // try {
-    //   const result = await signIn('credentials', {
-    //     email: email,
-    //     password: password,
-    //     redirect: false,
-    //   });
-    //
-    //   if (result?.error) {
-    //     // console.error('Login failed:', result.error);
-    //   } else {
-    //     // router.push(`../user/moreinfo`);
-    //     router.push(`/`);
-    //     // location.reload();
-    //
-    //     // console.log('Result of login successfully:', result);
-    //   }
-    // } catch (error) {
-    //   console.error('Login error:', error);
-    // }
   };
 
   return (
