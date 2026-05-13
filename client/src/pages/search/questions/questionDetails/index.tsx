@@ -15,10 +15,11 @@ import 'react-quill/dist/quill.snow.css';
 import type {Question} from '../../../../types/QuestionTypes.ts';
 import QuillEditor from 'react-quill';
 import {useAuth} from '../../../../context/AuthContext.tsx';
+import {questionService} from '../../../../services/questionService.ts';
 
 export default function QuestionDetails() {
   const params = useParams<{id: string}>();
-  const postID = params.id;
+  const id = params.id;
   const {user} = useAuth();
   // UseStates
   const [questionData, setQuestionData] = useState<Question | null>(null);
@@ -29,16 +30,15 @@ export default function QuestionDetails() {
 
   // -------QUERIES---------------
   useEffect(() => {
-    // const baseUrl = BuildFetchUrl();
-    const baseUrl = 'http://localhost:5000';
-    fetch(`${baseUrl}/question/${postID}`)
-      .then((res) => res.json())
-      .then((data) => {
+    const fetchQuestionById = async (): Promise<void> => {
+      try {
+        const data = await questionService.getQuestionById(id);
         setQuestionData(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchQuestionById();
   }, []);
 
   // Get posted on date in days difference as string

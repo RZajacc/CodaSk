@@ -4,6 +4,7 @@ import QuestionsGrid from '../../../components/questions/QuestionsGrid.tsx';
 import type {Question} from '../../../types/QuestionTypes.ts';
 import {Link} from 'react-router';
 import {useAuth} from '../../../context/AuthContext.tsx';
+import {questionService} from '../../../services/questionService.ts';
 
 export default function QuestionsList() {
   const [sortBy, setSortBy] = useState('All');
@@ -18,20 +19,18 @@ export default function QuestionsList() {
   const {isAuthenticated} = useAuth();
 
   useEffect(() => {
-    // const baseUrl = BuildFetchUrl();
-    const baseUrl = 'http://localhost:5000';
-    // console.log('BASE URL :>> ', baseUrl);
-    fetch(`${baseUrl}/question/search?filter=${sortBy}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log('DATA :>> ', data);
+    const fetchQuestions = async (): Promise<void> => {
+      try {
+        const data = await questionService.getAllQuestions(sortBy);
         setQuestionsData(data);
         setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
+      } catch (error) {
+        console.log(error);
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+    fetchQuestions();
   }, [sortBy]);
 
   return (
