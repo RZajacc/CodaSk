@@ -19,9 +19,11 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
+        working-directory: client
         run: npm install
 
       - name: Build React app
+        working-directory: client
         run: npm run build
 
       - name: Configure AWS Credentials
@@ -34,7 +36,7 @@ jobs:
       - name: deploy to S3
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
-        run: aws s3 sync dist/ s3://$AWS_S3_BUCKET --delete
+        run: aws s3 sync client/dist/ s3://$AWS_S3_BUCKET --delete
 
       - name: Invalidate CloudFront cache
         env:
