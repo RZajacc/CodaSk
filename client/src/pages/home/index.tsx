@@ -14,7 +14,7 @@ export default function Home() {
 
       {/* Header text section */}
       <h1 className="m-1 pt-6 pb-8 text-center text-xl font-bold text-[#6741D9] md:text-3xl lg:text-4xl">
-        Welcome to Codask!!,
+        Welcome to Codask,
         <br />a learning platform and community <br />
         for Codac students and alumnis!
       </h1>
