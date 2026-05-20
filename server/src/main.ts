@@ -16,8 +16,6 @@ async function bootstrap() {
 
   const allowedOrigins = configService.get('app.origins', { infer: true });
 
-  console.log('ALLOEWD ORIGINS', allowedOrigins);
-
   app.enableCors({
     origin: allowedOrigins,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
