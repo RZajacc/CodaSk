@@ -26,7 +26,7 @@ function MobileSidebar({
     <div
       className={`h-full ${showMobileNav && 'animate-slidein'} ${
         hideMobileNav && 'animate-slideout'
-      } fixed top-0 -left-1/2 z-20 w-1/2 bg-white`}
+      } fixed top-0 -left-1/2 z-50 w-1/2 bg-white`}
     >
       {/* Logo and contact section */}
       <section className="mt-12">

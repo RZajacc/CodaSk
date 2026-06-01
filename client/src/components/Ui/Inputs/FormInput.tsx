@@ -5,6 +5,7 @@ type FormInputProps = {
   htmlFor: string;
   type: string;
   placeholder: string;
+  error?: string | null;
   rows?: number;
   required?: boolean;
 };
@@ -14,6 +15,7 @@ export default function FormInput({
   htmlFor,
   type,
   placeholder,
+  error,
   rows = 5,
   required = false,
 }: FormInputProps) {
@@ -26,11 +28,11 @@ export default function FormInput({
         name={htmlFor}
         placeholder={placeholder}
         required={required}
-        className="shadow-custom w-full rounded-2xl border-2 border-[#6741D9] bg-[#EDE9E6] px-3 py-2"
+        className={`shadow-custom w-full rounded-2xl border ${error ? 'border-red-500' : 'border-[#6741D9]'} bg-[#EDE9E6] px-3 py-2`}
       />
     ) : (
       <input
-        className="shadow-custom w-full rounded-2xl border-2 border-[#6741D9] bg-[#EDE9E6] px-3 py-2"
+        className={`shadow-custom w-full rounded-2xl border ${error ? 'border-red-500' : 'border-[#6741D9]'} bg-[#EDE9E6] px-3 py-2`}
         type={type !== 'password' ? type : showPassword ? 'text' : 'password'}
         name={htmlFor}
         placeholder={placeholder}

@@ -114,7 +114,7 @@ pre {
 
 @theme {
   /* shadows */
-  --shadow-custom: 10px 10px 0 0 #6741D9;
+  --shadow-custom: 4px 4px 0 0 #6741D9;
   --shadow-custom2: 10px 10px 0 0 black;
 
   /* gradients */

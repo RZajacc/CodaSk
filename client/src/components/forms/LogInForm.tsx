@@ -20,7 +20,6 @@ export default function LogInForm() {
     } catch (error) {
       console.log(error);
     }
-
   };
 
   return (
@@ -35,6 +34,7 @@ export default function LogInForm() {
           htmlFor={'email'}
           type={'email'}
           placeholder={'email'}
+          error={error}
           required={true}
         />
         <FormInput
@@ -42,6 +42,7 @@ export default function LogInForm() {
           htmlFor={'password'}
           type={'password'}
           placeholder={'password'}
+          error={error}
           required={true}
         />
 
