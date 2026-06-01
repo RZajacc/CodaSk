@@ -1,21 +1,23 @@
-import React from 'react';
 import FormInput from '../../components/Ui/Inputs/FormInput';
 import {useAuth} from '../../context/AuthContext.tsx';
 import {useNavigate} from 'react-router';
+import {useForm, type SubmitHandler, FormProvider} from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {type LoginInputType, LoginSchema} from '../../schemas/AuthSchemas.ts';
 
 export default function LogInForm() {
   const {login, error} = useAuth();
   const navigate = useNavigate();
 
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const methods = useForm<LoginInputType>({
+    resolver: zodResolver(LoginSchema),
+  });
 
-    const formData = new FormData(e.currentTarget);
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
+  const {handleSubmit} = methods;
 
+  const onSubmit: SubmitHandler<LoginInputType> = async (data) => {
     try {
-      const user = await login(email, password);
+      const user = await login(data.email, data.password);
       navigate(`/user/profile/${user._id}`);
     } catch (error) {
       console.log(error);
@@ -24,38 +26,37 @@ export default function LogInForm() {
 
   return (
     <div className="w-96 rounded-2xl bg-[#EDE9E6] p-10">
-      <form
-        onSubmit={handleLogin}
-        data-testid="login-form"
-        className="mb-4 grid gap-3"
-      >
-        <FormInput
-          label={'Email'}
-          htmlFor={'email'}
-          type={'email'}
-          placeholder={'email'}
-          error={error}
-          required={true}
-        />
-        <FormInput
-          label={'Password'}
-          htmlFor={'password'}
-          type={'password'}
-          placeholder={'password'}
-          error={error}
-          required={true}
-        />
-
-        <button
-          type="submit"
-          className="rounded-full bg-black px-4 py-2 font-bold text-white hover:bg-[#B197FC]"
+      <FormProvider {...methods}>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          data-testid="login-form"
+          className="mb-4 grid gap-3"
         >
-          log in
-        </button>
+          <FormInput
+            label={'Email'}
+            htmlFor={'email'}
+            type={'email'}
+            placeholder={'email'}
+            required={true}
+          />
+          <FormInput
+            label={'Password'}
+            htmlFor={'password'}
+            type={'password'}
+            placeholder={'password'}
+            required={true}
+          />
 
-        {error && <div className={'text-center text-red-500'}>{error}</div>}
-      </form>
+          <button
+            type="submit"
+            className="rounded-full bg-black px-4 py-2 font-bold text-white hover:bg-[#B197FC]"
+          >
+            log in
+          </button>
 
+          {error && <div className={'text-center text-red-500'}>{error}</div>}
+        </form>
+      </FormProvider>
       {/*<button*/}
       {/*  onClick={() => {*/}
       {/*    signIn('github', {*/}
