@@ -38,7 +38,7 @@ jobs:
         with:
           function-name: codask-api
           code-artifacts-dir: server/dist
-          handler: index.handler
+          handler: lambda.handler
           runtime: nodejs24.x
 
       - name: Create ApiGateway Deployment
