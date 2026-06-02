@@ -11,6 +11,8 @@ import {
 import { QuestionService } from './question.service';
 import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
+import { ApiOkResponse, ApiOperation } from '@nestjs/swagger';
+import { Question } from './entities/question.entity';
 
 @Controller('question')
 export class QuestionController {
@@ -22,6 +24,15 @@ export class QuestionController {
   // }
 
   @Get()
+  // Swagger
+  @ApiOperation({
+    summary: 'Get all questions',
+    description: 'Get all questions without populating any fields',
+  })
+  @ApiOkResponse({
+    type: Question,
+    isArray: true,
+  })
   findAll() {
     return this.questionService.findAll();
   }

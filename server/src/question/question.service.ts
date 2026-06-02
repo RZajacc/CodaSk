@@ -36,7 +36,7 @@ export class QuestionService {
   }
 
   findAll() {
-    return this.questionModel.find();
+    return this.questionModel.find().lean().exec();
   }
 
   async findByQuery(filter: string) {
@@ -45,56 +45,47 @@ export class QuestionService {
         return this.questionModel
           .find()
           .populate(this.populateFindFields)
-          .sort({ posted_on: -1 });
+          .sort({ posted_on: -1 })
+          .lean()
+          .exec();
       }
       case 'Popular': {
-        const aggData = await this.questionModel.aggregate([
-          {
-            $addFields: {
-              answersCount: { $size: '$answers' },
-            },
-          },
-          {
-            $sort: { answersCount: -1, posted_on: -1 },
-          },
-        ]);
-        return await this.questionModel.populate(
-          aggData,
-          this.populateFindFields,
-        );
+        return this.questionModel
+          .find()
+          .populate(this.populateFindFields)
+          .sort({ answersCount: -1, posted_on: -1 });
       }
       case 'Unanswered': {
-        const aggData = await this.questionModel.aggregate([
-          {
-            $addFields: {
-              answersCount: { $size: '$answers' },
-            },
-          },
-          {
-            $sort: { answersCount: 1, posted_on: -1 },
-          },
-        ]);
-        return this.questionModel.populate(aggData, this.populateFindFields);
+        return this.questionModel
+          .find()
+          .populate(this.populateFindFields)
+          .sort({ answersCount: 1, posted_on: -1 });
       }
       case 'Oldest': {
         return this.questionModel
           .find()
           .populate(this.populateFindFields)
-          .sort({ posted_on: 1 });
+          .sort({ posted_on: 1 })
+          .lean()
+          .exec();
       }
       case 'Solved': {
         return this.questionModel
           .find()
           .populate(this.populateFindFields)
-          .sort({ status: 1 });
+          .sort({ status: 1 })
+          .lean()
+          .exec();
       }
     }
-
-    return 'Query not found';
   }
 
   findOne(id: string) {
-    return this.questionModel.findById(id).populate(this.populateFindFields);
+    return this.questionModel
+      .findById(id)
+      .populate(this.populateFindFields)
+      .lean()
+      .exec();
   }
 
   update(id: number, updateQuestionDto: UpdateQuestionDto) {
