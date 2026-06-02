@@ -2,7 +2,11 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Hello World!';
+  getRoot() {
+    return {
+      name: 'Codask API',
+      version: '0.5',
+      docs: '/api/docs',
+    };
   }
 }

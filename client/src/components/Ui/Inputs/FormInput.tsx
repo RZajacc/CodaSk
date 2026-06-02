@@ -61,7 +61,6 @@ export default function FormInput({
     </div>
   );
 
-  console.log('ERRORS===>', errors);
   return (
     <div className={'grid w-full gap-2'}>
       <label
