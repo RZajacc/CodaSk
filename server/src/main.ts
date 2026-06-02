@@ -21,7 +21,11 @@ async function bootstrap() {
     .setTitle('Codask')
     .setDescription('App for Codac students in trouble')
     .setVersion('0.5')
-    .addTag('Auth')
+    .addTag('Auth', 'User authentication endpoints')
+    .addTag('Question', 'Questions operations')
+    .addTag('User', 'User operations')
+    .addTag('Tag', 'Tag operations')
+    .addTag('Answer', 'Answers operations')
     .build();
 
   const documentFactory = () => SwaggerModule.createDocument(app, config);

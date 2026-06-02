@@ -16,17 +16,17 @@ import { UpdateQuestionDto } from './dto/update-question.dto';
 export class QuestionController {
   constructor(private readonly questionService: QuestionService) {}
 
-  @Post()
-  create(@Body() createQuestionDto: CreateQuestionDto) {
-    return this.questionService.create(createQuestionDto);
-  }
+  // @Post()
+  // create(@Body() createQuestionDto: CreateQuestionDto) {
+  //   return this.questionService.create(createQuestionDto);
+  // }
 
   @Get()
   findAll() {
     return this.questionService.findAll();
   }
 
-  @Get('search')
+  @Get('findByQuery')
   findByQuery(@Query('filter') filter: string) {
     return this.questionService.findByQuery(filter);
   }
@@ -36,16 +36,16 @@ export class QuestionController {
     return this.questionService.findOne(id);
   }
 
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateQuestionDto: UpdateQuestionDto,
-  ) {
-    return this.questionService.update(+id, updateQuestionDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.questionService.remove(+id);
-  }
+  // @Patch(':id')
+  // update(
+  //   @Param('id') id: string,
+  //   @Body() updateQuestionDto: UpdateQuestionDto,
+  // ) {
+  //   return this.questionService.update(+id, updateQuestionDto);
+  // }
+  //
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.questionService.remove(+id);
+  // }
 }

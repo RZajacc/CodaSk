@@ -21,7 +21,7 @@ export default function QuestionsList() {
   useEffect(() => {
     const fetchQuestions = async (): Promise<void> => {
       try {
-        const data = await questionService.getAllQuestions(sortBy);
+        const data = await questionService.getAllQuestionsByQuery(sortBy);
         setQuestionsData(data);
         setLoading(false);
       } catch (error) {

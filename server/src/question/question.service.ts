@@ -7,6 +7,10 @@ import { Model } from 'mongoose';
 
 @Injectable()
 export class QuestionService {
+  constructor(
+    @InjectModel(Question.name) private questionModel: Model<Question>,
+  ) {}
+
   // Fields to populate
   private readonly populateFindFields = [
     {
@@ -26,10 +30,6 @@ export class QuestionService {
       select: ['name'],
     },
   ];
-
-  constructor(
-    @InjectModel(Question.name) private questionModel: Model<Question>,
-  ) {}
 
   create(createQuestionDto: CreateQuestionDto) {
     return 'This action adds a new question';

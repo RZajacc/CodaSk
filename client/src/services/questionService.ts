@@ -3,9 +3,9 @@ import type {Question} from '../types/QuestionTypes.ts';
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 export const questionService = {
-  getAllQuestions: async (sortBy: string): Promise<Question[]> => {
+  getAllQuestionsByQuery: async (sortBy: string): Promise<Question[]> => {
     const response = await fetch(
-      API_BASE_URL + `/question/search?filter=${sortBy}`,
+      API_BASE_URL + `/question/findByQuery?filter=${sortBy}`,
       {
         method: 'GET',
         headers: {
