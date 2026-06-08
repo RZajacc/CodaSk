@@ -56,14 +56,17 @@ export class QuestionController {
     isArray: true,
   })
   async findByQuery(@Query('filter') filter: string) {
+    console.log('Filter===>', filter);
     const questionsList = await this.questionService.findByQuery(filter);
+    // return questionsList;
     return plainToInstance(FindByQueryResponseDto, questionsList, {
       excludeExtraneousValues: true,
     });
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
+    console.log('Getting here, looking for id', id);
     return this.questionService.findOne(id);
   }
 

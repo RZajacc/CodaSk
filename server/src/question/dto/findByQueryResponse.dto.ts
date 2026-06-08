@@ -1,13 +1,13 @@
 import { Types } from 'mongoose';
 import { ApiProperty } from '@nestjs/swagger';
-import { Expose, Type } from 'class-transformer';
+import { Expose, Transform, Type } from 'class-transformer';
 import { PopulatedAuthorDto } from './populated-author.dto';
 import { PopulatedTagDto } from './populated-tag.dto';
 
 export class FindByQueryResponseDto {
   @ApiProperty({ example: '658164f13468b3af52b44ff1' })
   @Expose()
-  _id: Types.ObjectId;
+  _id: string;
 
   @ApiProperty({ example: '656b4777d89e223b1e928c33' })
   @Expose()
@@ -47,7 +47,7 @@ export class FindByQueryResponseDto {
 
   @ApiProperty({ example: ['65816d209fe28bb962481f28'] })
   @Expose()
-  answers: Types.ObjectId[];
+  answers: string[];
 
   @ApiProperty({ example: 1 })
   @Expose()
@@ -55,7 +55,7 @@ export class FindByQueryResponseDto {
 
   @ApiProperty({ example: [] })
   @Expose()
-  saved_by: Types.ObjectId[];
+  saved_by: string[];
 
   @ApiProperty({ example: 'solved' })
   @Expose()

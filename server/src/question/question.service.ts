@@ -64,13 +64,17 @@ export class QuestionService {
         return this.questionModel
           .find()
           .populate(this.populateFindByQuery)
-          .sort({ answersCount: -1, posted_on: -1 });
+          .sort({ answersCount: -1, posted_on: -1 })
+          .lean()
+          .exec();
       }
       case 'Unanswered': {
         return this.questionModel
           .find()
           .populate(this.populateFindByQuery)
-          .sort({ answersCount: 1, posted_on: -1 });
+          .sort({ answersCount: 1, posted_on: -1 })
+          .lean()
+          .exec();
       }
       case 'Oldest': {
         return this.questionModel

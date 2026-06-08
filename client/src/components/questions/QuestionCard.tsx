@@ -20,6 +20,7 @@ function QuestionCard({questionObj}: Props) {
   const divideDescString = divideString(questionObj.problem_description);
   const problemDesc = deleteInlineStyles(divideDescString);
 
+  console.log(questionObj._id);
   return (
     <div className="questionCard grid gap-2 rounded-2xl bg-[#EDE9E6] no-underline hover:bg-gray-300 hover:font-normal">
       {/* QUESTION BOX HEADER */}

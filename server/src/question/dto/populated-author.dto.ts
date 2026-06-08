@@ -5,7 +5,7 @@ import { Types } from 'mongoose';
 export class PopulatedAuthorDto {
   @ApiProperty({ example: '656b4777d89e223b1e928c33' })
   @Expose()
-  _id: Types.ObjectId;
+  _id: string;
 
   @ApiProperty({ example: 'Bob' })
   @Expose()
