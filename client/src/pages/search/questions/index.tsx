@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {SortByOptions} from '../../../components/questions/SortByOptions.tsx';
 import QuestionsGrid from '../../../components/questions/QuestionsGrid.tsx';
-import type {Question} from '../../../types/QuestionTypes.ts';
+import type {QuestionByQuery} from '../../../types/QuestionTypes.ts';
 import {Link} from 'react-router';
 import {useAuth} from '../../../context/AuthContext.tsx';
 import {questionService} from '../../../services/questionService.ts';
@@ -10,7 +10,7 @@ export default function QuestionsList() {
   const [sortBy, setSortBy] = useState('All');
   const [loading, setLoading] = useState(true);
 
-  const [questionsData, setQuestionsData] = useState<Question[]>([]);
+  const [questionsData, setQuestionsData] = useState<QuestionByQuery[]>([]);
 
   const handleSortChange = (sortOption: string) => {
     setSortBy(sortOption);

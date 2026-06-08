@@ -4,14 +4,14 @@ import ProblemDescription from './questionCard/ProblemDescription';
 import TagPill from './questionCard/TagPill';
 import AnswersCount from './questionCard/AnswersCount';
 import QuestionOptions from './questionCard/QuestionOptions';
-import type {Question} from '../../types/QuestionTypes.ts';
+import type {QuestionByQuery} from '../../types/QuestionTypes.ts';
 import {divideString} from '../../utils/QuillTextProcessor.tsx';
 import {deleteInlineStyles} from '../../utils/CleanInlineStyles.tsx';
 import {Link} from 'react-router';
 import {useAuth} from '../../context/AuthContext.tsx';
 
 type Props = {
-  questionObj: Question;
+  questionObj: QuestionByQuery;
 };
 
 function QuestionCard({questionObj}: Props) {
@@ -20,16 +20,12 @@ function QuestionCard({questionObj}: Props) {
   const divideDescString = divideString(questionObj.problem_description);
   const problemDesc = deleteInlineStyles(divideDescString);
 
-  const questionAuthor =
-    typeof questionObj.author !== 'string' && questionObj.author;
-
-  // console.log(questionObj.tags[0]);
   return (
     <div className="questionCard grid gap-2 rounded-2xl bg-[#EDE9E6] no-underline hover:bg-gray-300 hover:font-normal">
       {/* QUESTION BOX HEADER */}
       <QuestionCardHeader
-        userImageURL={questionAuthor ? questionAuthor.user_photo : ''}
-        userName={questionAuthor ? questionAuthor.first_name : ''}
+        userImageURL={questionObj.author.user_photo}
+        userName={questionObj.author.first_name}
         postedOn={questionObj.posted_on}
         courseModule={questionObj.module}
       />
@@ -72,7 +68,7 @@ function QuestionCard({questionObj}: Props) {
       <QuestionOptions
         userId={user?._id}
         questionId={questionObj._id}
-        questionAuthorId={questionAuthor ? questionAuthor._id : ''}
+        questionAuthorId={questionObj.author._id}
       />
     </div>
   );

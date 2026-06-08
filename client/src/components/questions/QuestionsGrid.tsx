@@ -1,10 +1,10 @@
 import QuestionCard from './QuestionCard';
 import Loader from './Loader';
 import NoQuestionsFound from './NoQuestionsFound';
-import type {Question} from '../../types/QuestionTypes.ts';
+import type {QuestionByQuery} from '../../types/QuestionTypes.ts';
 
 type Props = {
-  questionsData: Question[];
+  questionsData: QuestionByQuery[];
   dataCount: number;
   loading: boolean;
 };
