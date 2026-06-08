@@ -13,6 +13,8 @@ import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
 import { ApiOkResponse, ApiOperation } from '@nestjs/swagger';
 import { Question } from './entities/question.entity';
+import { plainToInstance } from 'class-transformer';
+import { FindByQueryResponseDto } from './dto/findByQueryResponse.dto';
 
 @Controller('question')
 export class QuestionController {
@@ -38,8 +40,12 @@ export class QuestionController {
   }
 
   @Get('findByQuery')
-  findByQuery(@Query('filter') filter: string) {
-    return this.questionService.findByQuery(filter);
+  async findByQuery(@Query('filter') filter: string) {
+    const questionsList = await this.questionService.findByQuery(filter);
+    console.log(questionsList);
+    return plainToInstance(FindByQueryResponseDto, questionsList, {
+      excludeExtraneousValues: true,
+    });
   }
 
   @Get(':id')

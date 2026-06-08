@@ -12,7 +12,18 @@ export class QuestionService {
   ) {}
 
   // Fields to populate
-  private readonly populateFindFields = [
+  private readonly populateFindByQuery = [
+    {
+      path: 'author',
+      select: ['user_photo', 'first_name'],
+    },
+    {
+      path: 'tags',
+      select: ['name'],
+    },
+  ];
+
+  private readonly populateFindById = [
     {
       path: 'author',
       select: ['user_photo', 'first_name'],
@@ -44,7 +55,7 @@ export class QuestionService {
       case 'All': {
         return this.questionModel
           .find()
-          .populate(this.populateFindFields)
+          .populate(this.populateFindByQuery)
           .sort({ posted_on: -1 })
           .lean()
           .exec();
@@ -52,19 +63,19 @@ export class QuestionService {
       case 'Popular': {
         return this.questionModel
           .find()
-          .populate(this.populateFindFields)
+          .populate(this.populateFindByQuery)
           .sort({ answersCount: -1, posted_on: -1 });
       }
       case 'Unanswered': {
         return this.questionModel
           .find()
-          .populate(this.populateFindFields)
+          .populate(this.populateFindByQuery)
           .sort({ answersCount: 1, posted_on: -1 });
       }
       case 'Oldest': {
         return this.questionModel
           .find()
-          .populate(this.populateFindFields)
+          .populate(this.populateFindByQuery)
           .sort({ posted_on: 1 })
           .lean()
           .exec();
@@ -72,7 +83,7 @@ export class QuestionService {
       case 'Solved': {
         return this.questionModel
           .find()
-          .populate(this.populateFindFields)
+          .populate(this.populateFindByQuery)
           .sort({ status: 1 })
           .lean()
           .exec();
@@ -83,7 +94,7 @@ export class QuestionService {
   findOne(id: string) {
     return this.questionModel
       .findById(id)
-      .populate(this.populateFindFields)
+      .populate(this.populateFindById)
       .lean()
       .exec();
   }
