@@ -1,6 +1,6 @@
 import { Types } from 'mongoose';
 import { ApiProperty } from '@nestjs/swagger';
-import { Expose } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
 import { PopulatedAuthorDto } from './populated-author.dto';
 import { PopulatedTagDto } from './populated-tag.dto';
 
@@ -11,6 +11,7 @@ export class FindByQueryResponseDto {
 
   @ApiProperty({ example: '656b4777d89e223b1e928c33' })
   @Expose()
+  @Type(() => PopulatedAuthorDto)
   author: PopulatedAuthorDto;
 
   @ApiProperty({ example: '2023-12-19T09:40:01.839+00:00' })
@@ -41,6 +42,7 @@ export class FindByQueryResponseDto {
 
   @ApiProperty({ example: ['6571e499341b66e23bc6b370'] })
   @Expose()
+  @Type(() => PopulatedTagDto)
   tags: PopulatedTagDto[];
 
   @ApiProperty({ example: ['65816d209fe28bb962481f28'] })

@@ -11,7 +11,7 @@ import {
 import { QuestionService } from './question.service';
 import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
-import { ApiOkResponse, ApiOperation } from '@nestjs/swagger';
+import { ApiOkResponse, ApiOperation, ApiQuery } from '@nestjs/swagger';
 import { Question } from './entities/question.entity';
 import { plainToInstance } from 'class-transformer';
 import { FindByQueryResponseDto } from './dto/findByQueryResponse.dto';
@@ -40,9 +40,23 @@ export class QuestionController {
   }
 
   @Get('findByQuery')
+  // Swagger
+  @ApiOperation({
+    summary: 'Get all questions by selected query',
+    description: 'Get all questions with some data being populated',
+  })
+  @ApiQuery({
+    name: 'filter',
+    required: true,
+    enum: ['All', 'Popular', 'Unanswered', 'Oldest', 'Solved'],
+    description: 'Query options',
+  })
+  @ApiOkResponse({
+    type: FindByQueryResponseDto,
+    isArray: true,
+  })
   async findByQuery(@Query('filter') filter: string) {
     const questionsList = await this.questionService.findByQuery(filter);
-    console.log(questionsList);
     return plainToInstance(FindByQueryResponseDto, questionsList, {
       excludeExtraneousValues: true,
     });
