@@ -27,6 +27,26 @@ export interface QuestionByQuery extends QuestionBase {
   saved_by: string[];
 }
 
+export interface QuestionById extends QuestionBase {
+  author: {
+    _id: string;
+    first_name: string;
+    user_photo: string;
+  };
+  tags: {
+    _id: string;
+    name: string;
+  }[];
+  answers: {
+    _id: string;
+    posted_on: string;
+    message: string;
+    author: {_id: string; first_name: string; user_photo: string};
+    votes: string[];
+  }[];
+  saved_by: string[];
+}
+
 export interface Question {
   _id: string;
   author: string | User;

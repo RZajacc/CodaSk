@@ -5,10 +5,15 @@ import {divideString} from '../utils/QuillTextProcessor';
 import {deleteInlineStyles} from '../utils/CleanInlineStyles';
 import parse from 'html-react-parser';
 import DeleteModal from './DeleteModal';
-import type {Answer} from '../types/AnswerTypes.ts';
 
 type Props = {
-  answerData: Answer;
+  answerData: {
+    _id: string;
+    posted_on: string;
+    message: string;
+    author: {_id: string; first_name: string; user_photo: string};
+    votes: string[];
+  };
   showDeleteAnswerModal: boolean;
   handleOpenDeleteAModal: () => void;
   handleCloseDeleteAModal: () => void;

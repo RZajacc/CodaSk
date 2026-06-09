@@ -12,7 +12,7 @@ import {getPostedOnInDays} from '../../../../utils/GetPostedOnInDays';
 import {deleteInlineStyles} from '../../../../utils/CleanInlineStyles';
 import {quillFormats, quillModules} from '../../../../types/quillTypes';
 import 'react-quill/dist/quill.snow.css';
-import type {Question} from '../../../../types/QuestionTypes.ts';
+import type {QuestionById} from '../../../../types/QuestionTypes.ts';
 import QuillEditor from 'react-quill';
 import {useAuth} from '../../../../context/AuthContext.tsx';
 import {questionService} from '../../../../services/questionService.ts';
@@ -22,7 +22,7 @@ export default function QuestionDetails() {
   const id = params.id;
   const {user} = useAuth();
   // UseStates
-  const [questionData, setQuestionData] = useState<Question | null>(null);
+  const [questionData, setQuestionData] = useState<QuestionById | null>(null);
 
   const [answer, setAnswer] = useState('');
   const [showDeleteQuestionModal, setShowDeleteQuestionModal] = useState(false);
@@ -141,10 +141,10 @@ export default function QuestionDetails() {
     // });
   };
 
-  const questionAuthor =
-    questionData && typeof questionData.author !== 'string'
-      ? questionData.author
-      : null;
+  // const questionAuthor =
+  //   questionData && typeof questionData.author !== 'string'
+  //     ? questionData.author
+  //     : null;
 
   return (
     <>
@@ -158,7 +158,7 @@ export default function QuestionDetails() {
             {questionData ? questionData.title : ''}
           </h1>
           <div className="flex">
-            {questionAuthor && questionAuthor._id === user?._id ? (
+            {questionData && questionData._id === user?._id ? (
               <>
                 <Link
                   to={`/search/questions/updatequestion/${
@@ -223,7 +223,7 @@ export default function QuestionDetails() {
             </h3>
           </div>
           <div>
-            {questionAuthor && questionAuthor._id === user?._id ? (
+            {questionData && questionData._id === user?._id ? (
               <>
                 {/* <span className="text-gray-500">Question status: </span> */}
                 <button
@@ -331,14 +331,14 @@ export default function QuestionDetails() {
           </div>
           <div className="mr-6 flex">
             <img
-              src={questionAuthor ? questionAuthor.user_photo : ''}
+              src={questionData ? questionData.author.user_photo : ''}
               alt="userImage"
               width={35}
               height={35}
               className="rounded-full"
             />
             <span className="mx-2 text-lg">
-              {questionAuthor ? questionAuthor.first_name : ''}
+              {questionData ? questionData.author.first_name : ''}
             </span>
           </div>
         </div>

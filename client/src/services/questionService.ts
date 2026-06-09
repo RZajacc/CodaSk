@@ -1,4 +1,4 @@
-import type {QuestionByQuery, Question} from '../types/QuestionTypes.ts';
+import type {QuestionByQuery, QuestionById} from '../types/QuestionTypes.ts';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -23,7 +23,9 @@ export const questionService = {
     return response.json();
   },
 
-  getQuestionById: async (id: string | undefined): Promise<Question | null> => {
+  getQuestionById: async (
+    id: string | undefined
+  ): Promise<QuestionById | null> => {
     const response = await fetch(API_BASE_URL + `/question/${id}`, {
       method: 'GET',
       headers: {
