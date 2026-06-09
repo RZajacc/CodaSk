@@ -13,7 +13,6 @@ import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
 import { ApiOkResponse, ApiOperation, ApiQuery } from '@nestjs/swagger';
 import { Question } from './entities/question.entity';
-import { plainToInstance } from 'class-transformer';
 import { FindByQueryResponseDto } from './dto/findByQueryResponse.dto';
 
 @Controller('question')
@@ -55,18 +54,12 @@ export class QuestionController {
     type: FindByQueryResponseDto,
     isArray: true,
   })
-  async findByQuery(@Query('filter') filter: string) {
-    console.log('Filter===>', filter);
-    const questionsList = await this.questionService.findByQuery(filter);
-    // return questionsList;
-    return plainToInstance(FindByQueryResponseDto, questionsList, {
-      excludeExtraneousValues: true,
-    });
+  findByQuery(@Query('filter') filter: string) {
+    return this.questionService.findByQuery(filter);
   }
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    console.log('Getting here, looking for id', id);
     return this.questionService.findOne(id);
   }
 
