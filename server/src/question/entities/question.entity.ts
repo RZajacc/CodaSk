@@ -7,7 +7,15 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export type QuestionDocument = HydratedDocument<Question>;
 
-@Schema()
+@Schema({
+  collection: 'questions',
+  toJSON: {
+    virtuals: true,
+  },
+  toObject: {
+    virtuals: true,
+  },
+})
 export class Question {
   @ApiProperty({ example: '658164f13468b3af52b44ff1' })
   _id: Types.ObjectId;

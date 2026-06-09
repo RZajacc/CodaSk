@@ -30,7 +30,7 @@ export class FindByQueryResponseDto {
   @ApiProperty({ example: 'myrepo.github' })
   github_repo: string;
 
-  @ApiProperty({ type: PopulatedAuthorDto, isArray: true })
+  @ApiProperty({ type: PopulatedTagDto, isArray: true })
   tags: PopulatedTagDto[];
 
   @ApiProperty({ example: ['65816d209fe28bb962481f28'] })

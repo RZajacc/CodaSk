@@ -14,6 +14,8 @@ import { UpdateQuestionDto } from './dto/update-question.dto';
 import { ApiOkResponse, ApiOperation, ApiQuery } from '@nestjs/swagger';
 import { Question } from './entities/question.entity';
 import { FindByQueryResponseDto } from './dto/findByQueryResponse.dto';
+import { plainToInstance } from 'class-transformer';
+import { FindByIdResponseDto } from './dto/findByIdResponse.dto';
 
 @Controller('question')
 export class QuestionController {
@@ -54,11 +56,19 @@ export class QuestionController {
     type: FindByQueryResponseDto,
     isArray: true,
   })
-  findByQuery(@Query('filter') filter: string) {
+  async findByQuery(@Query('filter') filter: string) {
     return this.questionService.findByQuery(filter);
   }
 
   @Get(':id')
+  // Swagger
+  @ApiOperation({
+    summary: 'Get question by its ID',
+    description: 'Get a single question by id with populated values',
+  })
+  @ApiOkResponse({
+    type: FindByIdResponseDto,
+  })
   async findOne(@Param('id') id: string) {
     return this.questionService.findOne(id);
   }
