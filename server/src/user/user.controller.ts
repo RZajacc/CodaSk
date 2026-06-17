@@ -12,6 +12,9 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { ApiBearerAuth, ApiOkResponse, ApiOperation } from '@nestjs/swagger';
+import { User } from './entities/user.entity';
+import { UserResponseDto } from './dto/user-response.dto';
 
 @UseGuards(JwtAuthGuard)
 @Controller('user')
@@ -24,11 +27,30 @@ export class UserController {
   // }
 
   @Get()
+  // Swagger
+  @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Get all users',
+    description: 'Get all users without populating any fields',
+  })
+  @ApiOkResponse({
+    type: User,
+    isArray: true,
+  })
   findAll() {
     return this.userService.findAll();
   }
 
   @Get(':id')
+  // Swagger
+  @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Get user by its ID',
+    description: 'Get a single user by id with populated values',
+  })
+  @ApiOkResponse({
+    type: UserResponseDto,
+  })
   findOne(@Param('id') id: string) {
     return this.userService.findOne(id);
   }
