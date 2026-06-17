@@ -20,8 +20,9 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { LoginDto } from './dto/login.dto';
-import { UserResponseDto } from '../user/dto/user-response.dto';
+
 import { LoginResponseDTO } from './dto/login-response-dto';
+import { UserResponseDto } from '../user/dto/user-response.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -59,6 +60,7 @@ export class AuthController {
   @ApiBearerAuth()
   @ApiOperation({
     summary: 'Logout user',
+    description: 'Logging out user',
     // description: 'It will remove refresh token from the user',
   })
   @ApiOkResponse({
@@ -88,10 +90,10 @@ export class AuthController {
     description: 'Unauthorized',
     example: { statusCode: 401, error: 'Unauthorized' },
   })
-  // @ApiOkResponse({
-  //   description: 'Get user profile',
-  //   type: UserResponseDto,
-  // })
+  @ApiOkResponse({
+    description: 'Get user profile',
+    type: UserResponseDto,
+  })
   getProfile(@Req() req: Request) {
     return req.user;
   }

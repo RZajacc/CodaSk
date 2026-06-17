@@ -1,5 +1,5 @@
 import { ApiProperty, ApiSchema } from '@nestjs/swagger';
-import { UserResponseDto } from '../../user/dto/user-response-dto';
+import { UserResponseDto } from '../../user/dto/user-response.dto';
 
 @ApiSchema({
   description: 'Description of the object returned on successfully login',

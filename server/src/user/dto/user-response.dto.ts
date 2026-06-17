@@ -1,23 +1,18 @@
-export class UserResponseDto {
-  _id: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  user_photo: string;
-  questions: string[];
-  answers: string[];
-  saved_tags: string[];
-  member_since: Date;
-  last_seen: Date;
-  bio: string;
-  cohort_name: string;
-  course_type: string;
-  github: string;
-  location: {
-    city: string;
-    country: string;
-  };
-  user_permission: string;
-  website: string;
-  course_date: Date;
+import { User } from '../entities/user.entity';
+import { ApiProperty, OmitType } from '@nestjs/swagger';
+import { Question } from '../../question/entities/question.entity';
+import { Answer } from '../../answer/entities/answer.entity';
+import { Tag } from '../../tag/entities/tag.entity';
+
+export class UserResponseDto extends OmitType(User, [
+  'questions',
+  'answers',
+  'saved_tags',
+] as const) {
+  @ApiProperty({ type: Question, isArray: true })
+  questions: Question[];
+  @ApiProperty({ type: Answer, isArray: true })
+  answers: Answer[];
+  @ApiProperty({ type: Tag, isArray: true })
+  saved_tags: Tag[];
 }
