@@ -1,7 +1,7 @@
 import { Types } from 'mongoose';
 import { ApiProperty } from '@nestjs/swagger';
-import { PopulatedAuthorDto } from './populated-author.dto';
-import { PopulatedTagDto } from './populated-tag.dto';
+import { PopulatedAuthorDto } from './populatedDTO/populated-author.dto';
+import { PopulatedTagDto } from './populatedDTO/populated-tag.dto';
 
 export class FindByQueryResponseDto {
   @ApiProperty({ example: '658164f13468b3af52b44ff1' })

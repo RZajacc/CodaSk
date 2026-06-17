@@ -28,6 +28,22 @@ import Joi from 'joi';
         configService: ConfigService<{ database: { mongoURI: string } }>,
       ) => ({
         uri: configService.get('database.mongoURI', { infer: true }),
+        //   Connection pool settings
+        maxPoolSize: 10,
+        minPoolSize: 5,
+        //   Timeouts
+        serverSelectionTimeoutMS: 5000,
+        socketTimeoutMS: 45000,
+        //   Write concern for data durability
+        writeConcern: {
+          w: 'majority',
+          j: true,
+        },
+        //   Read preference for replica sets
+        readPreference: 'primaryPreferred',
+        //   Retry failed operations
+        retryWrites: true,
+        retryReads: true,
       }),
       inject: [ConfigService],
     }),

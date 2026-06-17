@@ -20,7 +20,7 @@ export class Question {
   @ApiProperty({ example: '658164f13468b3af52b44ff1' })
   _id: Types.ObjectId;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  @Prop({ type: Types.ObjectId, ref: 'User' })
   @ApiProperty({ example: '656b4777d89e223b1e928c33' })
   author: Types.ObjectId | User;
 
@@ -51,14 +51,14 @@ export class Question {
   github_repo: string;
 
   @Prop({
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tag' }],
+    type: [{ type: Types.ObjectId, ref: 'Tag' }],
     required: false,
   })
   @ApiProperty({ example: ['6571e499341b66e23bc6b370'] })
   tags: Types.ObjectId[] | Tag[];
 
   @Prop({
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Answer' }],
+    type: [{ type: Types.ObjectId, ref: 'Answer' }],
     required: false,
   })
   @ApiProperty({ example: ['65816d209fe28bb962481f28'] })
@@ -68,7 +68,7 @@ export class Question {
   answersCount: number;
 
   @Prop({
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    type: [{ type: Types.ObjectId, ref: 'User' }],
     required: false,
   })
   @ApiProperty({ example: ['656b4777d89e223b1e928c33'] })
