@@ -10,6 +10,8 @@ import {
 import { TagService } from './tag.service';
 import { CreateTagDto } from './dto/create-tag.dto';
 import { UpdateTagDto } from './dto/update-tag.dto';
+import { Tag } from './entities/tag.entity';
+import { ApiOkResponse, ApiOperation } from '@nestjs/swagger';
 
 @Controller('tag')
 export class TagController {
@@ -21,6 +23,15 @@ export class TagController {
   // }
 
   @Get()
+  // Swagger
+  @ApiOperation({
+    summary: 'Get all tags',
+    description: 'Get all tags without populating any fields',
+  })
+  @ApiOkResponse({
+    type: Tag,
+    isArray: true,
+  })
   findAll() {
     return this.tagService.findAll();
   }

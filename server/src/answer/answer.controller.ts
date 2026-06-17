@@ -10,6 +10,8 @@ import {
 import { AnswerService } from './answer.service';
 import { CreateAnswerDto } from './dto/create-answer.dto';
 import { UpdateAnswerDto } from './dto/update-answer.dto';
+import { Answer } from './entities/answer.entity';
+import { ApiOkResponse, ApiOperation } from '@nestjs/swagger';
 
 @Controller('answer')
 export class AnswerController {
@@ -21,6 +23,15 @@ export class AnswerController {
   // }
 
   @Get()
+  // Swagger
+  @ApiOperation({
+    summary: 'Get all answers',
+    description: 'Get all answers without populating any fields',
+  })
+  @ApiOkResponse({
+    type: Answer,
+    isArray: true,
+  })
   findAll() {
     return this.answerService.findAll();
   }

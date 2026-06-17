@@ -21,8 +21,10 @@ export default function Login() {
   const onSubmit: SubmitHandler<LoginInputType> = async (data) => {
     try {
       const user = await login(data.email, data.password);
-      navigate(`/user/profile/${user._id}`);
-      reset();
+      if (user) {
+        navigate(`/user/profile/${user._id}`);
+        reset();
+      }
     } catch (error) {
       console.log(error);
     }
