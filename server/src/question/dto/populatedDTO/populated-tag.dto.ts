@@ -1,10 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { Types } from 'mongoose';
+import { PickType } from '@nestjs/swagger';
+import { Tag } from '../../../tag/entities/tag.entity';
 
-export class PopulatedTagDto {
-  @ApiProperty({ example: '656b4777d89e223b1e928c33' })
-  _id: Types.ObjectId;
-
-  @ApiProperty({ example: 'Javascript' })
-  name: string;
-}
+export class PopulatedTagDto extends PickType(Tag, ['_id', 'name'] as const) {}

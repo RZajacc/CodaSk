@@ -3,11 +3,13 @@ import mongoose, { HydratedDocument, Types } from 'mongoose';
 import { Question } from '../../question/entities/question.entity';
 import { Answer } from '../../answer/entities/answer.entity';
 import { Tag } from '../../tag/entities/tag.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 export type UserDocument = HydratedDocument<User>;
 
 @Schema()
 export class User {
+  @ApiProperty({ example: 'test' })
   _id: Types.ObjectId;
 
   @Prop({ required: true, unique: true })

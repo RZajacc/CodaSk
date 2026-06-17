@@ -1,20 +1,11 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { Types } from 'mongoose';
+import { ApiProperty, OmitType } from '@nestjs/swagger';
 import { PopulatedAuthorDto } from './populated-author.dto';
+import { Answer } from '../../../answer/entities/answer.entity';
 
-export class PopulatedAnswerDto {
-  @ApiProperty({ example: '656b4777d89e223b1e928c33' })
-  _id: Types.ObjectId;
-
-  @ApiProperty({ example: 'I fixed it with...' })
-  message: string;
-
-  @ApiProperty({ example: '2023-12-19T10:14:56.217+00:00' })
-  posted_on: Date;
-
-  @ApiProperty({ example: ['656b4777d89e223b1e928c33'] })
-  votes: string[];
-
+export class PopulatedAnswerDto extends OmitType(Answer, [
+  'question',
+  'author',
+] as const) {
   @ApiProperty({ type: PopulatedAuthorDto })
   author: PopulatedAuthorDto;
 }

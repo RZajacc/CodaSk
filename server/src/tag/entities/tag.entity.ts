@@ -1,11 +1,15 @@
-import mongoose, { HydratedDocument } from 'mongoose';
+import mongoose, { HydratedDocument, Types } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Question } from '../../question/entities/question.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 export type TagDocument = HydratedDocument<Tag>;
 
 @Schema()
 export class Tag {
+  @ApiProperty({ example: 'test' })
+  _id: Types.ObjectId;
+
   @Prop({ required: true })
   name: string;
 

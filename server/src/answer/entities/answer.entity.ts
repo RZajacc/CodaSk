@@ -1,12 +1,16 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument } from 'mongoose';
+import mongoose, { HydratedDocument, Types } from 'mongoose';
 import { User } from '../../user/entities/user.entity';
 import { Question } from '../../question/entities/question.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 export type AnswerDocument = HydratedDocument<Answer>;
 
 @Schema()
 export class Answer {
+  @ApiProperty({ example: 'test' })
+  _id: Types.ObjectId;
+
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true })
   author: User;
 
