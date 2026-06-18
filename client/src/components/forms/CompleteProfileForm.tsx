@@ -1,6 +1,6 @@
 import type {User, UserPhoto} from '../../types/custom_types';
 import {type ChangeEvent, type FormEvent, useEffect, useState} from 'react';
-import FormInput from '../../components/Ui/Inputs/FormInput';
+// import FormInput from '../../components/Ui/Inputs/FormInput';
 import RadioButtonGroup from '../../components/Ui/Inputs/RadioButtonGroup';
 
 function CompleteProfileForm() {
@@ -189,55 +189,55 @@ function CompleteProfileForm() {
       <form className="grid gap-5" onSubmit={handleCompleteProfile}>
         {/*First and last name section*/}
         <div className="grid gap-4 sm:flex sm:gap-4">
-          <FormInput
-            label={'First Name'}
-            htmlFor={'firstName'}
-            type={'text'}
-            placeholder={'First name'}
-          />
-          <FormInput
-            label={'Last Name'}
-            htmlFor={'lastName'}
-            type={'text'}
-            placeholder={'Last name'}
-          />
+          {/*<FormInput*/}
+          {/*  label={'First Name'}*/}
+          {/*  htmlFor={'firstName'}*/}
+          {/*  type={'text'}*/}
+          {/*  placeholder={'First name'}*/}
+          {/*/>*/}
+          {/*<FormInput*/}
+          {/*  label={'Last Name'}*/}
+          {/*  htmlFor={'lastName'}*/}
+          {/*  type={'text'}*/}
+          {/*  placeholder={'Last name'}*/}
+          {/*/>*/}
         </div>
 
-        <FormInput
-          label={'Bio'}
-          htmlFor={'bio'}
-          type={'textarea'}
-          placeholder={'Write a short bio...'}
-        />
+        {/*<FormInput*/}
+        {/*  label={'Bio'}*/}
+        {/*  htmlFor={'bio'}*/}
+        {/*  type={'textarea'}*/}
+        {/*  placeholder={'Write a short bio...'}*/}
+        {/*/>*/}
 
         <div className="grid gap-4 sm:flex sm:gap-4">
-          <FormInput
-            label={'City'}
-            htmlFor={'city'}
-            type={'text'}
-            placeholder={'city'}
-          />
-          <FormInput
-            label={'Country'}
-            htmlFor={'country'}
-            type={'text'}
-            placeholder={'Country'}
-          />
+          {/*<FormInput*/}
+          {/*  label={'City'}*/}
+          {/*  htmlFor={'city'}*/}
+          {/*  type={'text'}*/}
+          {/*  placeholder={'city'}*/}
+          {/*/>*/}
+          {/*<FormInput*/}
+          {/*  label={'Country'}*/}
+          {/*  htmlFor={'country'}*/}
+          {/*  type={'text'}*/}
+          {/*  placeholder={'Country'}*/}
+          {/*/>*/}
         </div>
 
         <div className="grid gap-4 sm:flex sm:gap-4">
-          <FormInput
-            label={'Github'}
-            htmlFor={'github'}
-            type={'text'}
-            placeholder={'Github'}
-          />
-          <FormInput
-            label={'Website'}
-            htmlFor={'website'}
-            type={'text'}
-            placeholder={'Website'}
-          />
+          {/*<FormInput*/}
+          {/*  label={'Github'}*/}
+          {/*  htmlFor={'github'}*/}
+          {/*  type={'text'}*/}
+          {/*  placeholder={'Github'}*/}
+          {/*/>*/}
+          {/*<FormInput*/}
+          {/*  label={'Website'}*/}
+          {/*  htmlFor={'website'}*/}
+          {/*  type={'text'}*/}
+          {/*  placeholder={'Website'}*/}
+          {/*/>*/}
         </div>
 
         {/* SELECT FIELDS SECTION*/}
