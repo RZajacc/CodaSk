@@ -8,6 +8,15 @@ import {
 } from 'aws-lambda';
 import express from 'express';
 import { AppModule } from './app.module';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ConfigService } from '@nestjs/config';
+
+interface AppConfig {
+  app: {
+    port: number;
+    origins: string[];
+  };
+}
 
 type AsyncHandler = (
   event: APIGatewayProxyEvent,
@@ -26,7 +35,31 @@ async function setup(
     new ExpressAdapter(expressApp),
   );
 
-  nestApp.enableCors();
+  const configService = nestApp.get(ConfigService<AppConfig, true>);
+
+  const allowedOrigins = configService.get('app.origins', { infer: true });
+
+  const config = new DocumentBuilder()
+    .setTitle('Codask')
+    .setDescription('App for Codac students in trouble')
+    .setVersion('0.5')
+    .addTag('Auth', 'User authentication endpoints')
+    .addTag('Question', 'Questions operations')
+    .addTag('User', 'User operations')
+    .addTag('Tag', 'Tag operations')
+    .addTag('Answer', 'Answers operations')
+    .build();
+
+  const documentFactory = () => SwaggerModule.createDocument(nestApp, config);
+  SwaggerModule.setup('docs', nestApp, documentFactory);
+
+  nestApp.enableCors({
+    origin: allowedOrigins,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: 'Content-Type, Accept, Authorization',
+    withCredentials: true,
+  });
+
   await nestApp.init();
 
   serverlessExpressInstance = serverlessExpress({
