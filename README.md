@@ -2,14 +2,13 @@
 <h2>Codask - an educational platform for the students, <br/>graduates, and mentors of Code Academy Berlin</h2>
 <br/>
 <h3>Overview:</h3>
-<p>Collaborative project developed by Helene Abi Assi, Rafał Zajac, and Thair Orfali, as the final web development project from their boot camp at Code Academy Berlin, using Git and Github.
+<p>Collaborative project developed by  Rafał Zajac, Helene Abi Assi and Thair Orfali, as the final web development project from their boot camp at Code Academy Berlin, using Git and Github.
 
 <strong>Codask</strong> is an educational platform and student community for web development and data analytics students, graduates, and mentors from Code Academy Berlin.
 With this app, users can sign up and complete their profiles, create posts related to their projects and sprints, and search for existing solutions, by filtering the questions by tags, modules, or other criteria. </p>
 
 <h3>Functionalitites and objectives of the application:</h3>
 
-<p>The authentification process is done with the use of NextAuth. After creating an account, users can:</p>
 <ul>
   <li>Ask questions about the projects and apps they are working on. The “Ask a Question” form also allows users to post code snippets, using a rich text editor, link it to their Github repo, and add category tags.</li>
   <li>Once a question is submitted, it appears in the user's profile under the 'Your Questions' section. Users can also edit and delete the questions they submitted. </li>
@@ -27,20 +26,23 @@ They can also use our Connect page to look for students, graduates, or mentors a
 
 <h3>Technologies used:</h3>
 <ul>
-  <li>Next.js</li>
-  <li>Typescript</li>
-  <li>GraphQL</li>
-  <li>MongoDB</li>
-  <li>Express</li>
   <li>React</li>
-  <li>Node.js</li>
-  <li>Vitest</li>
+  <li>Typescript</li>
   <li>Tailwind CSS</li>
-  <li>Middlewares (i.e. Multer, Bcrypt, Jwt, Cloudinary)</li>
+  <li>Zod</li>
+  <li>ReactHookForm</li>
+  <li>Quill</li>
+  <li>NestJS</li>
+  <li>MongoDB</li>
+  <li>Mongoose</li>
+  <li>SwaggerUI</li>
 </ul>
 
-<h3>Deployed on Vercel:</h3>
-<p>[link to be published]</p>
+<h3>Deployed on AWS:</h3>
+<a target="_blank" href="https://codask.org">Link to the app</a>
+
+<h3>API documentation:</h3>
+<a target="_blank" href="https://api.codask.org/docs">Link to the API Docs</a>
 
 <h3>Designed on Figma:</h3> 
 <a target="_blank" href="https://www.figma.com/file/EvR6lR70uN6tXBimvGPnVR/Codask---Public?type=design&node-id=0%3A1&mode=design&t=XVwnIUeF8d4KDOMm-1">Link to Figma design</a>

@@ -6,7 +6,7 @@ export class AppService {
     return {
       name: 'Codask API',
       version: '0.5',
-      docs: '/api/docs',
+      docs: '/docs',
     };
   }
 }
