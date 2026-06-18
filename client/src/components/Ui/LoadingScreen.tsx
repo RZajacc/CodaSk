@@ -1,10 +1,15 @@
-export default function LoadingScreen() {
+function LoadingScreen() {
   return (
-    <div className="flex h-screen items-center justify-center bg-gray-50">
-      <div className="text-center">
-        <div className="mx-auto h-12 w-12 animate-spin rounded-full border-b-2 border-blue-600"></div>
-        <p className="mt-4 text-gray-600">Verifying your credentials...</p>
-      </div>
+    <div className="flex h-2/3 items-center justify-center">
+      <img
+        className="loader"
+        src={'/Loader.png'}
+        alt="logo"
+        width={400}
+        height={400}
+      />
     </div>
   );
 }
+
+export default LoadingScreen;

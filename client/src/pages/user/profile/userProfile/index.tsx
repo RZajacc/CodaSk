@@ -8,7 +8,7 @@ import {Link} from 'react-router';
 import {useAuth} from '../../../../context/AuthContext.tsx';
 
 export default function Profile() {
-  const id = '123';
+  // const id = '123';
 
   const {logout, user} = useAuth();
 
@@ -159,7 +159,7 @@ export default function Profile() {
           <div>
             <Link
               className="rounded-full font-semibold text-[#6741D9] no-underline hover:bg-[#B197FC] hover:p-2 hover:text-white"
-              to={`/user/update-profile/${id}`}
+              to={`/user/update-profile/${user!._id}`}
             >
               edit
             </Link>
@@ -284,7 +284,7 @@ export default function Profile() {
         <button
           className="rounded-full text-[#6741D9] hover:bg-[#B197FC] hover:p-2 hover:text-white"
           onClick={() => {
-            handleDeleteAccount(id);
+            handleDeleteAccount(user!._id);
           }}
         >
           delete account

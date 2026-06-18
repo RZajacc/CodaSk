@@ -1,5 +1,5 @@
 // import {BsFillPinFill} from 'react-icons/bs';
-import Loader from '../../components/questions/Loader';
+import LoadingScreen from '../Ui/LoadingScreen.tsx';
 // import Modal from '../Modal';
 import type {tagQuery} from '../../pages/search/tags';
 // import {Link} from 'react-router';
@@ -160,7 +160,7 @@ function TagCard({
 
   return (
     <div className="flex flex-wrap justify-center">
-      {loading && <Loader />}
+      {loading && <LoadingScreen />}
 
       {/*{displayedTags && allTags && displayedTags.length > 0 ? (*/}
       {/*  displayedTags?.map((tag, index) => {*/}

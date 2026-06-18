@@ -27,7 +27,7 @@ import UpdateProfile from './pages/user/profile/updateProfile';
 import NotFound from './pages/NotFound.tsx';
 import {ProtectedRoute} from './components/ProtectedRoute.tsx';
 import {useAuth} from './context/AuthContext.tsx';
-import LoadingScreen from './components/Ui/LoadingScreen.tsx';
+import CredentialLoader from './components/Ui/CredentialLoader.tsx';
 
 export function AppComponent() {
   const router = createBrowserRouter([
@@ -204,7 +204,7 @@ export function App() {
   const {isLoading} = useAuth();
 
   if (isLoading) {
-    return <LoadingScreen />;
+    return <CredentialLoader />;
   }
 
   return <AppComponent />;

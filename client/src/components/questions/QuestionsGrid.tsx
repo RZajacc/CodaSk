@@ -1,5 +1,5 @@
 import QuestionCard from './QuestionCard';
-import Loader from './Loader';
+import LoadingScreen from '../Ui/LoadingScreen.tsx';
 import NoQuestionsFound from './NoQuestionsFound';
 import type {QuestionByQuery} from '../../types/QuestionTypes.ts';
 
@@ -13,7 +13,7 @@ function QuestionsGrid({questionsData, dataCount, loading}: Props) {
   return (
     <div className="mt-4 grid gap-4">
       {/* Loading and empty array states */}
-      {loading && <Loader />}
+      {loading && <LoadingScreen />}
       {!loading && dataCount === 0 && <NoQuestionsFound />}
 
       {/* Display all questions */}

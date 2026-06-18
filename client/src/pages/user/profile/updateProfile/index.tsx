@@ -1,5 +1,5 @@
 import BackButton from '../../../../components/Ui/buttons/BackButton';
-import CompleteProfileForm from '../../../../components/forms/CompleteProfileForm';
+// import CompleteProfileForm from '../../../../components/forms/CompleteProfileForm';
 
 export default function UpdateProfile() {
   return (
@@ -12,7 +12,8 @@ export default function UpdateProfile() {
           </h1>
         </div>
         <div className="max-w-3xl rounded-2xl bg-[#EDE9E6] p-10">
-          <CompleteProfileForm />
+          <div>To be implemented soon!</div>
+          {/*<CompleteProfileForm />*/}
         </div>
       </div>
     </div>
