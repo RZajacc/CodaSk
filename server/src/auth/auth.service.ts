@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import * as bcrypt from 'bcrypt';
 import { User } from '../user/entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from 'jsonwebtoken';
+import { RegisterUserDto } from './dto/register-user.dto';
 
 export type SafeUser = Omit<User, 'password'>;
 
@@ -35,5 +36,9 @@ export class AuthService {
     };
     const access_token = this.jwtService.sign(payload);
     return { access_token, user };
+  }
+
+  async register(registerUserDTO: RegisterUserDto) {
+    return this.userService.register(registerUserDTO);
   }
 }

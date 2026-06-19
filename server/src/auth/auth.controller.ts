@@ -14,8 +14,11 @@ import { AuthService, SafeUser } from './auth.service';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import type { Request } from 'express';
 import {
+  ApiBadRequestResponse,
   ApiBearerAuth,
   ApiBody,
+  ApiConflictResponse,
+  ApiCreatedResponse,
   ApiOkResponse,
   ApiOperation,
   ApiUnauthorizedResponse,
@@ -56,8 +59,34 @@ export class AuthController {
   }
 
   @Post('register')
-  register(@Body() registerUserDTO: RegisterUserDto) {
-    return registerUserDTO;
+  // Swagger
+  @ApiOperation({
+    summary: 'Register a new user',
+    description: 'Register a new user with full user credentials',
+  })
+  @ApiCreatedResponse({
+    description: 'The user has been successfully registered.',
+    example: 'Registered successfully user with email: Jonh@email.com',
+  })
+  @ApiBadRequestResponse({
+    description: 'Failed due to validation error',
+    example: {
+      statusCode: 400,
+      error: 'Bad Request',
+      message: ['Password must be longer than or equal to 8 characters'],
+    },
+  })
+  @ApiConflictResponse({
+    description: 'Failed because user already exists',
+    example: {
+      statusCode: 409,
+      message: 'User already exists',
+    },
+  })
+  async register(@Body() registerUserDTO: RegisterUserDto) {
+    const registeredUser = await this.authService.register(registerUserDTO);
+
+    return `Registered successfully user with email: ${registeredUser.email}`;
   }
 
   @UseGuards(LocalAuthGuard)
