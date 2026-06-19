@@ -1,7 +1,6 @@
 import {
   Controller,
   Get,
-  Post,
   Body,
   Patch,
   Param,
@@ -20,11 +19,6 @@ import { UserResponseDto } from './dto/user-response.dto';
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
-
-  // @Post()
-  // create(@Body() createUserDto: CreateUserDto) {
-  //   return this.userService.create(createUserDto);
-  // }
 
   @Get()
   // Swagger

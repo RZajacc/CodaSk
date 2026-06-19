@@ -10,6 +10,7 @@ import express from 'express';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
+import { ValidationPipe } from '@nestjs/common';
 
 interface AppConfig {
   app: {
@@ -34,6 +35,8 @@ async function setup(
     AppModule,
     new ExpressAdapter(expressApp),
   );
+
+  nestApp.useGlobalPipes(new ValidationPipe());
 
   const configService = nestApp.get(ConfigService<AppConfig, true>);
 

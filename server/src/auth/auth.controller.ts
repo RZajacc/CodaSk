@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Get,
   HttpCode,
@@ -23,6 +24,7 @@ import { LoginDto } from './dto/login.dto';
 
 import { LoginResponseDTO } from './dto/login-response-dto';
 import { UserResponseDto } from '../user/dto/user-response.dto';
+import { RegisterUserDto } from './dto/register-user.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -51,6 +53,11 @@ export class AuthController {
       throw new UnauthorizedException();
     }
     return this.authService.login(req.user);
+  }
+
+  @Post('register')
+  register(@Body() registerUserDTO: RegisterUserDto) {
+    return registerUserDTO;
   }
 
   @UseGuards(LocalAuthGuard)
