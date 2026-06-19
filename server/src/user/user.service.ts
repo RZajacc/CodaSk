@@ -54,7 +54,11 @@ export class UserService {
     const salt = await bcrypt.genSalt();
     const hash = await bcrypt.hash(registerUserDto.password, salt);
 
-    const user = new this.userModel({ ...registerUserDto, password: hash });
+    const user = new this.userModel({
+      ...registerUserDto,
+      password: hash,
+      member_since: new Date(),
+    });
     return user.save();
   }
 
