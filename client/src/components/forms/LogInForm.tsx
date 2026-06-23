@@ -1,4 +1,4 @@
-import FormInput from '../../components/Ui/Inputs/FormInput';
+import FormTextInput from '../Ui/Inputs/FormTextInput.tsx';
 import {type SubmitHandler, useFormContext} from 'react-hook-form';
 import {type LoginInputType} from '../../schemas/AuthSchemas.ts';
 
@@ -16,14 +16,14 @@ export default function LogInForm({onSubmit, loginError}: Props) {
       data-testid="login-form"
       className="mb-4 grid w-96 gap-3 rounded-2xl bg-[#EDE9E6] p-6"
     >
-      <FormInput
+      <FormTextInput
         label={'Email'}
         htmlFor={'email'}
         type={'email'}
         placeholder={'email'}
         required={true}
       />
-      <FormInput
+      <FormTextInput
         label={'Password'}
         htmlFor={'password'}
         type={'password'}

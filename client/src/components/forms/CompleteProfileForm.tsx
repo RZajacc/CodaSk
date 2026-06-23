@@ -1,6 +1,6 @@
 import type {User, UserPhoto} from '../../types/custom_types';
 import {type ChangeEvent, type FormEvent, useEffect, useState} from 'react';
-// import FormInput from '../../components/Ui/Inputs/FormInput';
+// import FormTextInput from '../../components/Ui/Inputs/FormTextInput';
 import RadioButtonGroup from '../../components/Ui/Inputs/RadioButtonGroup';
 
 function CompleteProfileForm() {
@@ -189,13 +189,13 @@ function CompleteProfileForm() {
       <form className="grid gap-5" onSubmit={handleCompleteProfile}>
         {/*First and last name section*/}
         <div className="grid gap-4 sm:flex sm:gap-4">
-          {/*<FormInput*/}
+          {/*<FormTextInput*/}
           {/*  label={'First Name'}*/}
           {/*  htmlFor={'firstName'}*/}
           {/*  type={'text'}*/}
           {/*  placeholder={'First name'}*/}
           {/*/>*/}
-          {/*<FormInput*/}
+          {/*<FormTextInput*/}
           {/*  label={'Last Name'}*/}
           {/*  htmlFor={'lastName'}*/}
           {/*  type={'text'}*/}
@@ -203,7 +203,7 @@ function CompleteProfileForm() {
           {/*/>*/}
         </div>
 
-        {/*<FormInput*/}
+        {/*<FormTextInput*/}
         {/*  label={'Bio'}*/}
         {/*  htmlFor={'bio'}*/}
         {/*  type={'textarea'}*/}
@@ -211,13 +211,13 @@ function CompleteProfileForm() {
         {/*/>*/}
 
         <div className="grid gap-4 sm:flex sm:gap-4">
-          {/*<FormInput*/}
+          {/*<FormTextInput*/}
           {/*  label={'City'}*/}
           {/*  htmlFor={'city'}*/}
           {/*  type={'text'}*/}
           {/*  placeholder={'city'}*/}
           {/*/>*/}
-          {/*<FormInput*/}
+          {/*<FormTextInput*/}
           {/*  label={'Country'}*/}
           {/*  htmlFor={'country'}*/}
           {/*  type={'text'}*/}
@@ -226,13 +226,13 @@ function CompleteProfileForm() {
         </div>
 
         <div className="grid gap-4 sm:flex sm:gap-4">
-          {/*<FormInput*/}
+          {/*<FormTextInput*/}
           {/*  label={'Github'}*/}
           {/*  htmlFor={'github'}*/}
           {/*  type={'text'}*/}
           {/*  placeholder={'Github'}*/}
           {/*/>*/}
-          {/*<FormInput*/}
+          {/*<FormTextInput*/}
           {/*  label={'Website'}*/}
           {/*  htmlFor={'website'}*/}
           {/*  type={'text'}*/}

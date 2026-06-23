@@ -1,12 +1,19 @@
 import SignUpForm from '../../../components/forms/SignUpForm';
 import {Link} from 'react-router';
 import {FormProvider, type SubmitHandler, useForm} from 'react-hook-form';
+import {
+  type RegisterInputType,
+  RegisterSchema,
+} from '../../../schemas/AuthSchemas.ts';
+import {zodResolver} from '@hookform/resolvers/zod';
 
 export default function Register() {
   //   user_photo:
   //     'https://res.cloudinary.com/dfm1r4ikr/image/upload/v1701685725/codask/website_photos/user_photo_default.png'
 
-  const methods = useForm();
+  const methods = useForm<RegisterInputType>({
+    resolver: zodResolver(RegisterSchema),
+  });
 
   // const {reset} = methods;
 

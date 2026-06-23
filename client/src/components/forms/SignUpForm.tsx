@@ -1,34 +1,34 @@
-import FormInput from '../Ui/Inputs/FormInput.tsx';
+import FormTextInput from '../Ui/Inputs/FormTextInput.tsx';
 import {type SubmitHandler, useFormContext} from 'react-hook-form';
-import type {LoginInputType} from '../../schemas/AuthSchemas.ts';
+import type {RegisterInputType} from '../../schemas/AuthSchemas.ts';
 
 type Props = {
   onSubmit: SubmitHandler<any>;
 };
 
 function SignUpForm({onSubmit}: Props) {
-  const {handleSubmit} = useFormContext<LoginInputType>();
+  const {handleSubmit} = useFormContext<RegisterInputType>();
 
   return (
     <div className="w-96 rounded-2xl bg-[#EDE9E6] p-10">
       <form onSubmit={handleSubmit(onSubmit)} className="mb-4 grid gap-3">
-        <FormInput
+        <FormTextInput
           label={'Email'}
           htmlFor={'email'}
           type={'email'}
           placeholder={'email'}
           required={true}
         />
-        <FormInput
+        <FormTextInput
           label={'Password'}
           htmlFor={'password'}
           type={'password'}
           placeholder={'password'}
           required={true}
         />
-        <FormInput
+        <FormTextInput
           label={'Confirm Password'}
-          htmlFor={'password'}
+          htmlFor={'confirmPassword'}
           type={'password'}
           placeholder={'password'}
           required={true}
