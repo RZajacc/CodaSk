@@ -27,8 +27,7 @@ export default function FormTextInput({
   } = useFormContext();
 
   const textInputStyle = `shadow-custom rounded-2xl border ${errors && errors[htmlFor] ? 'border-red-500' : 'border-[#6741D9]'} bg-[#EDE9E6] px-3 py-2`;
-  const passwordInputStyle =
-    "shadow-custom rounded-2xl border ${errors && errors[htmlFor] ? 'border-red-500' : 'border-[#6741D9]'} bg-[#EDE9E6] px-1 py-2 flex items-center justify-around";
+  const passwordInputStyle = `shadow-custom rounded-2xl border ${errors && errors[htmlFor] ? 'border-red-500' : 'border-[#6741D9]'} bg-[#EDE9E6] px-3 py-2 flex items-center justify-around`;
 
   const error = errors[htmlFor]?.message as string | undefined;
 
@@ -60,6 +59,7 @@ export default function FormTextInput({
         placeholder={placeholder}
         type={showPassword ? 'text' : 'password'}
         required={required}
+        className={'grow focus:outline-none'}
       />
       {showPassword ? (
         <MdVisibilityOff
