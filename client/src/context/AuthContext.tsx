@@ -9,11 +9,6 @@ import {
 import type {User} from '../types/UserTypes.ts';
 import {authService} from '../services/authService.ts';
 
-export interface LoginResponse {
-  access_token: string;
-  user: User;
-}
-
 export interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;

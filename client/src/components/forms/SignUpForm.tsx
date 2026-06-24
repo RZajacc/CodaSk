@@ -10,7 +10,7 @@ function SignUpForm({onSubmit}: Props) {
   const {handleSubmit} = useFormContext<RegisterInputType>();
 
   return (
-    <div className="w-96 rounded-2xl bg-[#EDE9E6] p-10">
+    <div className="mb-4 grid w-96 gap-3 rounded-2xl bg-[#EDE9E6] p-6">
       <form onSubmit={handleSubmit(onSubmit)} className="mb-4 grid gap-3">
         <FormTextInput
           label={'Email'}

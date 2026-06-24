@@ -38,7 +38,7 @@ export default function Register() {
     //     return;
     //   }
     //
-    //   try {
+    //   try {z
     //     const myHeaders = new Headers();
     //     myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
     //

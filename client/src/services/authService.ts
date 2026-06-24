@@ -1,13 +1,7 @@
 import type {User} from '../types/UserTypes.ts';
-
-export interface LoginResponse {
-  access_token: string;
-  user: User;
-}
+import type {LoginResponse} from '../types/AuthTypes.ts';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
-
-console.log('BASE URL', API_BASE_URL);
 
 export const authService = {
   login: async (email: string, password: string): Promise<LoginResponse> => {
