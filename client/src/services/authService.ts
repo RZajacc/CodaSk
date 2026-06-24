@@ -1,5 +1,5 @@
 import type {User} from '../types/UserTypes.ts';
-import type {LoginResponse} from '../types/AuthTypes.ts';
+import type {LoginResponse, RegisterUserDTO} from '../types/AuthTypes.ts';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -31,5 +31,20 @@ export const authService = {
     }
 
     return response.json();
+  },
+
+  register: async (registerUserDTO: RegisterUserDTO): Promise<string> => {
+    const response = await fetch(API_BASE_URL + '/auth/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(registerUserDTO),
+    });
+    if (!response.ok) {
+      const responseData = await response.json();
+      throw new Error(responseData.message || 'Registration failed');
+    }
+    return await response.text();
   },
 };

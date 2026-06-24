@@ -6,79 +6,32 @@ import {
   RegisterSchema,
 } from '../../../schemas/AuthSchemas.ts';
 import {zodResolver} from '@hookform/resolvers/zod';
+import {authService} from '../../../services/authService.ts';
+import {useState} from 'react';
 
 export default function Register() {
-  //   user_photo:
-  //     'https://res.cloudinary.com/dfm1r4ikr/image/upload/v1701685725/codask/website_photos/user_photo_default.png'
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const methods = useForm<RegisterInputType>({
     resolver: zodResolver(RegisterSchema),
   });
 
-  // const {reset} = methods;
+  const {reset} = methods;
 
-  const onSubmit: SubmitHandler<any> = async (data) => {
-    console.log(data);
-    // * Get the form data
-    // const formData = new FormData(e.currentTarget);
-    // const email = formData.get('email') as string;
-    // const password = formData.get('password') as string;
-    //
-    // if (email && password) {
-    //   if (!email.includes('@') && password.length < 6) {
-    //     alert(
-    //       'Your email seems to be invalid. \n Your password should be at least 6 characters'
-    //     );
-    //     return;
-    //   } else if (password.length < 6) {
-    //     alert('Your password should be at least 6 characters');
-    //     return;
-    //   } else if (!email.includes('@')) {
-    //     alert('Your email seems to be invalid');
-    //     return;
-    //   }
-    //
-    //   try {z
-    //     const myHeaders = new Headers();
-    //     myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
-    //
-    //     const urlencoded = new URLSearchParams();
-    //
-    //     urlencoded.append('email', newUser.email);
-    //     urlencoded.append('password', newUser.password);
-    //     urlencoded.append('user_photo', newUser.user_photo);
-    //
-    //     const requestOptions = {
-    //       method: 'POST',
-    //       headers: myHeaders,
-    //       body: urlencoded,
-    //     };
-    //
-    //     try {
-    //       const response = await fetch(
-    //         `${FETCH_URL}/api/users/signup`,
-    //         requestOptions
-    //       );
-    //       if (response.ok) {
-    //         const result = await response.json();
-    //         // console.log('result in register:>> ', result);
-    //
-    //         setNewUser(result);
-    //         alert('Thank you for signing up!  🤓');
-    //         // await signIn('credentials', {
-    //         //   ...newUser,
-    //         //   redirect: false,
-    //         // });
-    //       }
-    //       // router.push('/user/moreinfo');
-    //       // location.reload();
-    //     } catch (error) {
-    //       console.log('error in your /signup fetch:>> ', error);
-    //     }
-    //   } catch (error) {
-    //     console.log('error when adding new user:>> ', error);
-    //   }
-    // }
+  const onSubmit: SubmitHandler<RegisterInputType> = async (data) => {
+    const {email, password} = data;
+    try {
+      const result = await authService.register({email, password});
+      setErrorMessage(null);
+      setSuccessMessage(result);
+      reset();
+    } catch (error) {
+      if (error instanceof Error) {
+        setErrorMessage(error.message);
+        setSuccessMessage(null);
+      }
+    }
   };
 
   return (
@@ -98,7 +51,11 @@ export default function Register() {
             }
           />
           <FormProvider {...methods}>
-            <SignUpForm onSubmit={onSubmit} />
+            <SignUpForm
+              onSubmit={onSubmit}
+              errorMessage={errorMessage}
+              successMessage={successMessage}
+            />
           </FormProvider>
           <p className="m-4 text-center font-medium text-white">
             <Link to={'/user/login'}>Already have an account? log in!</Link>

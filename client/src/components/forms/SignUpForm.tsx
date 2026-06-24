@@ -4,9 +4,11 @@ import type {RegisterInputType} from '../../schemas/AuthSchemas.ts';
 
 type Props = {
   onSubmit: SubmitHandler<any>;
+  errorMessage: string | null;
+  successMessage: string | null;
 };
 
-function SignUpForm({onSubmit}: Props) {
+function SignUpForm({onSubmit, errorMessage, successMessage}: Props) {
   const {handleSubmit} = useFormContext<RegisterInputType>();
 
   return (
@@ -33,6 +35,12 @@ function SignUpForm({onSubmit}: Props) {
           placeholder={'password'}
           required={true}
         />
+        {errorMessage && (
+          <div className="text-center text-red-500">{errorMessage}</div>
+        )}
+        {successMessage && (
+          <div className="text-center text-green-700">{successMessage}</div>
+        )}
         <button
           type="submit"
           className="rounded-full bg-black px-4 py-2 font-bold text-white hover:bg-[#B197FC]"

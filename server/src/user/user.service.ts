@@ -56,6 +56,8 @@ export class UserService {
 
     const user = new this.userModel({
       ...registerUserDto,
+      user_photo:
+        'https://res.cloudinary.com/dfm1r4ikr/image/upload/v1701685725/codask/website_photos/user_photo_default.png',
       password: hash,
       member_since: new Date(),
     });
