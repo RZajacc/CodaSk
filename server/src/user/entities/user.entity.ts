@@ -107,6 +107,9 @@ export class User {
   @Prop({ required: false })
   @ApiProperty({ example: '2022-07-11T06:31:15.000+00:00' })
   course_date: Date;
+
+  @Prop({ required: false })
+  refreshToken: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
