@@ -5,7 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import { JwtPayload } from 'jsonwebtoken';
 import { Request } from 'express';
 
-interface AuthConfig {
+interface AuthType {
   auth: {
     refreshToken: {
       secret: string;
@@ -19,14 +19,16 @@ export class RefreshTokenStrategy extends PassportStrategy(
   Strategy,
   'jwt-refresh',
 ) {
-  constructor(private configService: ConfigService<AuthConfig, true>) {
+  constructor(private configService: ConfigService<AuthType, true>) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
         RefreshTokenStrategy.extractJWT,
         ExtractJwt.fromAuthHeaderAsBearerToken(),
       ]),
       ignoreExpiration: false,
-      secretOrKey: 'Test',
+      secretOrKey: configService.get('auth.refreshToken.secret', {
+        infer: true,
+      }),
     });
   }
 
