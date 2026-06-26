@@ -7,8 +7,10 @@ export default () => ({
     mongoURI: process.env.MONGO_URI,
   },
   auth: {
-    accessTokenSecret: process.env.ACCESS_TOKEN_SECRET,
-    accessTokenExpiry: process.env.ACCESS_TOKEN_EXPIRY,
+    accessToken: {
+      secret: process.env.ACCESS_TOKEN_SECRET,
+      expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
+    },
     refreshToken: {
       secret: process.env.REFRESH_TOKEN_SECRET,
       expiresIn: process.env.REFRESH_TOKEN_EXPIRY,

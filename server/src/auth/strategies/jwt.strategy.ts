@@ -9,24 +9,32 @@ import {
 import { JwtPayload } from 'jsonwebtoken';
 import { UserService } from '../../user/user.service';
 import { SafeUser } from '../auth.service';
+import { Request } from 'express';
 
 interface AuthType {
   auth: {
-    accessTokenSecret: string;
-    accessTokenExpiry: string;
+    accessToken: {
+      secret: string;
+      expiresIn: string;
+    };
   };
 }
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
+export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor(
     private userService: UserService,
     private configService: ConfigService<AuthType, true>,
   ) {
     super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      jwtFromRequest: ExtractJwt.fromExtractors([
+        JwtStrategy.extractJWT,
+        ExtractJwt.fromAuthHeaderAsBearerToken(),
+      ]),
       ignoreExpiration: false,
-      secretOrKey: configService.get('auth.accessTokenSecret', { infer: true }),
+      secretOrKey: configService.get('auth.accessToken.secret', {
+        infer: true,
+      }),
     });
   }
 
@@ -45,5 +53,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...result } = user;
     return result;
+  }
+
+  private static extractJWT(this: void, req: Request): string | null {
+    if (req.cookies && 'access_token' in req.cookies) {
+      return req.cookies.access_token as string;
+    }
+    return null;
   }
 }
