@@ -25,10 +25,11 @@ export class RefreshTokenStrategy extends PassportStrategy(
         RefreshTokenStrategy.extractJWT,
         ExtractJwt.fromAuthHeaderAsBearerToken(),
       ]),
-      ignoreExpiration: false,
       secretOrKey: configService.get('auth.refreshToken.secret', {
         infer: true,
       }),
+      ignoreExpiration: false,
+      passReqToCallback: true,
     });
   }
 

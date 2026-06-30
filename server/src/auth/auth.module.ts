@@ -6,12 +6,15 @@ import { LocalStrategy } from './strategies/local.strategy';
 import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { JwtStrategy } from './strategies/jwt.strategy';
+import { AccessTokenStrategy } from './strategies/accessToken.strategy';
+import { RefreshTokenStrategy } from './strategies/refreshToken.strategy';
 
 interface AuthType {
   auth: {
-    accessTokenSecret: string;
-    accessTokenExpiry: string;
+    accessToken: {
+      secret: string;
+      expiresIn: string;
+    };
   };
 }
 
@@ -19,19 +22,25 @@ interface AuthType {
   imports: [
     UserModule,
     PassportModule,
-    JwtModule.registerAsync({
-      useFactory: (configService: ConfigService<AuthType>) => ({
-        secret: configService.get('auth.accessTokenSecret', { infer: true }),
-        signOptions: {
-          expiresIn: configService.get('auth.accessTokenExpiry', {
-            infer: true,
-          }),
-        },
-      }),
-      inject: [ConfigService],
-    }),
+    JwtModule.register({}),
+    // JwtModule.registerAsync({
+    //   useFactory: (configService: ConfigService<AuthType>) => ({
+    //     secret: configService.get('auth.accessToken.secret', { infer: true }),
+    //     signOptions: {
+    //       expiresIn: configService.get('auth.accessToken.expiresIn', {
+    //         infer: true,
+    //       }),
+    //     },
+    //   }),
+    //   inject: [ConfigService],
+    // }),
   ],
-  providers: [AuthService, LocalStrategy, JwtStrategy],
+  providers: [
+    AuthService,
+    LocalStrategy,
+    AccessTokenStrategy,
+    RefreshTokenStrategy,
+  ],
   controllers: [AuthController],
 })
 export class AuthModule {}

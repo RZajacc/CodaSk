@@ -6,13 +6,14 @@ import {
   HttpStatus,
   Post,
   Req,
+  Res,
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { AuthService, SafeUser } from './auth.service';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import type { Request } from 'express';
+import type { Request, Response } from 'express';
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
@@ -51,10 +52,19 @@ export class AuthController {
     description: 'Invalid credentials',
     example: { statusCode: 401, error: 'Unauthorized' },
   })
-  login(@Req() req: Request & { user: SafeUser }) {
+  login(
+    @Req() req: Request & { user: SafeUser },
+    @Res({ passthrough: true }) response: Response,
+  ) {
     if (!req.user) {
       throw new UnauthorizedException();
     }
+
+    // response.cookie('accessToken', token, {
+    //   httpOnly: true,
+    //   secure: true,
+    //   sameSite: 'strict',
+    // });
     return this.authService.login(req.user);
   }
 

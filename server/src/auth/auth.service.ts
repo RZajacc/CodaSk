@@ -30,6 +30,10 @@ export class AuthService {
     return null;
   }
 
+  async register(registerUserDTO: RegisterUserDto) {
+    return this.userService.register(registerUserDTO);
+  }
+
   login(user: SafeUser) {
     const payload: JwtPayload = {
       sub: user._id.toString(),
@@ -38,7 +42,7 @@ export class AuthService {
     return { access_token, user };
   }
 
-  async register(registerUserDTO: RegisterUserDto) {
-    return this.userService.register(registerUserDTO);
-  }
+  // async logout(userId: string) {
+  //   return this.userService.update(userId, { re });
+  // }
 }
