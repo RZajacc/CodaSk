@@ -52,7 +52,7 @@ export class AuthController {
     description: 'Invalid credentials',
     example: { statusCode: 401, error: 'Unauthorized' },
   })
-  login(
+  async login(
     @Req() req: Request & { user: SafeUser },
     @Res({ passthrough: true }) response: Response,
   ) {
@@ -60,12 +60,21 @@ export class AuthController {
       throw new UnauthorizedException();
     }
 
-    // response.cookie('accessToken', token, {
-    //   httpOnly: true,
-    //   secure: true,
-    //   sameSite: 'strict',
-    // });
-    return this.authService.login(req.user);
+    const { tokens, user } = await this.authService.login(req.user);
+
+    response.cookie('accessToken', tokens.accessToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
+    });
+
+    response.cookie('refreshTOken', tokens.refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
+    });
+
+    return user;
   }
 
   @Post('register')
@@ -116,12 +125,12 @@ export class AuthController {
     description: 'Invalid credentials',
     example: { statusCode: 401, error: 'Unauthorized' },
   })
-  logout(@Req() req: Request) {
+  async logout(@Req() req: Request) {
     if (!req.user) {
       throw new UnauthorizedException();
     }
-
-    return 'Loggging out...';
+    const userId = req.user['_id'] as string;
+    return await this.authService.logout(userId);
   }
 
   @UseGuards(JwtAuthGuard)

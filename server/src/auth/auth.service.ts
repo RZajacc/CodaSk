@@ -5,6 +5,20 @@ import { User } from '../user/entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from 'jsonwebtoken';
 import { RegisterUserDto } from './dto/register-user.dto';
+import { ConfigService } from '@nestjs/config';
+
+interface AuthType {
+  auth: {
+    accessToken: {
+      secret: string;
+      expiresIn: string;
+    };
+    refreshToken: {
+      secret: string;
+      expiresIn: string;
+    };
+  };
+}
 
 export type SafeUser = Omit<User, 'password'>;
 
@@ -13,6 +27,7 @@ export class AuthService {
   constructor(
     private userService: UserService,
     private jwtService: JwtService,
+    private configService: ConfigService<AuthType, true>,
   ) {}
 
   async validateUser(
@@ -34,16 +49,19 @@ export class AuthService {
     return this.userService.register(registerUserDTO);
   }
 
-  login(user: SafeUser) {
-    const payload: JwtPayload = {
-      sub: user._id.toString(),
-    };
-    const access_token = this.jwtService.sign(payload);
-    return { access_token, user };
+  async login(user: SafeUser) {
+    const tokens = await this.getTokens(user._id.toString(), user.email);
+    await this.updateRefreshToken(user._id.toString(), tokens.refreshToken);
+    return { tokens, user };
   }
 
-  logout(userId: string) {
-    return this.userService.update(userId, { refreshToken: '' });
+  async logout(userId: string) {
+    const loggedOutUser = await this.userService.update(userId, {
+      refreshToken: '',
+    });
+    if (loggedOutUser) {
+      return 'Logging out successful';
+    }
   }
 
   async updateRefreshToken(userId: string, refreshToken: string) {
@@ -53,5 +71,39 @@ export class AuthService {
     await this.userService.update(userId, {
       refreshToken: hashedRefreshToken,
     });
+  }
+
+  async getTokens(userId: string, email: string) {
+    const [accessToken, refreshToken] = await Promise.all([
+      this.jwtService.signAsync(
+        {
+          sub: userId,
+          email,
+        },
+        {
+          secret: this.configService.get('auth.accessToken.secret', {
+            infer: true,
+          }),
+          expiresIn: this.configService.get('auth.accessToken.expiresIn', {
+            infer: true,
+          }),
+        },
+      ),
+      this.jwtService.signAsync(
+        {
+          sub: userId,
+          email,
+        },
+        {
+          secret: this.configService.get('auth.refreshToken.secret', {
+            infer: true,
+          }),
+          expiresIn: this.configService.get('auth.refreshToken.expiresIn', {
+            infer: true,
+          }),
+        },
+      ),
+    ]);
+    return { accessToken, refreshToken };
   }
 }
