@@ -11,8 +11,9 @@ import { RegisterUserDto } from '../auth/dto/register-user.dto';
 export class UserService {
   constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  async create(createUserDto: CreateUserDto) {
+    const createdUser = new this.userModel(createUserDto);
+    return createdUser.save();
   }
 
   findAll() {
@@ -64,11 +65,13 @@ export class UserService {
     return user.save();
   }
 
-  update(id: string, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: string, updateUserDto: UpdateUserDto) {
+    return this.userModel
+      .findByIdAndUpdate(id, updateUserDto, { new: true })
+      .exec();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: string) {
+    return this.userModel.findByIdAndDelete(id).exec();
   }
 }

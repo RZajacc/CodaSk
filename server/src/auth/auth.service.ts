@@ -42,7 +42,16 @@ export class AuthService {
     return { access_token, user };
   }
 
-  // async logout(userId: string) {
-  //   return this.userService.update(userId, { re });
-  // }
+  logout(userId: string) {
+    return this.userService.update(userId, { refreshToken: '' });
+  }
+
+  async updateRefreshToken(userId: string, refreshToken: string) {
+    const salt = await bcrypt.genSalt();
+    const hashedRefreshToken = await bcrypt.hash(refreshToken, salt);
+
+    await this.userService.update(userId, {
+      refreshToken: hashedRefreshToken,
+    });
+  }
 }
