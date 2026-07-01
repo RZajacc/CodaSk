@@ -29,6 +29,7 @@ import { LoginDto } from './dto/login.dto';
 import { LoginResponseDTO } from './dto/login-response-dto';
 import { UserResponseDto } from '../user/dto/user-response.dto';
 import { RegisterUserDto } from './dto/register-user.dto';
+import { RefreshTokenGuard } from './guards/refresh-token-guard';
 
 @Controller('auth')
 export class AuthController {
@@ -75,6 +76,34 @@ export class AuthController {
     });
 
     return user;
+  }
+
+  @UseGuards(RefreshTokenGuard)
+  @Get('refresh')
+  async refreshTokens(
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    if (!req.user) {
+      throw new UnauthorizedException();
+    }
+
+    const userId = req.user['sub'] as string;
+    const refreshToken = req.user['refreshToken'] as string;
+
+    const tokens = await this.authService.refreshTokens(userId, refreshToken);
+
+    res.cookie('accessToken', tokens.accessToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
+    });
+
+    res.cookie('refreshToken', tokens.refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
+    });
   }
 
   @Post('register')
@@ -129,10 +158,20 @@ export class AuthController {
     if (!req.user) {
       throw new UnauthorizedException();
     }
+    console.log('USER BY LOGOUT==>', req.user);
     const userId = req.user['_id'] as string;
 
-    res.clearCookie('accessToken');
-    res.clearCookie('refreshToken');
+    res.clearCookie('accessToken', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
+    });
+
+    res.clearCookie('refreshToken', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
+    });
 
     return await this.authService.logout(userId);
   }

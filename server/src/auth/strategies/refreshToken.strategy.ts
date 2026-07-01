@@ -35,12 +35,13 @@ export class RefreshTokenStrategy extends PassportStrategy(
 
   validate(req: Request, payload: JwtPayload) {
     const refreshToken = req.cookies.refreshToken as string;
+
     return { ...payload, refreshToken };
   }
 
   private static extractJWT(this: void, req: Request): string | null {
     if (req.cookies && 'refreshToken' in req.cookies) {
-      return req.cookies.refresToken as string;
+      return req.cookies.refreshToken as string;
     }
     return null;
   }
