@@ -22,7 +22,7 @@ import { Question } from './entities/question.entity';
 import { FindByQueryResponseDto } from './dto/findByQueryResponse.dto';
 import { plainToInstance } from 'class-transformer';
 import { FindByIdResponseDto } from './dto/findByIdResponse.dto';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { AccessTokenGuard } from '../auth/guards/access-token-guard';
 
 @Controller('question')
 export class QuestionController {
@@ -68,7 +68,7 @@ export class QuestionController {
   }
 
   @Get(':id')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AccessTokenGuard)
   // Swagger
   @ApiBearerAuth()
   @ApiOperation({

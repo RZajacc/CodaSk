@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { AuthService, SafeUser } from './auth.service';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { AccessTokenGuard } from './guards/access-token-guard';
 import type { Request, Response } from 'express';
 import {
   ApiBadRequestResponse,
@@ -68,7 +68,7 @@ export class AuthController {
       sameSite: 'strict',
     });
 
-    response.cookie('refreshTOken', tokens.refreshToken, {
+    response.cookie('refreshToken', tokens.refreshToken, {
       httpOnly: true,
       secure: true,
       sameSite: 'strict',
@@ -108,7 +108,7 @@ export class AuthController {
     return `Registered successfully user with email: ${registeredUser.email}`;
   }
 
-  @UseGuards(LocalAuthGuard)
+  @UseGuards(AccessTokenGuard)
   @Post('logout')
   @HttpCode(HttpStatus.OK)
   // Swagger
@@ -125,15 +125,19 @@ export class AuthController {
     description: 'Invalid credentials',
     example: { statusCode: 401, error: 'Unauthorized' },
   })
-  async logout(@Req() req: Request) {
+  async logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
     if (!req.user) {
       throw new UnauthorizedException();
     }
     const userId = req.user['_id'] as string;
+
+    res.clearCookie('accessToken');
+    res.clearCookie('refreshToken');
+
     return await this.authService.logout(userId);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AccessTokenGuard)
   @Get('profile')
   // Swagger
   @ApiOperation({

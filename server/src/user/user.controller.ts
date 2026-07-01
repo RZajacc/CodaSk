@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { AccessTokenGuard } from '../auth/guards/access-token-guard';
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
@@ -24,7 +24,7 @@ import {
 import { User } from './entities/user.entity';
 import { UserResponseDto } from './dto/user-response.dto';
 
-@UseGuards(JwtAuthGuard)
+@UseGuards(AccessTokenGuard)
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
