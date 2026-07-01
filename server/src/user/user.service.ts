@@ -41,6 +41,7 @@ export class UserService {
   findOne(id: string): Promise<User | null> {
     return this.userModel
       .findOne({ _id: id })
+      .select('-password')
       .populate([
         { path: 'questions' },
         { path: 'answers' },

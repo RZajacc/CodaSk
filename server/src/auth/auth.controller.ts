@@ -81,17 +81,17 @@ export class AuthController {
   @UseGuards(RefreshTokenGuard)
   @Get('refresh')
   async refreshTokens(
-    @Req() req: Request,
+    @Req() req: Request & { user: SafeUser },
     @Res({ passthrough: true }) res: Response,
   ) {
-    if (!req.user) {
+    if (!req.user || !req.user.refreshToken) {
       throw new UnauthorizedException();
     }
 
-    const userId = req.user['sub'] as string;
-    const refreshToken = req.user['refreshToken'] as string;
-
-    const tokens = await this.authService.refreshTokens(userId, refreshToken);
+    const tokens = await this.authService.refreshTokens(
+      req.user._id.toString(),
+      req.user.refreshToken,
+    );
 
     res.cookie('accessToken', tokens.accessToken, {
       httpOnly: true,
@@ -154,12 +154,13 @@ export class AuthController {
     description: 'Invalid credentials',
     example: { statusCode: 401, error: 'Unauthorized' },
   })
-  async logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+  async logout(
+    @Req() req: Request & { user: SafeUser },
+    @Res({ passthrough: true }) res: Response,
+  ) {
     if (!req.user) {
       throw new UnauthorizedException();
     }
-    console.log('USER BY LOGOUT==>', req.user);
-    const userId = req.user['_id'] as string;
 
     res.clearCookie('accessToken', {
       httpOnly: true,
@@ -173,7 +174,7 @@ export class AuthController {
       sameSite: 'strict',
     });
 
-    return await this.authService.logout(userId);
+    return await this.authService.logout(req.user._id.toString());
   }
 
   @UseGuards(AccessTokenGuard)

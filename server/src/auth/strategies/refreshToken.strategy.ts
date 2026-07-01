@@ -1,9 +1,16 @@
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { Injectable } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtPayload } from 'jsonwebtoken';
 import { Request } from 'express';
+import { SafeUser } from '../auth.service';
+import { UserService } from '../../user/user.service';
 
 interface AuthType {
   auth: {
@@ -19,7 +26,10 @@ export class RefreshTokenStrategy extends PassportStrategy(
   Strategy,
   'jwt-refresh',
 ) {
-  constructor(private configService: ConfigService<AuthType, true>) {
+  constructor(
+    private userService: UserService,
+    private configService: ConfigService<AuthType, true>,
+  ) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
         RefreshTokenStrategy.extractJWT,
@@ -33,10 +43,26 @@ export class RefreshTokenStrategy extends PassportStrategy(
     });
   }
 
-  validate(req: Request, payload: JwtPayload) {
-    const refreshToken = req.cookies.refreshToken as string;
+  async validate(req: Request, payload: JwtPayload): Promise<SafeUser> {
+    const { sub } = payload;
 
-    return { ...payload, refreshToken };
+    if (!sub) {
+      throw new UnauthorizedException();
+    }
+
+    const user = await this.userService.findOne(sub);
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    if (!req.cookies && !('refreshToken' in req.cookies)) {
+      throw new ForbiddenException('Access Denied');
+    }
+
+    const cookieRefreshToken = req.cookies.refreshToken as string;
+
+    return { ...user, refreshToken: cookieRefreshToken };
   }
 
   private static extractJWT(this: void, req: Request): string | null {

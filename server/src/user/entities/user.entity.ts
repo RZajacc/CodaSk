@@ -109,7 +109,7 @@ export class User {
   course_date: Date;
 
   @Prop({ required: false })
-  refreshToken: string;
+  refreshToken?: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
