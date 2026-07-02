@@ -54,14 +54,19 @@ export class AuthController {
     example: { statusCode: 401, error: 'Unauthorized' },
   })
   async login(
-    @Req() req: Request & { user: SafeUser },
+    @Req() request: Request & { user: SafeUser },
     @Res({ passthrough: true }) response: Response,
   ) {
-    if (!req.user) {
+    if (!request.user) {
       throw new UnauthorizedException();
     }
 
-    const { tokens, user } = await this.authService.login(req.user);
+    const user = request.user;
+
+    const tokens = await this.authService.login(
+      user._id.toString(),
+      user.email,
+    );
 
     response.cookie('accessToken', tokens.accessToken, {
       httpOnly: true,
@@ -81,25 +86,25 @@ export class AuthController {
   @UseGuards(RefreshTokenGuard)
   @Get('refresh')
   async refreshTokens(
-    @Req() req: Request & { user: SafeUser },
-    @Res({ passthrough: true }) res: Response,
+    @Req() request: Request & { user: SafeUser },
+    @Res({ passthrough: true }) response: Response,
   ) {
-    if (!req.user || !req.user.refreshToken) {
+    if (!request.user || !request.user.refreshToken) {
       throw new UnauthorizedException();
     }
 
     const tokens = await this.authService.refreshTokens(
-      req.user._id.toString(),
-      req.user.refreshToken,
+      request.user._id.toString(),
+      request.user.refreshToken,
     );
 
-    res.cookie('accessToken', tokens.accessToken, {
+    response.cookie('accessToken', tokens.accessToken, {
       httpOnly: true,
       secure: true,
       sameSite: 'strict',
     });
 
-    res.cookie('refreshToken', tokens.refreshToken, {
+    response.cookie('refreshToken', tokens.refreshToken, {
       httpOnly: true,
       secure: true,
       sameSite: 'strict',
@@ -155,26 +160,26 @@ export class AuthController {
     example: { statusCode: 401, error: 'Unauthorized' },
   })
   async logout(
-    @Req() req: Request & { user: SafeUser },
-    @Res({ passthrough: true }) res: Response,
+    @Req() request: Request & { user: SafeUser },
+    @Res({ passthrough: true }) response: Response,
   ) {
-    if (!req.user) {
+    if (!request.user) {
       throw new UnauthorizedException();
     }
 
-    res.clearCookie('accessToken', {
+    response.clearCookie('accessToken', {
       httpOnly: true,
       secure: true,
       sameSite: 'strict',
     });
 
-    res.clearCookie('refreshToken', {
+    response.clearCookie('refreshToken', {
       httpOnly: true,
       secure: true,
       sameSite: 'strict',
     });
 
-    return await this.authService.logout(req.user._id.toString());
+    return await this.authService.logout(request.user._id.toString());
   }
 
   @UseGuards(AccessTokenGuard)
@@ -193,7 +198,7 @@ export class AuthController {
     description: 'Get user profile',
     type: UserResponseDto,
   })
-  getProfile(@Req() req: Request) {
-    return req.user;
+  getProfile(@Req() request: Request) {
+    return request.user;
   }
 }

@@ -2,7 +2,6 @@ import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { ConfigService } from '@nestjs/config';
 import {
-  ForbiddenException,
   Injectable,
   NotFoundException,
   UnauthorizedException,
@@ -36,11 +35,10 @@ export class AccessTokenStrategy extends PassportStrategy(Strategy, 'jwt') {
         infer: true,
       }),
       ignoreExpiration: false,
-      passReqToCallback: true,
     });
   }
 
-  async validate(req: Request, payload: JwtPayload): Promise<SafeUser> {
+  async validate(payload: JwtPayload): Promise<SafeUser> {
     const { sub } = payload;
 
     if (!sub) {
@@ -53,13 +51,7 @@ export class AccessTokenStrategy extends PassportStrategy(Strategy, 'jwt') {
       throw new NotFoundException('User not found');
     }
 
-    if (!req.cookies && !('refreshToken' in req.cookies)) {
-      throw new ForbiddenException('Access Denied');
-    }
-
-    const cookieRefreshToken = req.cookies.refreshToken as string;
-
-    return { ...user, refreshToken: cookieRefreshToken };
+    return user;
   }
 
   private static extractJWT(this: void, req: Request): string | null {

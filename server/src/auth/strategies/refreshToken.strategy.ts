@@ -56,7 +56,7 @@ export class RefreshTokenStrategy extends PassportStrategy(
       throw new NotFoundException('User not found');
     }
 
-    if (!req.cookies && !('refreshToken' in req.cookies)) {
+    if (!req.cookies || !('refreshToken' in req.cookies)) {
       throw new ForbiddenException('Access Denied');
     }
 

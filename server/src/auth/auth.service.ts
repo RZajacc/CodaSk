@@ -1,13 +1,8 @@
-import {
-  ConflictException,
-  ForbiddenException,
-  Injectable,
-} from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import * as bcrypt from 'bcrypt';
 import { User } from '../user/entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
-import { JwtPayload } from 'jsonwebtoken';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { ConfigService } from '@nestjs/config';
 
@@ -53,10 +48,10 @@ export class AuthService {
     return this.userService.register(registerUserDTO);
   }
 
-  async login(user: SafeUser) {
-    const tokens = await this.getTokens(user._id.toString(), user.email);
-    await this.updateRefreshToken(user._id.toString(), tokens.refreshToken);
-    return { tokens, user };
+  async login(userId: string, email: string) {
+    const tokens = await this.getTokens(userId, email);
+    await this.updateRefreshToken(userId, tokens.refreshToken);
+    return tokens;
   }
 
   async logout(userId: string) {
