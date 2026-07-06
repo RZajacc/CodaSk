@@ -1,5 +1,6 @@
 import type {User} from '../types/UserTypes.ts';
 import type {RegisterUserDTO} from '../types/AuthTypes.ts';
+import {fetchWithAuthAndRefresh} from './fetchUtils.ts';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -22,17 +23,21 @@ export const authService = {
   },
 
   getProfile: async (): Promise<User> => {
-    const response = await fetch(API_BASE_URL + '/auth/profile', {
+    return await fetchWithAuthAndRefresh<User>(API_BASE_URL + '/auth/profile', {
       method: 'GET',
       credentials: 'include',
-      // headers: {Authorization: `Bearer ${token}`},
     });
-
-    if (!response.ok) {
-      throw new Error('Auth check failed');
-    }
-
-    return response.json();
+    // const response = await fetch(API_BASE_URL + '/auth/profile', {
+    //   method: 'GET',
+    //   credentials: 'include',
+    //   // headers: {Authorization: `Bearer ${token}`},
+    // });
+    //
+    // if (!response.ok) {
+    //   throw new Error('Auth check failed');
+    // }
+    //
+    // return response.json();
   },
 
   register: async (registerUserDTO: RegisterUserDTO): Promise<string> => {
