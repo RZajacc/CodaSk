@@ -75,16 +75,16 @@ export function AuthProvider({children}: {children: ReactNode}) {
 
     try {
       // Use service method for fetching
-      const responseData = await authService.login(email, password);
+      const user = await authService.login(email, password);
 
       // Until cookie authentication is set
-      localStorage.setItem('accessToken', responseData.access_token);
+      // localStorage.setItem('accessToken', responseData.access_token);
 
       // Dispatch success
-      dispatch({type: 'LOGIN_SUCCESS', payload: responseData.user});
+      dispatch({type: 'LOGIN_SUCCESS', payload: user});
 
       // To be able to redirect after login properly user is needed
-      return responseData.user;
+      return user;
     } catch (error) {
       dispatch({
         type: 'LOGIN_ERROR',
@@ -96,7 +96,8 @@ export function AuthProvider({children}: {children: ReactNode}) {
 
   const logout = useCallback(async () => {
     //   Call backend to be implemented
-    localStorage.removeItem('accessToken');
+
+    // localStorage.removeItem('accessToken');
     dispatch({type: 'LOGOUT'});
   }, []);
 
@@ -104,15 +105,14 @@ export function AuthProvider({children}: {children: ReactNode}) {
     dispatch({type: 'CHECK_AUTH_START'});
 
     try {
-      const token = localStorage.getItem('accessToken');
-
-      if (!token) {
-        dispatch({type: 'CHECK_AUTH_ERROR'});
-        return;
-      }
-
-      const user = await authService.getProfile(token);
-
+      // const token = localStorage.getItem('accessToken');
+      //
+      // if (!token) {
+      //   dispatch({type: 'CHECK_AUTH_ERROR'});
+      //   return;
+      // }
+      const user = await authService.getProfile();
+      console.log('USER', user);
       dispatch({type: 'CHECK_AUTH_SUCCESS', payload: user});
     } catch (error) {
       dispatch({type: 'CHECK_AUTH_ERROR'});

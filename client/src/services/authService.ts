@@ -1,15 +1,16 @@
 import type {User} from '../types/UserTypes.ts';
-import type {LoginResponse, RegisterUserDTO} from '../types/AuthTypes.ts';
+import type {RegisterUserDTO} from '../types/AuthTypes.ts';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 export const authService = {
-  login: async (email: string, password: string): Promise<LoginResponse> => {
+  login: async (email: string, password: string): Promise<User> => {
     const response = await fetch(API_BASE_URL + '/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
+      credentials: 'include',
       body: JSON.stringify({email, password}),
     });
 
@@ -20,10 +21,11 @@ export const authService = {
     return response.json();
   },
 
-  getProfile: async (token: string): Promise<User> => {
+  getProfile: async (): Promise<User> => {
     const response = await fetch(API_BASE_URL + '/auth/profile', {
       method: 'GET',
-      headers: {Authorization: `Bearer ${token}`},
+      credentials: 'include',
+      // headers: {Authorization: `Bearer ${token}`},
     });
 
     if (!response.ok) {
