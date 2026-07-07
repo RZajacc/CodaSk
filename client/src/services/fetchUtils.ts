@@ -4,12 +4,12 @@ async function fetchWithAuth<T>(url: string, options: RequestInit): Promise<T> {
   const headers = {
     'Content-Type': 'application/json',
     ...options.headers,
-    credentials: 'include',
   };
 
   const response = await fetch(url, {
     ...options,
     headers,
+    credentials: 'include',
   });
 
   if (!response.ok) {
