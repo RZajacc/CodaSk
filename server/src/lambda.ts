@@ -79,6 +79,7 @@ export function handler(
   event: APIGatewayProxyEvent,
   context: Context,
 ): Promise<APIGatewayProxyResult> {
+  console.log('HEADERS===>', event.headers);
   if (serverlessExpressInstance) {
     return serverlessExpressInstance(event, context);
   }
