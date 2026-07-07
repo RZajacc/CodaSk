@@ -72,14 +72,14 @@ export class AuthController {
     response.cookie('accessToken', tokens.accessToken, {
       httpOnly: true,
       secure: true,
-      sameSite: 'strict',
+      sameSite: 'lax',
       domain: 'codask.org',
     });
 
     response.cookie('refreshToken', tokens.refreshToken, {
       httpOnly: true,
       secure: true,
-      sameSite: 'strict',
+      sameSite: 'lax',
       domain: 'codask.org',
     });
 
@@ -105,14 +105,14 @@ export class AuthController {
     response.cookie('accessToken', tokens.accessToken, {
       httpOnly: true,
       secure: true,
-      sameSite: 'strict',
+      sameSite: 'lax',
       domain: 'codask.org',
     });
 
     response.cookie('refreshToken', tokens.refreshToken, {
       httpOnly: true,
       secure: true,
-      sameSite: 'strict',
+      sameSite: 'lax',
       domain: 'codask.org',
     });
   }
@@ -176,14 +176,14 @@ export class AuthController {
     response.clearCookie('accessToken', {
       httpOnly: true,
       secure: true,
-      sameSite: 'strict',
+      sameSite: 'lax',
       domain: 'codask.org',
     });
 
     response.clearCookie('refreshToken', {
       httpOnly: true,
       secure: true,
-      sameSite: 'strict',
+      sameSite: 'lax',
       domain: 'codask.org',
     });
 
