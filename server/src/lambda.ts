@@ -63,7 +63,7 @@ async function setup(
     origin: allowedOrigins,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type, Accept, Authorization',
-    withCredentials: true,
+    credentials: true,
   });
 
   await nestApp.init();
