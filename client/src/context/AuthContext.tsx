@@ -34,7 +34,8 @@ type AuthAction =
   | {type: 'LOGOUT'}
   | {type: 'CHECK_AUTH_START'}
   | {type: 'CHECK_AUTH_SUCCESS'; payload: User}
-  | {type: 'CHECK_AUTH_ERROR'};
+  | {type: 'CHECK_AUTH_ERROR'}
+  | {type: 'CHECK_AUTH_NETWORK_ERROR'};
 
 const initialState: AuthState = {
   user: null,
@@ -57,6 +58,8 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
     case 'CHECK_AUTH_SUCCESS':
       return {...state, isLoading: false, user: action.payload};
     case 'CHECK_AUTH_ERROR':
+      return {...state, isLoading: false, user: null};
+    case 'CHECK_AUTH_NETWORK_ERROR':
       return {...state, isLoading: false};
     default:
       return state;
@@ -77,9 +80,6 @@ export function AuthProvider({children}: {children: ReactNode}) {
       // Use service method for fetching
       const user = await authService.login(email, password);
 
-      // Until cookie authentication is set
-      // localStorage.setItem('accessToken', responseData.access_token);
-
       // Dispatch success
       dispatch({type: 'LOGIN_SUCCESS', payload: user});
 
@@ -95,28 +95,25 @@ export function AuthProvider({children}: {children: ReactNode}) {
   }, []);
 
   const logout = useCallback(async () => {
-    //   Call backend to be implemented
-
-    // localStorage.removeItem('accessToken');
-    dispatch({type: 'LOGOUT'});
+    try {
+      dispatch({type: 'LOGOUT'});
+      await authService.logout();
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
   const checkAuth = useCallback(async () => {
     dispatch({type: 'CHECK_AUTH_START'});
-
     try {
-      // const token = localStorage.getItem('accessToken');
-      //
-      // if (!token) {
-      //   dispatch({type: 'CHECK_AUTH_ERROR'});
-      //   return;
-      // }
       const user = await authService.getProfile();
-      console.log('USER', user);
       dispatch({type: 'CHECK_AUTH_SUCCESS', payload: user});
     } catch (error) {
-      dispatch({type: 'CHECK_AUTH_ERROR'});
-      console.log(error);
+      if (error instanceof Error && error.message.includes('401')) {
+        dispatch({type: 'CHECK_AUTH_ERROR'});
+      } else {
+        dispatch({type: 'CHECK_AUTH_NETWORK_ERROR'});
+      }
     }
   }, []);
 

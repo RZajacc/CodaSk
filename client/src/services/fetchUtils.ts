@@ -27,12 +27,12 @@ async function refreshAccessToken() {
       },
       credentials: 'include',
     });
-
     if (!response.ok) {
-      throw new Error('Failed to refresh access token');
+      throw new Error(
+        `Failed to refresh access token! Status: ${response.status}`
+      );
     }
   } catch (error) {
-    window.location.href = '/login';
     throw error;
   }
 }

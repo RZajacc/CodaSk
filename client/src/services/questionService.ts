@@ -34,17 +34,5 @@ export const questionService = {
         credentials: 'include',
       }
     );
-    // const response = await fetch(API_BASE_URL + `/question/${id}`, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    // });
-    //
-    // if (!response.ok) {
-    //   throw new Error('Unable to fetch selected question');
-    // }
-    //
-    // return response.json();
   },
 };

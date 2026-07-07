@@ -20,6 +20,7 @@ import {
   ApiBody,
   ApiConflictResponse,
   ApiCreatedResponse,
+  ApiExcludeEndpoint,
   ApiOkResponse,
   ApiOperation,
   ApiUnauthorizedResponse,
@@ -84,6 +85,7 @@ export class AuthController {
   }
 
   @UseGuards(RefreshTokenGuard)
+  @ApiExcludeEndpoint()
   @Get('refresh')
   async refreshTokens(
     @Req() request: Request & { user: SafeUser },

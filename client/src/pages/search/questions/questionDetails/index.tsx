@@ -20,7 +20,7 @@ import {questionService} from '../../../../services/questionService.ts';
 export default function QuestionDetails() {
   const params = useParams<{id: string}>();
   const id = params.id;
-  const {user} = useAuth();
+  const {user, logout} = useAuth();
   // UseStates
   const [questionData, setQuestionData] = useState<QuestionById | null>(null);
 
@@ -35,7 +35,11 @@ export default function QuestionDetails() {
         const data = await questionService.getQuestionById(id);
         setQuestionData(data);
       } catch (error) {
-        console.error(error);
+        if (error instanceof Error && error.message.includes('401')) {
+          await logout();
+        } else {
+          console.error(error);
+        }
       }
     };
     fetchQuestionById();

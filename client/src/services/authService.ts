@@ -27,17 +27,6 @@ export const authService = {
       method: 'GET',
       credentials: 'include',
     });
-    // const response = await fetch(API_BASE_URL + '/auth/profile', {
-    //   method: 'GET',
-    //   credentials: 'include',
-    //   // headers: {Authorization: `Bearer ${token}`},
-    // });
-    //
-    // if (!response.ok) {
-    //   throw new Error('Auth check failed');
-    // }
-    //
-    // return response.json();
   },
 
   register: async (registerUserDTO: RegisterUserDTO): Promise<string> => {
@@ -53,5 +42,16 @@ export const authService = {
       throw new Error(responseData.message || 'Registration failed');
     }
     return await response.text();
+  },
+
+  logout: async () => {
+    const response = await fetch(API_BASE_URL + '/auth/logout', {
+      method: 'POST',
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      throw new Error('Logout failed');
+    }
   },
 };
