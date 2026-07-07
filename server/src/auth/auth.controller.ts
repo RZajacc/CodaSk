@@ -106,12 +106,14 @@ export class AuthController {
       httpOnly: true,
       secure: true,
       sameSite: 'strict',
+      domain: 'codask.org',
     });
 
     response.cookie('refreshToken', tokens.refreshToken, {
       httpOnly: true,
       secure: true,
       sameSite: 'strict',
+      domain: 'codask.org',
     });
   }
 
@@ -175,12 +177,14 @@ export class AuthController {
       httpOnly: true,
       secure: true,
       sameSite: 'strict',
+      domain: 'codask.org',
     });
 
     response.clearCookie('refreshToken', {
       httpOnly: true,
       secure: true,
       sameSite: 'strict',
+      domain: 'codask.org',
     });
 
     return await this.authService.logout(request.user._id.toString());
