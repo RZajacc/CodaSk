@@ -4,6 +4,8 @@ import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import cookieParser from 'cookie-parser';
+import { Callback, Context, Handler } from 'aws-lambda';
+import serverlessExpress from '@codegenie/serverless-express';
 
 interface AppConfig {
   app: {
@@ -12,7 +14,9 @@ interface AppConfig {
   };
 }
 
-async function bootstrap() {
+let server: Handler;
+
+async function bootstrap(): Promise<Handler> {
   const app = await NestFactory.create(AppModule);
 
   app.useGlobalPipes(new ValidationPipe());
@@ -44,6 +48,22 @@ async function bootstrap() {
     credentials: true,
   });
 
+  await app.init();
+  const expressApp = app.getHttpAdapter().getInstance();
   await app.listen(configService.get('app.port', { infer: true }));
+  return serverlessExpress({ app: expressApp });
 }
-bootstrap();
+
+export const handler: Handler = async (
+  event: any,
+  context: Context,
+  callback: Callback,
+) => {
+  server = server ?? (await bootstrap());
+  console.log('EVENT===>', event);
+  return server(event, context, callback);
+};
+
+if (require.main === module) {
+  bootstrap();
+}

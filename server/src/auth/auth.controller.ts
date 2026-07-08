@@ -73,14 +73,14 @@ export class AuthController {
       httpOnly: true,
       secure: true,
       sameSite: 'lax',
-      domain: 'codask.org',
+      // domain: 'localhost',
     });
 
     response.cookie('refreshToken', tokens.refreshToken, {
       httpOnly: true,
       secure: true,
       sameSite: 'lax',
-      domain: 'codask.org',
+      // domain: 'localhost',
     });
 
     return user;
