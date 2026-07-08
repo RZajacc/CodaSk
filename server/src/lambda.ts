@@ -62,7 +62,7 @@ async function setup(
   nestApp.enableCors({
     origin: allowedOrigins,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    allowedHeaders: 'Content-Type, Accept, Authorization, Cookie',
+    allowedHeaders: 'Content-Type, Accept, Authorization',
     credentials: true,
   });
 
