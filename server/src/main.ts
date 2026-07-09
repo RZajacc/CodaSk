@@ -12,6 +12,8 @@ import {
 } from 'aws-lambda';
 import serverlessExpress from '@codegenie/serverless-express';
 
+type ServerHandler = (event: any, context: Context) => Promise<any>;
+
 interface AppConfig {
   app: {
     port: number;
@@ -19,9 +21,9 @@ interface AppConfig {
   };
 }
 
-let server: APIGatewayProxyHandlerV2;
+let server: ServerHandler;
 
-async function bootstrap(): Promise<APIGatewayProxyHandlerV2> {
+async function bootstrap(): Promise<ServerHandler> {
   const app = await NestFactory.create(AppModule);
 
   app.useGlobalPipes(new ValidationPipe());
