@@ -4,15 +4,8 @@ import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import cookieParser from 'cookie-parser';
-import {
-  Callback,
-  Context,
-  Handler,
-  APIGatewayProxyHandlerV2,
-} from 'aws-lambda';
+import { Callback, Context, Handler } from 'aws-lambda';
 import serverlessExpress from '@codegenie/serverless-express';
-
-type ServerHandler = (event: any, context: Context) => Promise<any>;
 
 interface AppConfig {
   app: {
@@ -21,9 +14,9 @@ interface AppConfig {
   };
 }
 
-let server: ServerHandler;
+let server: Handler;
 
-async function bootstrap(): Promise<ServerHandler> {
+async function bootstrap(): Promise<Handler> {
   const app = await NestFactory.create(AppModule);
 
   app.useGlobalPipes(new ValidationPipe());
@@ -61,13 +54,17 @@ async function bootstrap(): Promise<ServerHandler> {
   return serverlessExpress({ app: expressApp });
 }
 
-export const handler: APIGatewayProxyHandlerV2 = async (
+export const handler: Handler = async (
   event: any,
   context: Context,
+  callback: Callback,
 ) => {
+  if (event.headers?.Cookie && !event.headers.cookie) {
+    event.headers.cookie = event.headers.Cookie;
+  }
+
   server = server ?? (await bootstrap());
-  console.log('EVENT===>', event);
-  return server(event, context);
+  return server(event, context, callback);
 };
 
 if (require.main === module) {
