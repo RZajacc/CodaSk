@@ -4,7 +4,12 @@ import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import cookieParser from 'cookie-parser';
-import { Callback, Context, Handler } from 'aws-lambda';
+import {
+  Callback,
+  Context,
+  Handler,
+  APIGatewayProxyHandlerV2,
+} from 'aws-lambda';
 import serverlessExpress from '@codegenie/serverless-express';
 
 interface AppConfig {
@@ -14,9 +19,9 @@ interface AppConfig {
   };
 }
 
-let server: Handler;
+let server: APIGatewayProxyHandlerV2;
 
-async function bootstrap(): Promise<Handler> {
+async function bootstrap(): Promise<APIGatewayProxyHandlerV2> {
   const app = await NestFactory.create(AppModule);
 
   app.useGlobalPipes(new ValidationPipe());
@@ -54,7 +59,10 @@ async function bootstrap(): Promise<Handler> {
   return serverlessExpress({ app: expressApp });
 }
 
-export const handler: Handler = async (event: any, context: Context) => {
+export const handler: APIGatewayProxyHandlerV2 = async (
+  event: any,
+  context: Context,
+) => {
   server = server ?? (await bootstrap());
   console.log('EVENT===>', event);
   return server(event, context);
