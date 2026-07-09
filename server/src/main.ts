@@ -54,14 +54,10 @@ async function bootstrap(): Promise<Handler> {
   return serverlessExpress({ app: expressApp });
 }
 
-export const handler: Handler = async (
-  event: any,
-  context: Context,
-  callback: Callback,
-) => {
+export const handler: Handler = async (event: any, context: Context) => {
   server = server ?? (await bootstrap());
   console.log('EVENT===>', event);
-  return server(event, context, callback);
+  return server(event, context);
 };
 
 if (require.main === module) {
