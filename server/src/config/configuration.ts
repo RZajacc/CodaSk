@@ -16,4 +16,5 @@ export default () => ({
       expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
     },
   },
+  domainName: process.env.DOMAIN_NAME,
 });

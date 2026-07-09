@@ -31,10 +31,18 @@ import { LoginResponseDTO } from './dto/login-response-dto';
 import { UserResponseDto } from '../user/dto/user-response.dto';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { RefreshTokenGuard } from './guards/refresh-token-guard';
+import { ConfigService } from '@nestjs/config';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  private readonly domainName: string | undefined;
+
+  constructor(
+    private authService: AuthService,
+    private configService: ConfigService,
+  ) {
+    this.domainName = this.configService.get<string>('domainName');
+  }
 
   @Post('login')
   @HttpCode(HttpStatus.OK)
@@ -73,14 +81,14 @@ export class AuthController {
       httpOnly: true,
       secure: true,
       sameSite: 'lax',
-      // domain: 'localhost',
+      domain: this.domainName,
     });
 
     response.cookie('refreshToken', tokens.refreshToken, {
       httpOnly: true,
       secure: true,
       sameSite: 'lax',
-      // domain: 'localhost',
+      domain: this.domainName,
     });
 
     return user;
@@ -106,14 +114,14 @@ export class AuthController {
       httpOnly: true,
       secure: true,
       sameSite: 'lax',
-      domain: 'codask.org',
+      domain: this.domainName,
     });
 
     response.cookie('refreshToken', tokens.refreshToken, {
       httpOnly: true,
       secure: true,
       sameSite: 'lax',
-      domain: 'codask.org',
+      domain: this.domainName,
     });
   }
 
@@ -177,14 +185,14 @@ export class AuthController {
       httpOnly: true,
       secure: true,
       sameSite: 'lax',
-      domain: 'codask.org',
+      domain: this.domainName,
     });
 
     response.clearCookie('refreshToken', {
       httpOnly: true,
       secure: true,
       sameSite: 'lax',
-      domain: 'codask.org',
+      domain: this.domainName,
     });
 
     return await this.authService.logout(request.user._id.toString());
