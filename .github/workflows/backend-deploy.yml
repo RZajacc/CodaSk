@@ -45,8 +45,8 @@ jobs:
         with:
           function-name: ${{secrets.AWS_LAMBDA_FUNCTION_NAME}}
           code-artifacts-dir: server/dist
-          handler: lambda.handler
-          runtime: nodejs24.x
+          handler: main.handler
+          runtime: nodejs22.x
 
       - name: Create ApiGateway Deployment
         env:
