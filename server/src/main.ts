@@ -4,8 +4,9 @@ import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import cookieParser from 'cookie-parser';
-import { Callback, Context, Handler } from 'aws-lambda';
+import { APIGatewayProxyEvent, Callback, Context, Handler } from 'aws-lambda';
 import serverlessExpress from '@codegenie/serverless-express';
+import { Application } from 'express';
 
 interface AppConfig {
   app: {
@@ -49,21 +50,37 @@ async function bootstrap(): Promise<Handler> {
   });
 
   await app.init();
-  const expressApp = app.getHttpAdapter().getInstance();
+  const expressApp = app.getHttpAdapter().getInstance() as Application;
   await app.listen(configService.get('app.port', { infer: true }));
   return serverlessExpress({ app: expressApp });
 }
 
 export const handler: Handler = async (
-  event: any,
+  event: APIGatewayProxyEvent,
   context: Context,
   callback: Callback,
 ) => {
-  if (event.headers?.Cookie && !event.headers.cookie) {
-    event.headers.cookie = event.headers.Cookie;
+  server = server ?? (await bootstrap());
+
+  // Fix for badly parsed cookies on lambda
+  if (
+    Array.isArray(event.multiValueHeaders?.cookie) &&
+    event.multiValueHeaders.cookie.length > 0
+  ) {
+    const joinedCookie = event.multiValueHeaders.cookie.join('; ');
+
+    event.headers = {
+      ...event.headers,
+      cookie: joinedCookie,
+    };
+
+    event.multiValueHeaders = {
+      ...event.multiValueHeaders,
+      cookie: [joinedCookie],
+    };
   }
 
-  server = server ?? (await bootstrap());
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return server(event, context, callback);
 };
 
