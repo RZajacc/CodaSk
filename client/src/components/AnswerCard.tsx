@@ -46,7 +46,7 @@ function AnswerCard({
     typeof answerData.author !== 'string' ? answerData.author : null;
 
   return (
-    <>
+    <div className="mx-3">
       {/* HEADER */}
       <div className="flex justify-between rounded-2xl bg-black p-2 text-white">
         <div className="flex">
@@ -70,8 +70,13 @@ function AnswerCard({
       </div>
       {/* BODY */}
       <div className="mb-8 grid grid-cols-12 rounded-2xl shadow-[10px_10px_0px_0px_#EDE9E6]">
-        <div className="col-span-1 mx-auto my-auto p-2">
-          <button onClick={handleUpvote} id="upvote" value={answerData._id}>
+        <div className="col-span-1 mx-auto my-auto flex flex-wrap items-center p-2">
+          <button
+            onClick={handleUpvote}
+            id="upvote"
+            value={answerData._id}
+            className="cursor-pointer"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="30"
@@ -140,7 +145,7 @@ function AnswerCard({
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

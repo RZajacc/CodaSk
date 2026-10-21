@@ -156,7 +156,7 @@ export default function QuestionDetails() {
         <BackButton />
       </div>
       {/* Displaying problem description depending on text type */}
-      <div className="mx-auto mt-10 mb-10 w-9/12 rounded-lg p-4 shadow-[0_4px_4px_0px_rgba(0,0,0,0.30)]">
+      <div className="mx-auto mt-10 mb-10 w-full rounded-lg p-4 shadow-[0_4px_4px_0px_rgba(0,0,0,0.30)] md:w-11/12 lg:w-10/12 xl:w-9/12">
         <div className="flex justify-between">
           <h1 className="text-3xl text-[#6741D9]">
             {questionData ? questionData.title : ''}
@@ -313,7 +313,7 @@ export default function QuestionDetails() {
         )}
       </div>
       {/* TAGS */}
-      <div className="mx-auto mt-10 mb-10 w-9/12">
+      <div className="mx-auto mt-10 mb-10 w-full md:w-11/12 lg:w-10/12 xl:w-9/12">
         <div className="mt-8 flex justify-between">
           <div className="ml-6">
             {questionData &&
@@ -347,14 +347,14 @@ export default function QuestionDetails() {
           </div>
         </div>
       </div>
-      <div className="mx-auto mt-10 mb-10 w-9/12">
-        <hr className="border-[1px] border-gray-500" />
+      <div className="mx-auto mt-10 mb-10 w-full md:w-11/12 lg:w-10/12 xl:w-9/12">
+        <hr className="mx-3 border border-gray-500" />
       </div>
       {/* Adding a new answer */}
-      <div className="relative mx-auto mt-10 mb-10 h-fit w-9/12">
+      <div className="relative mx-auto mt-10 mb-10 h-fit w-full md:w-11/12 lg:w-10/12 xl:w-9/12">
         <QuillEditor
           className={
-            'shadow-custom rounded-3xl border-2 bg-[#EDE9E6] p-5 text-[#6741D9]'
+            'shadow-custom mx-3 rounded-3xl border-2 bg-[#EDE9E6] p-5 text-[#6741D9]'
           }
           value={answer}
           placeholder="*Provide an answer..."
@@ -382,7 +382,7 @@ export default function QuestionDetails() {
         </div>
       </div>
       {/* ANSWERS */}
-      <div className="relative mx-auto mt-10 mb-10 h-fit w-9/12">
+      <div className="relative mx-auto mt-10 mb-10 h-fit w-full md:w-11/12 lg:w-10/12 xl:w-9/12">
         {questionData
           ? questionData.answers.map((answer) => {
               // console.log(answer.author);
