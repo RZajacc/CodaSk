@@ -29,9 +29,9 @@ jobs:
       - name: Prepare Lambda package
         working-directory: server
         run: |
-          cp package.json dist/
+          cp package.json package-lock.json dist/
           cd dist
-          npm install --omit=dev 
+          npm ci --omit=dev
 
       - name: Configure AWS Credentials1
         uses: aws-actions/configure-aws-credentials@v6.1.0
