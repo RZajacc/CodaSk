@@ -14,6 +14,7 @@ import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
 import {
   ApiBearerAuth,
+  ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
   ApiQuery,
@@ -23,6 +24,7 @@ import { FindByQueryResponseDto } from './dto/findByQueryResponse.dto';
 import { plainToInstance } from 'class-transformer';
 import { FindByIdResponseDto } from './dto/findByIdResponse.dto';
 import { AccessTokenGuard } from '../auth/guards/access-token-guard';
+import { ParseObjectIdPipe } from '../common/pipes/parse-object-id.pipe';
 
 @Controller('question')
 export class QuestionController {
@@ -73,12 +75,17 @@ export class QuestionController {
   @ApiBearerAuth()
   @ApiOperation({
     summary: 'Get question by its ID',
-    description: 'Get a single question by id with populated values',
+    description:
+      'Get a single question by id with populated values. Returns 404 if no question with this id exists.',
   })
   @ApiOkResponse({
     type: FindByIdResponseDto,
   })
-  async findOne(@Param('id') id: string) {
+  @ApiNotFoundResponse({
+    description: 'No question with provided id was found.',
+    example: { statusCode: 404, error: 'Question not found' },
+  })
+  async findOne(@Param('id', ParseObjectIdPipe) id: string) {
     return this.questionService.findOne(id);
   }
 

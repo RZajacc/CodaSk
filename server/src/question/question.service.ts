@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -95,12 +95,18 @@ export class QuestionService {
     }
   }
 
-  findOne(id: string) {
-    return this.questionModel
+  async findOne(id: string) {
+    const question = await this.questionModel
       .findById(id)
       .populate(this.populateFindById)
       .lean()
       .exec();
+
+    if (!question) {
+      throw new NotFoundException('Question not found');
+    }
+
+    return question;
   }
 
   update(id: number, updateQuestionDto: UpdateQuestionDto) {
