@@ -15,8 +15,12 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getRoot()).toBe('Hello World!');
+    it('should return the root information', () => {
+      expect(appController.getRoot()).toEqual({
+        name: 'Codask API',
+        version: '0.5',
+        docs: '/docs',
+      });
     });
   });
 });
