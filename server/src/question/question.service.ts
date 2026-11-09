@@ -96,16 +96,19 @@ export class QuestionService {
   }
 
   async findOne(id: string) {
+    // Find the question and populate the related author, answers, and tags.
     const question = await this.questionModel
       .findById(id)
       .populate(this.populateFindById)
       .lean()
       .exec();
 
+    // Throw a 404 when no question exists for the provided ID.
     if (!question) {
       throw new NotFoundException('Question not found');
     }
 
+    // Return the question as a plain object from the lean query.
     return question;
   }
 

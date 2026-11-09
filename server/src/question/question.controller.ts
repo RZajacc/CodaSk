@@ -10,18 +10,17 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { QuestionService } from './question.service';
-import { CreateQuestionDto } from './dto/create-question.dto';
-import { UpdateQuestionDto } from './dto/update-question.dto';
 import {
+  ApiBadRequestResponse,
   ApiBearerAuth,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
+  ApiParam,
   ApiQuery,
 } from '@nestjs/swagger';
 import { Question } from './entities/question.entity';
 import { FindByQueryResponseDto } from './dto/findByQueryResponse.dto';
-import { plainToInstance } from 'class-transformer';
 import { FindByIdResponseDto } from './dto/findByIdResponse.dto';
 import { AccessTokenGuard } from '../auth/guards/access-token-guard';
 import { ParseObjectIdPipe } from '../common/pipes/parse-object-id.pipe';
@@ -76,10 +75,19 @@ export class QuestionController {
   @ApiOperation({
     summary: 'Get question by its ID',
     description:
-      'Get a single question by id with populated values. Returns 404 if no question with this id exists.',
+      'Get a single question by id with populated values. Returns 400 if the id is not a valid ObjectId and 404 if no question with this id exists.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'MongoDB ObjectId (24-character hex string)',
+    example: '656b4777d89e223b1e928c33',
   })
   @ApiOkResponse({
     type: FindByIdResponseDto,
+  })
+  @ApiBadRequestResponse({
+    description: 'Provided id is not a valid ObjectId.',
+    example: { statusCode: 400, message: 'Invalid id', error: 'Bad Request' },
   })
   @ApiNotFoundResponse({
     description: 'No question with provided id was found.',
