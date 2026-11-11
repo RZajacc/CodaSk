@@ -1,73 +1,93 @@
-# React + TypeScript + Vite
+# Codask client
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The Codask client is a React and TypeScript single-page application for the
+Code Academy Berlin community. It uses Vite, React Router, Tailwind CSS, React
+Hook Form and Zod, and communicates with the [Codask API](../server/README.md).
 
-Currently, two official plugins are available:
+## Prerequisites
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Node.js 22.12 or newer and npm. The current Vite dependency also supports
+  Node.js 20.19 or newer within the 20.x release line.
+- A running Codask API and an isolated MongoDB database for data-backed features.
+  See the [server setup](../server/README.md).
 
-## React Compiler
+## Local setup
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Run these commands from `client/`:
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm ci
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Open the URL printed by Vite, normally <http://localhost:5173>. If that port is
+unavailable, Vite may choose another; add the actual client origin to the
+server's `CORS_ORIGINS`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### API configuration
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+The client uses `VITE_API_URL` as the API base URL. The tracked
+`.env.development` points to the local API at `http://localhost:5000`, while
+`.env.production` configures the production build. To use a different local
+API, create `client/.env.development.local`:
+
+```dotenv
+VITE_API_URL=http://localhost:5000
 ```
+
+Vite embeds `VITE_` variables in browser code; they are public and must never
+contain secrets. Local override files are ignored by Git. Restart the dev server
+after changing environment files, and rebuild for changes to affect a
+production build.
+
+The API uses credentialed requests and secure authentication cookies. Configure
+the server's CORS and cookie domain for your local origin; browser handling of
+secure cookies on HTTP depends on the host and browser. See the
+[server authentication notes](../server/README.md#authentication-and-local-cookies).
+
+## Commands
+
+Run from `client/`:
+
+| Command | Purpose |
+| --- | --- |
+| `npm run dev` | Start the Vite development server. |
+| `npm run build` | Type-check and create the production build in `dist/`. |
+| `npm run preview` | Preview an existing production build locally. |
+| `npm run lint` | Run ESLint. |
+
+There is currently no frontend test script configured in `package.json`.
+
+## Source layout
+
+- `src/pages/`: route pages.
+- `src/components/` and `src/layouts/`: reusable UI and page layouts.
+- `src/services/`: API calls and authentication helpers.
+- `src/context/` and `src/hooks/`: shared state and hooks.
+- `src/schemas/`, `src/types/` and `src/utils/`: validation, types and utilities.
+- `public/`: static assets.
+
+Some routes, including polls, student projects and module search, are currently
+placeholders or in development.
+
+## Docker Compose
+
+From the repository root, after configuring `server/.env` as described in the
+[server README](../server/README.md):
+
+```bash
+docker compose up --build
+```
+
+Compose starts the client and server, but does not start MongoDB. Configure a
+database reachable from the server container. The API URL in the client is
+used by the **browser**, so it must be reachable from the host, not just from
+another container. The default development ports are 5173 for the client and
+5000 for the API.
+
+## Deployment
+
+On pushes to `main`, the
+[frontend deployment workflow](../.github/workflows/frontend-deploy.yml) builds
+the client, syncs `client/dist/` to S3 and invalidates CloudFront. It does not
+currently run frontend tests. The production API URL is selected at build time.
