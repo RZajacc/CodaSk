@@ -80,7 +80,7 @@ docker compose up --build
 ```
 
 Compose starts the client, server and a local MongoDB instance. The database
-starts empty and uses a persistent volume; see the
+is empty on first creation and uses a persistent volume; see the
 [server README](../server/README.md#docker-compose) for connection details.
 The API URL in the client is used by the **browser**, so it must be reachable
 from the host, not just from another container. The default development ports

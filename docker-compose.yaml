@@ -12,21 +12,6 @@ services:
       retries: 12
       start_period: 10s
 
-  mongo-test:
-    image: mongo:7.0.16
-    profiles: ['test']
-    ports:
-      - '127.0.0.1:27018:27017'
-    tmpfs:
-      - /data/db
-      - /data/configdb
-    healthcheck:
-      test: ['CMD', 'mongosh', '--quiet', '--eval', "db.adminCommand('ping').ok"]
-      interval: 5s
-      timeout: 5s
-      retries: 12
-      start_period: 10s
-
   server:
     build:
       context: ./server

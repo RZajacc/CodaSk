@@ -41,12 +41,13 @@ the intended local database.
 Start just the database from the repository root before starting the API:
 
 ```bash
-docker compose up -d mongo
+docker compose up -d --wait mongo
 ```
 
-MongoDB listens on `127.0.0.1:27017` on the host. The database starts empty;
-no sample data is loaded automatically. To add synthetic sample data, run
-`npm run seed:dev` from `server/` after starting MongoDB.
+MongoDB listens on `127.0.0.1:27017` on the host. A new database is empty;
+its named volume retains existing data and no sample data is loaded
+automatically. To add synthetic sample data, run `npm run seed:dev` from
+`server/` after starting MongoDB.
 
 The seed command always targets `mongodb://127.0.0.1:27017/codask-dev`, ignoring
 `MONGO_URI` and other environment settings. Ensure the intended local Compose
@@ -102,7 +103,8 @@ Run from `server/`:
 | `npm run seed:dev` | Add missing synthetic records to the local development database. |
 | `npm test` | Run the Jest unit tests. |
 | `npm run test:cov` | Run unit tests with coverage and the configured 70% global thresholds. |
-| `npm run test:integration` | Run the MongoDB-backed integration test against the local test service. |
+| `npm run test:integration` | Run integration tests inside the Docker test runner. |
+| `npm run test:all` | Run unit and integration tests inside the Docker test runner. |
 | `npm run test:e2e` | Run the separate e2e suite; see the caveat below. |
 
 The existing e2e test imports the full app and requires a configured, reachable
@@ -110,36 +112,46 @@ MongoDB instance. It currently expects an outdated root response (`Hello
 World!`), so it needs updating before it can reliably pass. Use a separate test
 database and test credentials; do not use production resources.
 
-### Isolated test MongoDB
+### Docker test runner
 
-The test MongoDB service is separate from the development database and is not
-started with the normal Compose stack. From the repository root, start it with:
-
-```bash
-docker compose --profile test up -d --wait mongo-test
-```
-
-Then run `npm run test:integration` from `server/`. The suite ignores
-`MONGO_URI` and connects only to `127.0.0.1:27018`. It creates a uniquely named
-database, loads the shared synthetic fixtures and drops that database during
-teardown. Ensure the intended test MongoDB instance owns that port. It does
-not use the development database or the deployed MongoDB instance.
-
-It is available to host processes at `mongodb://127.0.0.1:27018` and to
-containers on the Compose network at `mongodb://mongo-test:27017`. It has no
-authentication, is bound to host loopback only, and is for local testing only.
-Other local users can still access it. Its data is stored in memory and is lost
-when the container stops or restarts. To remove just this service:
+From the repository root, run both unit and integration tests:
 
 ```bash
-docker compose --profile test rm --stop --force mongo-test
+docker compose -p codask-tests -f docker-compose.test.yaml run --build --rm test
 ```
 
-The backend deployment workflow also starts an isolated test MongoDB service.
-The existing unit tests remain database-independent. The integration test uses
-the shared sample data in `test/fixtures/` and runs in the deployment workflow.
-The existing e2e command does not automatically connect to the test service;
-do not run it against development or production data.
+This builds the test image, starts a separate test MongoDB and waits for it to
+be healthy. No host Node.js installation or `server/.env` file is needed.
+The image contains the source and dependencies, so use `--build` after changes.
+
+Run the suites individually:
+
+```bash
+# Unit tests only; does not start MongoDB
+docker compose -p codask-tests -f docker-compose.test.yaml run --build --rm --no-deps test npm test -- --ci --runInBand
+
+# Integration tests only
+docker compose -p codask-tests -f docker-compose.test.yaml run --build --rm test npm run test:integration -- --ci --runInBand
+```
+
+Unit tests can also still run in the running application server with
+`docker compose exec server npm test`. Integration tests run only in the
+dedicated test runner: they connect to `mongo-test:27017`, ignore `MONGO_URI`,
+seed a uniquely named database with the shared fixtures, and remove it during
+teardown. They never seed the development database; `seed:dev` remains optional
+and manual.
+
+The test MongoDB has no published host port and stores its data in memory.
+The test runner is removed automatically, but the MongoDB container remains
+available for subsequent runs. Stop and remove the test stack when finished:
+
+```bash
+docker compose -p codask-tests -f docker-compose.test.yaml down
+```
+
+GitHub Actions uses the same test stack and cleans it up after the tests. The
+existing e2e command does not automatically connect to this service; do not run
+it against development or production data.
 
 ## Source layout
 
@@ -177,7 +189,7 @@ matches the client URL opened in the browser.
 
 On pushes to `main`, the
 [backend deployment workflow](../.github/workflows/backend-deploy.yml) installs
-dependencies, runs unit and integration tests and builds before deploying to
+dependencies, runs unit and integration tests in Docker and builds before deploying to
 AWS Lambda and creating an API Gateway deployment. A test failure stops the
 deployment. The integration tests use an isolated, ephemeral MongoDB service;
 the workflow does not run e2e tests or enforce coverage thresholds. It builds

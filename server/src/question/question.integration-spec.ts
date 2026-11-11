@@ -35,7 +35,7 @@ describe('QuestionService.findOne (integration)', () => {
 
   beforeAll(async () => {
     connection = mongoose.createConnection(
-      `mongodb://127.0.0.1:27018/${databaseName}`,
+      `mongodb://mongo-test:27017/${databaseName}`,
       {
         // A local test service should be ready before the suite starts.
         serverSelectionTimeoutMS: 5000,

@@ -31,9 +31,10 @@ The project has two applications:
   variables, testing, and deployment.
 
 For local development, install Node.js and npm and follow the server and client
-setup instructions above. Docker Compose can start both applications and an
-empty, persistent local MongoDB database. See the app READMEs for prerequisites,
-environment configuration, and Docker details.
+setup instructions above. Docker Compose can start both applications and a
+persistent local MongoDB database. A new database is empty; optional sample
+data and isolated integration tests are described in the server README. See
+the app READMEs for prerequisites, environment configuration, and Docker details.
 
 ## Technologies
 
