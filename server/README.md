@@ -8,8 +8,8 @@ authentication and user, question, answer and tag endpoints for the
 
 - Node.js 22.12 or newer and npm. The frontend's current Vite dependency also
   supports Node.js 20.19 or newer within the 20.x release line.
-- A reachable MongoDB instance and a separate database for development. Docker
-  Compose does not provide MongoDB.
+- Docker and Docker Compose to run the local MongoDB service, or another
+  reachable MongoDB instance with a separate development database.
 
 ## Local setup
 
@@ -19,7 +19,8 @@ From `server/`, install dependencies and create a local `.env` file:
 npm ci
 ```
 
-For example, use the following as a starting point for a local MongoDB instance:
+For example, use the following as a starting point for the Compose MongoDB
+service when running the server on the host:
 
 ```dotenv
 PORT=5000
@@ -33,6 +34,18 @@ REFRESH_TOKEN_EXPIRY=7d
 
 Replace the example secrets with distinct local values. Do not commit `.env`,
 use production credentials, or point tests at production data.
+The file is local to your machine, so each contributor must configure it.
+Before starting the server on the host, verify its active `MONGO_URI` points to
+the intended local database.
+
+Start just the database from the repository root before starting the API:
+
+```bash
+docker compose up -d mongo
+```
+
+MongoDB listens on `127.0.0.1:27017` on the host. The database starts empty;
+no sample data is loaded automatically.
 
 | Variable | Purpose |
 | --- | --- |
@@ -86,6 +99,31 @@ MongoDB instance. It currently expects an outdated root response (`Hello
 World!`), so it needs updating before it can reliably pass. Use a separate test
 database and test credentials; do not use production resources.
 
+### Isolated test MongoDB
+
+The test MongoDB service is separate from the development database and is not
+started with the normal Compose stack. From the repository root, start it with:
+
+```bash
+docker compose --profile test up -d --wait mongo-test
+```
+
+It is available to host processes at `mongodb://127.0.0.1:27018` and to
+containers on the Compose network at `mongodb://mongo-test:27017`. It has no
+authentication, is bound to host loopback only, and is for local testing only.
+Other local users can still access it. Its data is stored in memory and is lost
+when the container stops or restarts. To remove just this service:
+
+```bash
+docker compose --profile test rm --stop --force mongo-test
+```
+
+The backend deployment workflow also starts an isolated test MongoDB service.
+No tests use it yet: the existing unit tests remain database-independent, and
+the integration test and fixtures will be added separately. The existing e2e
+command does not automatically connect to this service; do not run it against
+development or production data.
+
 ## Source layout
 
 - `src/auth/` and `src/user/`: authentication and users.
@@ -102,12 +140,20 @@ After creating `server/.env`, run from the repository root:
 docker compose up --build
 ```
 
-Compose starts the server and client and maps the server's port 5000 to the
-host. Set `PORT=5000` for that mapping, or update the mapping if you use another
-port. MongoDB is not included: its URI must be reachable **from the server
-container**, where `127.0.0.1` refers to the container itself. The correct host
-address depends on your Docker environment. Ensure `CORS_ORIGINS` matches the
-client URL opened in the browser.
+Compose starts MongoDB, the server and the client. The server waits for MongoDB
+to become healthy and uses `mongodb://mongo:27017/codask-dev` inside the
+Compose network, overriding `MONGO_URI` from `server/.env`. A server started
+on the host instead uses the active URI in its environment or `.env`.
+
+The database uses a named volume, so its data survives normal container restarts
+and `docker compose down`. Removing the volume deletes the local data. MongoDB
+has no authentication and is intended only for local development; its host
+port is bound to loopback, but other local users can still access it. Do not
+expose it publicly or use it for production.
+
+Compose maps the server's port 5000 to the host. Set `PORT=5000` for that
+mapping, or update the mapping if you use another port. Ensure `CORS_ORIGINS`
+matches the client URL opened in the browser.
 
 ## Deployment
 
