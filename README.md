@@ -30,10 +30,10 @@ The project has two applications:
 - [Server README](./server/README.md): API and MongoDB setup, environment
   variables, testing, and deployment.
 
-For local development, install Node.js and npm, set up a separate MongoDB
-database, and follow the server and client setup instructions above. Docker
-Compose can also start both applications; it does not provide MongoDB. See the
-app READMEs for prerequisites, environment configuration, and Docker details.
+For local development, install Node.js and npm and follow the server and client
+setup instructions above. Docker Compose can start both applications and an
+empty, persistent local MongoDB database. See the app READMEs for prerequisites,
+environment configuration, and Docker details.
 
 ## Technologies
 

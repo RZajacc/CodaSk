@@ -79,11 +79,12 @@ From the repository root, after configuring `server/.env` as described in the
 docker compose up --build
 ```
 
-Compose starts the client and server, but does not start MongoDB. Configure a
-database reachable from the server container. The API URL in the client is
-used by the **browser**, so it must be reachable from the host, not just from
-another container. The default development ports are 5173 for the client and
-5000 for the API.
+Compose starts the client, server and a local MongoDB instance. The database
+starts empty and uses a persistent volume; see the
+[server README](../server/README.md#docker-compose) for connection details.
+The API URL in the client is used by the **browser**, so it must be reachable
+from the host, not just from another container. The default development ports
+are 5173 for the client and 5000 for the API.
 
 ## Deployment
 
