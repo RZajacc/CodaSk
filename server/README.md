@@ -102,6 +102,7 @@ Run from `server/`:
 | `npm run seed:dev` | Add missing synthetic records to the local development database. |
 | `npm test` | Run the Jest unit tests. |
 | `npm run test:cov` | Run unit tests with coverage and the configured 70% global thresholds. |
+| `npm run test:integration` | Run the MongoDB-backed integration test against the local test service. |
 | `npm run test:e2e` | Run the separate e2e suite; see the caveat below. |
 
 The existing e2e test imports the full app and requires a configured, reachable
@@ -118,6 +119,12 @@ started with the normal Compose stack. From the repository root, start it with:
 docker compose --profile test up -d --wait mongo-test
 ```
 
+Then run `npm run test:integration` from `server/`. The suite ignores
+`MONGO_URI` and connects only to `127.0.0.1:27018`. It creates a uniquely named
+database, loads the shared synthetic fixtures and drops that database during
+teardown. Ensure the intended test MongoDB instance owns that port. It does
+not use the development database or the deployed MongoDB instance.
+
 It is available to host processes at `mongodb://127.0.0.1:27018` and to
 containers on the Compose network at `mongodb://mongo-test:27017`. It has no
 authentication, is bound to host loopback only, and is for local testing only.
@@ -129,11 +136,10 @@ docker compose --profile test rm --stop --force mongo-test
 ```
 
 The backend deployment workflow also starts an isolated test MongoDB service.
-No tests use it yet: the existing unit tests remain database-independent, and
-the integration test will be added separately using the shared sample data in
-`test/fixtures/`. The existing e2e
-command does not automatically connect to this service; do not run it against
-development or production data.
+The existing unit tests remain database-independent. The integration test uses
+the shared sample data in `test/fixtures/`, but is not yet run by the deployment
+workflow. The existing e2e command does not automatically connect to the test
+service; do not run it against development or production data.
 
 ## Source layout
 
@@ -141,7 +147,8 @@ development or production data.
 - `src/question/`, `src/answer/` and `src/tag/`: domain endpoints and services.
 - `src/config/` and `src/common/`: configuration and shared utilities.
 - `src/main.ts`: HTTP bootstrap, Swagger setup and Lambda handler.
-- `src/**/*.spec.ts`: Jest unit tests; `test/`: separate e2e configuration and test.
+- `src/**/*.spec.ts`: Jest unit tests; `src/**/*.integration-spec.ts`: integration tests.
+- `test/`: shared fixtures and separate Jest configuration and e2e test.
 
 ## Docker Compose
 
