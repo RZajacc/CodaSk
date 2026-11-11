@@ -45,7 +45,16 @@ docker compose up -d mongo
 ```
 
 MongoDB listens on `127.0.0.1:27017` on the host. The database starts empty;
-no sample data is loaded automatically.
+no sample data is loaded automatically. To add synthetic sample data, run
+`npm run seed:dev` from `server/` after starting MongoDB.
+
+The seed command always targets `mongodb://127.0.0.1:27017/codask-dev`, ignoring
+`MONGO_URI` and other environment settings. Ensure the intended local Compose
+MongoDB instance owns that port before running it. It inserts missing sample
+records without changing existing fixture records or deleting any data. If a
+fixture ID belongs to an unrelated record, it fails rather than overwriting it.
+Errors such as a conflicting unique email may leave some records inserted; fix
+the conflict and rerun. The synthetic user accounts cannot log in.
 
 | Variable | Purpose |
 | --- | --- |
@@ -90,6 +99,7 @@ Run from `server/`:
 | `npm run start:prod` | Run the compiled application; build first. |
 | `npm run lint` | Run ESLint with `--fix`; this can modify files. |
 | `npm run format` | Run Prettier with `--write`; this can modify files. |
+| `npm run seed:dev` | Add missing synthetic records to the local development database. |
 | `npm test` | Run the Jest unit tests. |
 | `npm run test:cov` | Run unit tests with coverage and the configured 70% global thresholds. |
 | `npm run test:e2e` | Run the separate e2e suite; see the caveat below. |
@@ -120,7 +130,8 @@ docker compose --profile test rm --stop --force mongo-test
 
 The backend deployment workflow also starts an isolated test MongoDB service.
 No tests use it yet: the existing unit tests remain database-independent, and
-the integration test and fixtures will be added separately. The existing e2e
+the integration test will be added separately using the shared sample data in
+`test/fixtures/`. The existing e2e
 command does not automatically connect to this service; do not run it against
 development or production data.
 
