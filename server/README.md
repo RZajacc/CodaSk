@@ -137,9 +137,9 @@ docker compose --profile test rm --stop --force mongo-test
 
 The backend deployment workflow also starts an isolated test MongoDB service.
 The existing unit tests remain database-independent. The integration test uses
-the shared sample data in `test/fixtures/`, but is not yet run by the deployment
-workflow. The existing e2e command does not automatically connect to the test
-service; do not run it against development or production data.
+the shared sample data in `test/fixtures/` and runs in the deployment workflow.
+The existing e2e command does not automatically connect to the test service;
+do not run it against development or production data.
 
 ## Source layout
 
@@ -177,7 +177,8 @@ matches the client URL opened in the browser.
 
 On pushes to `main`, the
 [backend deployment workflow](../.github/workflows/backend-deploy.yml) installs
-dependencies, runs unit tests and builds before deploying to AWS Lambda and
-creating an API Gateway deployment. A unit-test failure stops the deployment.
-The workflow does not run e2e tests or enforce coverage thresholds. It builds
+dependencies, runs unit and integration tests and builds before deploying to
+AWS Lambda and creating an API Gateway deployment. A test failure stops the
+deployment. The integration tests use an isolated, ephemeral MongoDB service;
+the workflow does not run e2e tests or enforce coverage thresholds. It builds
 with Node 24 and configures the Lambda runtime as Node 22.
