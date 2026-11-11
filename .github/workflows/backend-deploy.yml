@@ -22,6 +22,10 @@ jobs:
         working-directory: server
         run: npm ci
 
+      - name: Run unit tests
+        working-directory: server
+        run: npm test -- --ci --runInBand
+
       - name: Build
         working-directory: server
         run: npm run build
