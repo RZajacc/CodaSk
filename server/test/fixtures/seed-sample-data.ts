@@ -9,6 +9,7 @@ export async function seedSampleData(connection: Connection): Promise<void> {
     );
   }
 
+  // Check every fixture ID first so seeding cannot overwrite a document owned by someone else.
   for (const [collectionName, documents] of Object.entries(sampleData)) {
     const collection = db.collection(collectionName);
     for (const document of documents) {
@@ -21,6 +22,7 @@ export async function seedSampleData(connection: Connection): Promise<void> {
     }
   }
 
+  // Insert fixtures that are missing; existing fixtures are left unchanged.
   for (const [collectionName, documents] of Object.entries(sampleData)) {
     const collection = db.collection(collectionName);
     for (const document of documents) {
