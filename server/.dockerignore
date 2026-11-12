@@ -3,3 +3,8 @@ dist
 *.log
 *.md
 .git
+.env
+.env.*
+*.pem
+*.key
+.npmrc

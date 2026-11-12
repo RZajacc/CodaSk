@@ -1,4 +1,17 @@
 services:
+  mongo:
+    image: mongo:7.0.16
+    ports:
+      - '127.0.0.1:27017:27017'
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ['CMD', 'mongosh', '--quiet', '--eval', "db.adminCommand('ping').ok"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+
   server:
     build:
       context: ./server
@@ -10,6 +23,11 @@ services:
       - ./server:/usr/src/app
     env_file:
       - server/.env
+    environment:
+      MONGO_URI: mongodb://mongo:27017/codask-dev
+    depends_on:
+      mongo:
+        condition: service_healthy
 
   client:
     build: 
@@ -21,3 +39,6 @@ services:
       - ./client:/app
     depends_on:
       - server
+
+volumes:
+  mongo-data:

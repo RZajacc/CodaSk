@@ -8,8 +8,8 @@ authentication and user, question, answer and tag endpoints for the
 
 - Node.js 22.12 or newer and npm. The frontend's current Vite dependency also
   supports Node.js 20.19 or newer within the 20.x release line.
-- A reachable MongoDB instance and a separate database for development. Docker
-  Compose does not provide MongoDB.
+- Docker and Docker Compose to run the local MongoDB service, or another
+  reachable MongoDB instance with a separate development database.
 
 ## Local setup
 
@@ -19,7 +19,8 @@ From `server/`, install dependencies and create a local `.env` file:
 npm ci
 ```
 
-For example, use the following as a starting point for a local MongoDB instance:
+For example, use the following as a starting point for the Compose MongoDB
+service when running the server on the host:
 
 ```dotenv
 PORT=5000
@@ -33,6 +34,28 @@ REFRESH_TOKEN_EXPIRY=7d
 
 Replace the example secrets with distinct local values. Do not commit `.env`,
 use production credentials, or point tests at production data.
+The file is local to your machine, so each contributor must configure it.
+Before starting the server on the host, verify its active `MONGO_URI` points to
+the intended local database.
+
+Start just the database from the repository root before starting the API:
+
+```bash
+docker compose up -d --wait mongo
+```
+
+MongoDB listens on `127.0.0.1:27017` on the host. A new database is empty;
+its named volume retains existing data and no sample data is loaded
+automatically. To add synthetic sample data, run `npm run seed:dev` from
+`server/` after starting MongoDB.
+
+The seed command always targets `mongodb://127.0.0.1:27017/codask-dev`, ignoring
+`MONGO_URI` and other environment settings. Ensure the intended local Compose
+MongoDB instance owns that port before running it. It inserts missing sample
+records without changing existing fixture records or deleting any data. If a
+fixture ID belongs to an unrelated record, it fails rather than overwriting it.
+Errors such as a conflicting unique email may leave some records inserted; fix
+the conflict and rerun. The synthetic user accounts cannot log in.
 
 | Variable | Purpose |
 | --- | --- |
@@ -77,8 +100,11 @@ Run from `server/`:
 | `npm run start:prod` | Run the compiled application; build first. |
 | `npm run lint` | Run ESLint with `--fix`; this can modify files. |
 | `npm run format` | Run Prettier with `--write`; this can modify files. |
+| `npm run seed:dev` | Add missing synthetic records to the local development database. |
 | `npm test` | Run the Jest unit tests. |
 | `npm run test:cov` | Run unit tests with coverage and the configured 70% global thresholds. |
+| `npm run test:integration` | Run integration tests inside the Docker test runner. |
+| `npm run test:all` | Run unit and integration tests inside the Docker test runner. |
 | `npm run test:e2e` | Run the separate e2e suite; see the caveat below. |
 
 The existing e2e test imports the full app and requires a configured, reachable
@@ -86,13 +112,55 @@ MongoDB instance. It currently expects an outdated root response (`Hello
 World!`), so it needs updating before it can reliably pass. Use a separate test
 database and test credentials; do not use production resources.
 
+### Docker test runner
+
+From the repository root, run both unit and integration tests:
+
+```bash
+docker compose -p codask-tests -f docker-compose.test.yaml run --build --rm test
+```
+
+This builds the test image, starts a separate test MongoDB and waits for it to
+be healthy. No host Node.js installation or `server/.env` file is needed.
+The image contains the source and dependencies, so use `--build` after changes.
+
+Run the suites individually:
+
+```bash
+# Unit tests only; does not start MongoDB
+docker compose -p codask-tests -f docker-compose.test.yaml run --build --rm --no-deps test npm test -- --ci --runInBand
+
+# Integration tests only
+docker compose -p codask-tests -f docker-compose.test.yaml run --build --rm test npm run test:integration -- --ci --runInBand
+```
+
+Unit tests can also still run in the running application server with
+`docker compose exec server npm test`. Integration tests run only in the
+dedicated test runner: they connect to `mongo-test:27017`, ignore `MONGO_URI`,
+seed a uniquely named database with the shared fixtures, and remove it during
+teardown. They never seed the development database; `seed:dev` remains optional
+and manual.
+
+The test MongoDB has no published host port and stores its data in memory.
+The test runner is removed automatically, but the MongoDB container remains
+available for subsequent runs. Stop and remove the test stack when finished:
+
+```bash
+docker compose -p codask-tests -f docker-compose.test.yaml down
+```
+
+GitHub Actions uses the same test stack and cleans it up after the tests. The
+existing e2e command does not automatically connect to this service; do not run
+it against development or production data.
+
 ## Source layout
 
 - `src/auth/` and `src/user/`: authentication and users.
 - `src/question/`, `src/answer/` and `src/tag/`: domain endpoints and services.
 - `src/config/` and `src/common/`: configuration and shared utilities.
 - `src/main.ts`: HTTP bootstrap, Swagger setup and Lambda handler.
-- `src/**/*.spec.ts`: Jest unit tests; `test/`: separate e2e configuration and test.
+- `src/**/*.spec.ts`: Jest unit tests; `src/**/*.integration-spec.ts`: integration tests.
+- `test/`: shared fixtures and separate Jest configuration and e2e test.
 
 ## Docker Compose
 
@@ -102,18 +170,27 @@ After creating `server/.env`, run from the repository root:
 docker compose up --build
 ```
 
-Compose starts the server and client and maps the server's port 5000 to the
-host. Set `PORT=5000` for that mapping, or update the mapping if you use another
-port. MongoDB is not included: its URI must be reachable **from the server
-container**, where `127.0.0.1` refers to the container itself. The correct host
-address depends on your Docker environment. Ensure `CORS_ORIGINS` matches the
-client URL opened in the browser.
+Compose starts MongoDB, the server and the client. The server waits for MongoDB
+to become healthy and uses `mongodb://mongo:27017/codask-dev` inside the
+Compose network, overriding `MONGO_URI` from `server/.env`. A server started
+on the host instead uses the active URI in its environment or `.env`.
+
+The database uses a named volume, so its data survives normal container restarts
+and `docker compose down`. Removing the volume deletes the local data. MongoDB
+has no authentication and is intended only for local development; its host
+port is bound to loopback, but other local users can still access it. Do not
+expose it publicly or use it for production.
+
+Compose maps the server's port 5000 to the host. Set `PORT=5000` for that
+mapping, or update the mapping if you use another port. Ensure `CORS_ORIGINS`
+matches the client URL opened in the browser.
 
 ## Deployment
 
 On pushes to `main`, the
 [backend deployment workflow](../.github/workflows/backend-deploy.yml) installs
-dependencies, runs unit tests and builds before deploying to AWS Lambda and
-creating an API Gateway deployment. A unit-test failure stops the deployment.
-The workflow does not run e2e tests or enforce coverage thresholds. It builds
+dependencies, runs unit and integration tests in Docker and builds before deploying to
+AWS Lambda and creating an API Gateway deployment. A test failure stops the
+deployment. The integration tests use an isolated, ephemeral MongoDB service;
+the workflow does not run e2e tests or enforce coverage thresholds. It builds
 with Node 24 and configures the Lambda runtime as Node 22.
