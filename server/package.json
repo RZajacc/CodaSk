@@ -94,6 +94,7 @@
       "**/*.ts",
       "!**/*.module.ts",
       "!**/*.spec.ts",
+      "!**/*.integration-spec.ts",
       "!**/dto/**",
       "!**/entities/**",
       "!**/guards/**",
