@@ -70,7 +70,6 @@
     "globals": "^16.0.0",
     "i": "^0.3.7",
     "jest": "^30.0.0",
-    "npm": "^12.2.3",
     "prettier": "^3.4.2",
     "serverless-offline": "^14.7.4",
     "source-map-support": "^0.5.21",
